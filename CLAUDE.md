@@ -8,11 +8,12 @@ fleetserv/
     components/
       ui/           # Primitive UI components: Button, Card, StatusBadge, etc.
       layout/       # AppLayout, Sidebar
+      auth/         # AuthProvider: session context over Supabase auth
       fleet/        # Fleet and truck-specific components
       visits/       # Service visit form and detail components
       quotes/       # Quote generation and PDF components
       invoices/     # Invoice table and QBO export components
-    pages/          # Route-level page components (one per route)
+    pages/          # Route-level page components (one per route, plus LoginPage)
     lib/
       supabase.ts   # Typed Supabase client and db() helper
       queryClient.ts
@@ -21,13 +22,17 @@ fleetserv/
     utils/
       cn.ts         # Tailwind class merge utility
       format.ts     # Currency, date, status label formatters
-    hooks/          # Custom React hooks (useTrucks, useServiceVisit, etc.)
-    router.tsx      # React Router v6 route definitions
-    App.tsx         # Root: QueryClientProvider + RouterProvider
+    hooks/          # Custom React hooks (useTrucks, useAuth, etc.)
+    router.tsx      # React Router v6 routes, guarded by RequireAuth
+    App.tsx         # Root: AuthProvider > QueryClientProvider > RouterProvider
     main.tsx        # ReactDOM.createRoot entry point
     index.css       # Tailwind directives + global base styles
   public/
     favicon.svg
+  supabase/
+    migrations/
+      001_rls_policies.sql            # RLS: authenticated-only access
+      002_invoice_number_sequence.sql # Atomic invoice number allocation
   index.html
   tailwind.config.ts
   vite.config.ts
