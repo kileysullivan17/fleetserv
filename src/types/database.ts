@@ -171,7 +171,12 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      allocate_invoice_number: {
+        Args: Record<string, never>;
+        Returns: string;
+      };
+    };
     Enums: {
       hawaii_county: HawaiiCounty;
       service_visit_status: ServiceVisitStatus;

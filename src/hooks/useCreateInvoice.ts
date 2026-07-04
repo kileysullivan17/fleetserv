@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { db } from "@/lib/supabase";
+import { db, supabase } from "@/lib/supabase";
 import type { Invoice, Quote } from "@/types/database";
 import { visitDetailKeys } from "@/hooks/useVisit";
 import { visitKeys } from "@/hooks/useVisitsByTruck";
@@ -8,22 +8,14 @@ function isoDate(date: Date): string {
   return date.toISOString().split("T")[0];
 }
 
-// Reads the highest existing invoice number and allocates the next one.
-// Fine for a single-operator prototype. Under concurrent writers this can
-// collide; the production fix is a Postgres sequence or an RPC that
-// allocates atomically.
+// Allocates the next invoice number atomically via a Postgres sequence, so
+// concurrent writers can never receive the same number. See the migration
+// supabase/migrations/002_invoice_number_sequence.sql.
 async function nextInvoiceNumber(): Promise<string> {
-  const { data, error } = await db("invoices")
-    .select("invoice_number")
-    .order("invoice_number", { ascending: false })
-    .limit(1);
+  const { data, error } = await supabase.rpc("allocate_invoice_number");
 
   if (error) throw error;
-
-  const last = data?.[0]?.invoice_number;
-  const lastN = last ? parseInt(last.replace(/\D/g, ""), 10) : 0;
-  const nextN = Number.isNaN(lastN) ? 1 : lastN + 1;
-  return `INV-${String(nextN).padStart(4, "0")}`;
+  return data;
 }
 
 interface CreateInvoiceInput {
