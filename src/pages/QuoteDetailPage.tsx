@@ -7,6 +7,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { LineItemsTable } from "@/components/visits/LineItemsTable";
 import { quoteDisplayNumber } from "@/components/quotes/quoteNumber";
 import { useQuoteDetail } from "@/hooks/useQuoteDetail";
+import { useAcceptQuote, useDeclineQuote } from "@/hooks/useAcceptQuote";
 import {
   formatCurrency,
   formatDate,
@@ -18,6 +19,22 @@ export function QuoteDetailPage() {
   const { data: quote, isLoading, isError } = useQuoteDetail(quoteId);
   const [downloading, setDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState(false);
+
+  const acceptQuote = useAcceptQuote();
+  const declineQuote = useDeclineQuote();
+  const decisionPending = acceptQuote.isPending || declineQuote.isPending;
+
+  const onAccept = () => {
+    const visit = quote?.service_visits;
+    if (!quote || !visit) return;
+    acceptQuote.mutate({ quote, truckId: visit.truck_id });
+  };
+
+  const onDecline = () => {
+    const visit = quote?.service_visits;
+    if (!quote || !visit) return;
+    declineQuote.mutate({ quote, truckId: visit.truck_id });
+  };
 
   const onDownloadPdf = async () => {
     const visit = quote?.service_visits;
@@ -120,6 +137,25 @@ export function QuoteDetailPage() {
               status={quote.status}
               label={QUOTE_STATUS_LABELS[quote.status]}
             />
+            {(quote.status === "draft" || quote.status === "sent") && (
+              <>
+                <Button
+                  onClick={onAccept}
+                  loading={acceptQuote.isPending}
+                  disabled={decisionPending}
+                >
+                  Accept Quote
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={onDecline}
+                  loading={declineQuote.isPending}
+                  disabled={decisionPending}
+                >
+                  Decline Quote
+                </Button>
+              </>
+            )}
             <Button
               onClick={() => void onDownloadPdf()}
               loading={downloading}
@@ -130,6 +166,18 @@ export function QuoteDetailPage() {
           </div>
         }
       />
+
+      {acceptQuote.isError && (
+        <p className="form-error mb-4">
+          Could not accept the quote. Try again.
+        </p>
+      )}
+
+      {declineQuote.isError && (
+        <p className="form-error mb-4">
+          Could not decline the quote. Try again.
+        </p>
+      )}
 
       {downloadError && (
         <p className="form-error mb-4">
