@@ -1,5 +1,6 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/utils/cn";
+import { useAuth } from "@/hooks/useAuth";
 
 interface NavItem {
   label: string;
@@ -84,6 +85,14 @@ const navItems: NavItem[] = [
 
 export function Sidebar({ onSearchClick }: { onSearchClick?: () => void }) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { session, signOut } = useAuth();
+  const email = session?.user.email ?? "";
+
+  const onSignOut = async () => {
+    await signOut();
+    navigate("/login", { replace: true });
+  };
 
   return (
     <aside className="fixed inset-y-0 left-0 z-30 flex w-60 flex-col bg-surface-sidebar">
@@ -174,7 +183,7 @@ export function Sidebar({ onSearchClick }: { onSearchClick?: () => void }) {
         })}
       </nav>
 
-      {/* Footer: user / company context */}
+      {/* Footer: signed-in user and sign out */}
       <div className="px-4 py-4 border-t border-brand-navy-muted">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-brand-navy-muted flex items-center justify-center shrink-0">
@@ -192,11 +201,30 @@ export function Sidebar({ onSearchClick }: { onSearchClick?: () => void }) {
           </div>
           <div className="min-w-0">
             <p className="text-xs font-medium text-white truncate">
-              Technician
+              {email || "Signed in"}
             </p>
             <p className="text-2xs text-slate-400 truncate">FleetServ Hawaii</p>
           </div>
         </div>
+        <button
+          type="button"
+          onClick={() => void onSignOut()}
+          className="mt-3 flex w-full items-center justify-center gap-2 rounded px-3 py-2 text-xs font-medium text-slate-300 bg-brand-navy-muted/40 hover:bg-surface-sidebar-hover hover:text-white transition-colors"
+        >
+          <svg
+            className="w-4 h-4 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            aria-hidden="true"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Sign Out
+        </button>
       </div>
     </aside>
   );
