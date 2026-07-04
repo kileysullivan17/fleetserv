@@ -31,6 +31,7 @@ fleetserv/
     favicon.svg
   supabase/
     migrations/
+      000_schema.sql                  # Enums, tables, indexes, photo bucket
       001_rls_policies.sql            # RLS: authenticated-only access
       002_invoice_number_sequence.sql # Atomic invoice number allocation
   index.html
