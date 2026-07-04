@@ -2,7 +2,7 @@ import { useContext } from "react";
 import {
   AuthContext,
   type AuthContextValue,
-} from "@/components/auth/AuthProvider";
+} from "@/components/auth/authContext";
 
 // Reads the auth context. Throws if used outside AuthProvider so a missing
 // provider surfaces immediately instead of as a silent null session.

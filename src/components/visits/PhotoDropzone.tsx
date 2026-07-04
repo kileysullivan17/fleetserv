@@ -1,21 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { cn } from "@/utils/cn";
-
-export interface StagedPhoto {
-  id: string;
-  file: File;
-  previewUrl: string;
-  caption: string;
-}
-
-export function createStagedPhoto(file: File): StagedPhoto {
-  return {
-    id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-    file,
-    previewUrl: URL.createObjectURL(file),
-    caption: "",
-  };
-}
+import type { StagedPhoto } from "@/components/visits/photoStaging";
 
 interface PhotoDropzoneProps {
   photos: StagedPhoto[];

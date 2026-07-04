@@ -5,11 +5,11 @@ import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Button } from "@/components/ui/Button";
+import { PhotoDropzone } from "@/components/visits/PhotoDropzone";
 import {
-  PhotoDropzone,
   createStagedPhoto,
   type StagedPhoto,
-} from "@/components/visits/PhotoDropzone";
+} from "@/components/visits/photoStaging";
 import { PhotoGrid } from "@/components/visits/PhotoGrid";
 import { LineItemsTable } from "@/components/visits/LineItemsTable";
 import { useVisit } from "@/hooks/useVisit";

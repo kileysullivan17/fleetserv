@@ -6,11 +6,11 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { LineItemRow } from "@/components/visits/LineItemRow";
+import { PhotoDropzone } from "@/components/visits/PhotoDropzone";
 import {
-  PhotoDropzone,
   createStagedPhoto,
   type StagedPhoto,
-} from "@/components/visits/PhotoDropzone";
+} from "@/components/visits/photoStaging";
 import { useAllTrucks } from "@/hooks/useAllTrucks";
 import { useCreateVisit } from "@/hooks/useCreateVisit";
 import { uploadVisitPhoto } from "@/lib/photos";

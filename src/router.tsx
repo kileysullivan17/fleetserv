@@ -1,7 +1,7 @@
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { RequireAuth } from "@/components/auth/RequireAuth";
 import { LoginPage } from "@/pages/LoginPage";
-import { useAuth } from "@/hooks/useAuth";
 import { FleetsPage } from "@/pages/FleetsPage";
 import { CompanyDetailPage } from "@/pages/CompanyDetailPage";
 import { TruckDetailPage } from "@/pages/TruckDetailPage";
@@ -13,27 +13,6 @@ import { QuoteDetailPage } from "@/pages/QuoteDetailPage";
 import { InvoicesPage } from "@/pages/InvoicesPage";
 import { InvoiceDetailPage } from "@/pages/InvoiceDetailPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
-
-// Gates every app route behind an authenticated session. RLS (migration 001)
-// locks all tables to authenticated users, so unauthenticated requests would
-// only ever load empty screens.
-function RequireAuth() {
-  const { session, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-page text-sm text-gray-500">
-        Loading...
-      </div>
-    );
-  }
-
-  if (!session) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return <Outlet />;
-}
 
 export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
