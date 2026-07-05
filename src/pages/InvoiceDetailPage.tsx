@@ -94,8 +94,9 @@ export function InvoiceDetailPage() {
               variant="secondary"
               onClick={onDownloadIif}
               disabled={!visit || !company}
+              title="Downloads a QuickBooks import file (.iif)"
             >
-              Download IIF
+              Download for QuickBooks
             </Button>
             {invoice.qbo_export_url ? (
               <span className="text-xs text-gray-500">
