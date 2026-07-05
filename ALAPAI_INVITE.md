@@ -18,8 +18,8 @@ Log in with:
   Email: [the email you gave me]
   Password: [the temporary password]
 
-(You can change the password later. It is just for you for now, there is no
-public sign-up.)
+(This login is just for you. There is no public sign-up, so the link is not
+useful to anyone without these credentials.)
 
 What you are looking at is an early working version loaded with sample data, so
 nothing here is a real customer. A quick tour once you are in:
