@@ -34,6 +34,7 @@ fleetserv/
       000_schema.sql                  # Enums, tables, indexes, photo bucket
       001_rls_policies.sql            # RLS: authenticated-only access
       002_invoice_number_sequence.sql # Atomic invoice number allocation
+    seed_demo_data.sql                # Optional sample data (not run on deploy)
   index.html
   tailwind.config.ts
   vite.config.ts
