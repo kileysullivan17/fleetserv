@@ -83,7 +83,15 @@ const navItems: NavItem[] = [
   },
 ];
 
-export function Sidebar({ onSearchClick }: { onSearchClick?: () => void }) {
+export function Sidebar({
+  open = false,
+  onClose,
+  onSearchClick,
+}: {
+  open?: boolean;
+  onClose?: () => void;
+  onSearchClick?: () => void;
+}) {
   const location = useLocation();
   const navigate = useNavigate();
   const { session, signOut } = useAuth();
@@ -91,11 +99,18 @@ export function Sidebar({ onSearchClick }: { onSearchClick?: () => void }) {
 
   const onSignOut = async () => {
     await signOut();
+    onClose?.();
     navigate("/login", { replace: true });
   };
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 flex w-60 flex-col bg-surface-sidebar">
+    <aside
+      className={cn(
+        "fixed inset-y-0 left-0 z-40 flex w-60 flex-col bg-surface-sidebar transition-transform duration-200",
+        open ? "translate-x-0" : "-translate-x-full",
+        "lg:translate-x-0"
+      )}
+    >
       {/* Logo / wordmark */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-brand-navy-muted">
         <div className="flex h-8 w-8 items-center justify-center rounded bg-brand-teal shrink-0">
@@ -127,7 +142,10 @@ export function Sidebar({ onSearchClick }: { onSearchClick?: () => void }) {
         <div className="px-3 pt-4">
           <button
             type="button"
-            onClick={onSearchClick}
+            onClick={() => {
+              onSearchClick?.();
+              onClose?.();
+            }}
             className="flex w-full items-center gap-3 rounded px-3 py-2 text-sm text-slate-400 bg-brand-navy-muted/40 hover:bg-surface-sidebar-hover hover:text-slate-200 transition-colors"
           >
             <svg
@@ -160,6 +178,7 @@ export function Sidebar({ onSearchClick }: { onSearchClick?: () => void }) {
             <NavLink
               key={item.to}
               to={item.to}
+              onClick={() => onClose?.()}
               className={cn(
                 "flex items-center gap-3 rounded px-3 py-2.5 text-sm font-medium transition-colors group",
                 isActive
