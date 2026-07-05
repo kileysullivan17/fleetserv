@@ -4,10 +4,11 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { InfoPopover } from "@/components/ui/InfoPopover";
 import { AddTruckModal } from "@/components/fleet/AddTruckModal";
+import { TaxRateReminderBanner } from "@/components/fleet/TaxRateReminderBanner";
 import { useCompany } from "@/hooks/useCompanies";
 import { useTrucksByCompany } from "@/hooks/useTrucks";
+import { useTaxRateReminder } from "@/hooks/useTaxRateReminder";
 import { formatDate } from "@/utils/format";
 
 export function CompanyDetailPage() {
@@ -22,6 +23,7 @@ export function CompanyDetailPage() {
   } = useCompany(companyId);
   const { data: trucks, isLoading: trucksLoading } =
     useTrucksByCompany(companyId);
+  const taxReminder = useTaxRateReminder(companyId);
 
   if (companyLoading) {
     return (
@@ -65,6 +67,15 @@ export function CompanyDetailPage() {
         }
       />
 
+      {taxReminder.status === "due" && (
+        <TaxRateReminderBanner
+          county={company.hawaii_county}
+          taxRate={company.tax_rate}
+          onConfirm={taxReminder.confirm}
+          onSnooze={taxReminder.snooze}
+        />
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Company detail card */}
         <Card className="lg:col-span-1 self-start">
@@ -107,22 +118,20 @@ export function CompanyDetailPage() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="flex items-center gap-1 text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Tax Rate
-                    <InfoPopover
-                      label="About this tax rate"
-                      title="Verify before invoicing"
-                      variant="warning"
-                    >
-                      This rate may still be an illustrative default rather than
-                      a verified Hawaii GET rate. The account owner should
-                      confirm the current rate for {company.hawaii_county}{" "}
-                      County, then update it here so quotes and invoices bill the
-                      correct tax.
-                    </InfoPopover>
                   </dt>
-                  <dd className="mt-1 text-sm font-mono text-gray-700">
+                  <dd className="mt-1 flex items-center gap-2 text-sm font-mono text-gray-700">
                     {company.tax_rate}%
+                    {taxReminder.status === "confirmed" ? (
+                      <span className="rounded-full bg-brand-teal-subtle px-2 py-0.5 font-sans text-2xs font-medium text-brand-teal">
+                        Confirmed
+                      </span>
+                    ) : (
+                      <span className="rounded-full bg-brand-coral-subtle px-2 py-0.5 font-sans text-2xs font-medium text-brand-coral">
+                        Unconfirmed
+                      </span>
+                    )}
                   </dd>
                 </div>
               </div>

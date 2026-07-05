@@ -209,13 +209,13 @@ export function AddCompanyModal({ open, onOpenChange }: AddCompanyModalProps) {
           </svg>
           <div>
             <p className="text-xs font-semibold text-brand-navy">
-              Confirm this tax rate before invoicing
+              Alapa'i, confirm this tax rate before invoicing
             </p>
             <p className="mt-0.5 text-xs text-gray-600">
-              The county rates here are illustrative defaults, not verified
-              Hawaii GET rates. The account owner should confirm the current
-              rate for this county before billing real customers, then set it
-              here. This rate flows onto every quote and invoice.
+              The county rates here are illustrative placeholders, not verified
+              Hawaii GET rates. Until you confirm a fleet's rate on its page,
+              quotes and invoices for it bill at this placeholder value. Verify
+              the current rate for this county before billing real customers.
             </p>
           </div>
         </div>
