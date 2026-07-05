@@ -12,7 +12,7 @@ fleetserv/
       fleet/        # Fleet and truck-specific components
       visits/       # Service visit form and detail components
       quotes/       # Quote generation and PDF components
-      invoices/     # Invoice table and QBO export components
+      invoices/     # Invoice table, invoice PDF, and QBO export components
     pages/          # Route-level page components (one per route, plus LoginPage)
     lib/
       supabase.ts   # Typed Supabase client and db() helper

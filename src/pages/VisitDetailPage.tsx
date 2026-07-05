@@ -21,12 +21,15 @@ import {
   usePhotosByVisit,
   useUploadVisitPhotos,
 } from "@/hooks/useVisitPhotos";
+import { downloadBlob } from "@/utils/downloadBlob";
 import { formatDate, VISIT_STATUS_LABELS } from "@/utils/format";
 
 export function VisitDetailPage() {
   const { visitId } = useParams<{ visitId: string }>();
   const navigate = useNavigate();
   const [staged, setStaged] = useState<StagedPhoto[]>([]);
+  const [reportDownloading, setReportDownloading] = useState(false);
+  const [reportError, setReportError] = useState(false);
 
   const { data: visit, isLoading, isError } = useVisit(visitId);
   const { data: lineItems, isLoading: itemsLoading } =
@@ -44,6 +47,37 @@ export function VisitDetailPage() {
       truckId: visit.truck_id,
     });
     navigate(`/invoices/${invoice.id}`);
+  };
+
+  const onDownloadReport = async () => {
+    const truck = visit?.trucks;
+    const company = truck?.companies;
+    if (!visit || !truck || !company) return;
+
+    setReportDownloading(true);
+    setReportError(false);
+    try {
+      // react-pdf is heavy, so it loads only when a download is requested.
+      const [{ pdf }, { ServiceReportPdf }] = await Promise.all([
+        import("@react-pdf/renderer"),
+        import("@/components/visits/ServiceReportPdf"),
+      ]);
+      const blob = await pdf(
+        <ServiceReportPdf
+          visit={visit}
+          truck={truck}
+          company={company}
+          lineItems={lineItems ?? []}
+          photos={photos ?? []}
+          preparedOn={formatDate(new Date().toISOString().slice(0, 10))}
+        />
+      ).toBlob();
+      downloadBlob(blob, `Service-Report-${visit.visit_date}.pdf`);
+    } catch {
+      setReportError(true);
+    } finally {
+      setReportDownloading(false);
+    }
   };
 
   const onGenerateQuote = async () => {
@@ -135,12 +169,29 @@ export function VisitDetailPage() {
           .filter(Boolean)
           .join(". ")}
         actions={
-          <StatusBadge
-            status={visit.status}
-            label={VISIT_STATUS_LABELS[visit.status]}
-          />
+          <div className="flex flex-wrap items-center gap-3">
+            <StatusBadge
+              status={visit.status}
+              label={VISIT_STATUS_LABELS[visit.status]}
+            />
+            <Button
+              variant="secondary"
+              onClick={() => void onDownloadReport()}
+              loading={reportDownloading}
+              disabled={!company || reportDownloading}
+              title="Downloads a service report with inspection photos"
+            >
+              Download Report
+            </Button>
+          </div>
         }
       />
+
+      {reportError && (
+        <p className="form-error mb-4">
+          Could not generate the report. Try again.
+        </p>
+      )}
 
       {visit.notes && (
         <Card className="mb-6">
