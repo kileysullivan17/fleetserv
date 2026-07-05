@@ -4,6 +4,7 @@ import type { Quote } from "@/types/database";
 import { visitDetailKeys } from "@/hooks/useVisit";
 import { quoteKeys } from "@/hooks/useQuoteByVisit";
 import { visitKeys } from "@/hooks/useVisitsByTruck";
+import { allQuotesKeys } from "@/hooks/useAllQuotes";
 
 function roundMoney(value: number): number {
   return Math.round(value * 100) / 100;
@@ -78,6 +79,7 @@ export function useGenerateQuote() {
       void queryClient.invalidateQueries({
         queryKey: visitKeys.byTruck(truckId),
       });
+      void queryClient.invalidateQueries({ queryKey: allQuotesKeys.list });
     },
   });
 }

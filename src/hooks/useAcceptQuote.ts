@@ -6,6 +6,7 @@ import { quoteKeys } from "@/hooks/useQuoteByVisit";
 import { visitDetailKeys } from "@/hooks/useVisit";
 import { visitKeys } from "@/hooks/useVisitsByTruck";
 import { allVisitsKeys } from "@/hooks/useAllVisits";
+import { allQuotesKeys } from "@/hooks/useAllQuotes";
 
 interface QuoteActionInput {
   quote: Quote;
@@ -33,6 +34,7 @@ function invalidateQuoteViews(
     queryKey: visitKeys.byTruck(truckId),
   });
   void queryClient.invalidateQueries({ queryKey: allVisitsKeys.board });
+  void queryClient.invalidateQueries({ queryKey: allQuotesKeys.list });
 }
 
 export function useAcceptQuote() {
