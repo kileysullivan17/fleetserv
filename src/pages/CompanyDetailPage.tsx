@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { InfoPopover } from "@/components/ui/InfoPopover";
 import { AddTruckModal } from "@/components/fleet/AddTruckModal";
 import { useCompany } from "@/hooks/useCompanies";
 import { useTrucksByCompany } from "@/hooks/useTrucks";
@@ -106,8 +107,19 @@ export function CompanyDetailPage() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <dt className="flex items-center gap-1 text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Tax Rate
+                    <InfoPopover
+                      label="About this tax rate"
+                      title="Verify before invoicing"
+                      variant="warning"
+                    >
+                      This rate may still be an illustrative default rather than
+                      a verified Hawaii GET rate. The account owner should
+                      confirm the current rate for {company.hawaii_county}{" "}
+                      County, then update it here so quotes and invoices bill the
+                      correct tax.
+                    </InfoPopover>
                   </dt>
                   <dd className="mt-1 text-sm font-mono text-gray-700">
                     {company.tax_rate}%
