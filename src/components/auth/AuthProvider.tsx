@@ -44,6 +44,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const { error } = await supabase.auth.signOut();
         if (error) throw error;
       },
+      updateDisplayName: async (name) => {
+        const { error } = await supabase.auth.updateUser({
+          data: { display_name: name },
+        });
+        if (error) throw error;
+      },
+      updatePassword: async (newPassword) => {
+        const { error } = await supabase.auth.updateUser({
+          password: newPassword,
+        });
+        if (error) throw error;
+      },
     }),
     [session, loading]
   );

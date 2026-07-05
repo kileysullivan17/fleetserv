@@ -6,6 +6,12 @@ export interface AuthContextValue {
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  // Self-service account management for the signed-in user. Both go through
+  // supabase.auth.updateUser, so they need no elevated privileges: a user can
+  // change their own display name and password without an admin or the
+  // Supabase dashboard.
+  updateDisplayName: (name: string) => Promise<void>;
+  updatePassword: (newPassword: string) => Promise<void>;
 }
 
 // Kept in its own module (not colocated with AuthProvider) so the provider
