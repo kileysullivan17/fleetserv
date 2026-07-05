@@ -56,6 +56,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
         if (error) throw error;
       },
+      signUp: async (email, password) => {
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) throw error;
+        // When "Confirm email" is on, Supabase creates the user but returns no
+        // session until they click the confirmation link.
+        return { needsConfirmation: data.session === null };
+      },
+      sendPasswordReset: async (email) => {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (error) throw error;
+      },
     }),
     [session, loading]
   );

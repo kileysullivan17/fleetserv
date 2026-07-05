@@ -6,6 +6,13 @@ export interface AuthContextValue {
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  // Access-code-gated self sign-up. Returns whether a session was created
+  // immediately (Supabase "confirm email" off) or the user must confirm by
+  // email first (confirm on).
+  signUp: (email: string, password: string) => Promise<{ needsConfirmation: boolean }>;
+  // Sends a password-reset email that links back to /reset-password. Works for
+  // a locked-out user who cannot sign in.
+  sendPasswordReset: (email: string) => Promise<void>;
   // Self-service account management for the signed-in user. Both go through
   // supabase.auth.updateUser, so they need no elevated privileges: a user can
   // change their own display name and password without an admin or the

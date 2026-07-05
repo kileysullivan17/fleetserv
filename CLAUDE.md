@@ -62,6 +62,11 @@ Required in .env.local (local) and Vercel project settings (production/preview):
 - VITE_SUPABASE_URL
 - VITE_SUPABASE_ANON_KEY
 
+Optional:
+- VITE_SIGNUP_ACCESS_CODE: shared code required on the sign-up page. Ships in
+  the client bundle (a deterrent, not a secret). If unset, self sign-up is
+  disabled (fail safe).
+
 ## Key dependencies
 
 | Purpose | Package |
