@@ -9,7 +9,8 @@ export function LineItemsTable({ items }: LineItemsTableProps) {
   const total = items.reduce((sum, item) => sum + Number(item.subtotal), 0);
 
   return (
-    <table>
+    <div className="overflow-x-auto">
+      <table>
       <thead>
         <tr>
           <th>Service</th>
@@ -50,6 +51,7 @@ export function LineItemsTable({ items }: LineItemsTableProps) {
           </td>
         </tr>
       </tfoot>
-    </table>
+      </table>
+    </div>
   );
 }

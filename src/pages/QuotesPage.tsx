@@ -74,7 +74,8 @@ export function QuotesPage() {
               All Quotes ({quotes.length})
             </h2>
           </CardHeader>
-          <table>
+          <div className="overflow-x-auto">
+            <table>
             <thead>
               <tr>
                 <th>Quote</th>
@@ -122,7 +123,8 @@ export function QuotesPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         </Card>
       )}
     </div>

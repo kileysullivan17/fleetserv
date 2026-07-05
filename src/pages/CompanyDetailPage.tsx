@@ -166,7 +166,8 @@ export function CompanyDetailPage() {
           )}
 
           {trucks && trucks.length > 0 && (
-            <table>
+            <div className="overflow-x-auto">
+              <table>
               <thead>
                 <tr>
                   <th>Unit</th>
@@ -199,7 +200,8 @@ export function CompanyDetailPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+              </table>
+            </div>
           )}
         </Card>
       </div>

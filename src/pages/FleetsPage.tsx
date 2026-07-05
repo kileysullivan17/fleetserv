@@ -63,7 +63,8 @@ export function FleetsPage() {
         )}
 
         {companies && companies.length > 0 && (
-          <table>
+          <div className="overflow-x-auto">
+            <table>
             <thead>
               <tr>
                 <th>Company</th>
@@ -101,7 +102,8 @@ export function FleetsPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         )}
       </Card>
 

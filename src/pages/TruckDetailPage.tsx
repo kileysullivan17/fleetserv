@@ -204,7 +204,8 @@ export function TruckDetailPage() {
           )}
 
           {visits && visits.length > 0 && (
-            <table>
+            <div className="overflow-x-auto">
+              <table>
               <thead>
                 <tr>
                   <th>Date</th>
@@ -240,7 +241,8 @@ export function TruckDetailPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+              </table>
+            </div>
           )}
         </Card>
       </div>

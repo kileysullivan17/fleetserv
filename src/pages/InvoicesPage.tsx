@@ -71,7 +71,8 @@ export function InvoicesPage() {
               All Invoices ({invoices.length})
             </h2>
           </CardHeader>
-          <table>
+          <div className="overflow-x-auto">
+            <table>
             <thead>
               <tr>
                 <th>Invoice</th>
@@ -123,7 +124,8 @@ export function InvoicesPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         </Card>
       )}
     </div>
