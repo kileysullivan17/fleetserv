@@ -2,6 +2,19 @@
 
 Judgment calls made during the UI redesign. Newest first.
 
+## 2026-07-21 — Desktop builder density
+
+### Desktop is a workspace + rail, not a generic part/labor grid
+Board 1f is a dense editable table with ITEM / TYPE / QTY / RATE / LINE TOTAL
+columns and a summary + customer rail. The app's line items are service-type
+specific (oil grade, tire PSI, an inspection pass/fail grid), so a single fixed
+column table can't hold them without flattening the domain. Instead, at `lg+`
+the builder becomes a two-column workspace: the service cards (already real
+inputs, mono and right-aligned, with computed non-editable line totals from C3)
+on the left, and a sticky rail on the right carrying the Subtotal / Visit total
+summary, the Save/Cancel actions, and a live customer-and-vehicle context card
+driven by the selected truck. The mobile thumb bar is preserved below `lg`.
+
 ## 2026-07-21 — Customer, vehicle, new customer
 
 ### New-customer form: two required fields (safe against the schema)

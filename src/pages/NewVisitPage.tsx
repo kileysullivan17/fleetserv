@@ -79,6 +79,10 @@ export function NewVisitPage() {
   const subtotals = watchedItems.map(computeSubtotal);
   const visitTotal = subtotals.reduce((sum, s) => sum + s, 0);
 
+  // Selected truck powers the desktop context rail (board 1f).
+  const selectedTruckId = watch("truck_id");
+  const selectedTruck = trucks?.find((t) => t.id === selectedTruckId);
+
   const onSubmit = handleSubmit(async (values) => {
     const visit = await createVisit.mutateAsync({
       visit: {
@@ -127,6 +131,8 @@ export function NewVisitPage() {
       />
 
       <form onSubmit={onSubmit} noValidate>
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start lg:gap-6">
+          <div className="space-y-6 lg:min-w-0">
         <Card>
           <CardHeader>
             <h2 className="text-sm font-semibold text-brand-navy">
@@ -210,7 +216,7 @@ export function NewVisitPage() {
           </CardBody>
         </Card>
 
-        <Card className="mt-6">
+        <Card>
           <CardHeader>
             <h2 className="text-sm font-semibold text-brand-navy">
               Line Items
@@ -249,7 +255,7 @@ export function NewVisitPage() {
           </CardBody>
         </Card>
 
-        <Card className="mt-6">
+        <Card>
           <CardHeader>
             <h2 className="text-sm font-semibold text-brand-navy">
               Photos{stagedPhotos.length > 0 ? ` (${stagedPhotos.length})` : ""}
@@ -281,11 +287,75 @@ export function NewVisitPage() {
             them from the visit page.
           </p>
         )}
+          </div>
 
-        {/* Pinned totals: subtotal + total sit above the thumb-zone primary
-            button. GET is itemized on the quote (per-company rate applied at
-            quote generation), not on this pre-tax visit builder. */}
-        <div className="sticky bottom-0 z-10 -mx-4 mt-6 border-t border-fs-line-300 bg-white px-4 pb-5 pt-3 shadow-[0_-6px_16px_rgba(13,30,45,0.06)] sm:mx-0 sm:rounded-b-fs">
+          {/* Desktop rail: totals + customer context (board 1f) */}
+          <aside className="mt-6 hidden lg:sticky lg:top-6 lg:mt-0 lg:block">
+            <div className="rounded-fs border border-fs-line-200 bg-white p-4 shadow-fs-card">
+              <div className="flex items-baseline justify-between">
+                <span className="text-sm text-fs-ink-500">Subtotal</span>
+                <span className="fs-money text-sm font-semibold text-fs-ink-900">
+                  {formatCurrency(visitTotal)}
+                </span>
+              </div>
+              <div className="mt-3 flex items-center justify-between border-t-2 border-fs-navy-900 pt-3">
+                <span className="text-xs font-extrabold uppercase tracking-[0.1em] text-fs-ink-900">
+                  Visit total
+                </span>
+                <span className="fs-money text-2xl font-bold text-fs-navy-900">
+                  {formatCurrency(visitTotal)}
+                </span>
+              </div>
+              <p className="mt-1.5 text-xs text-fs-ink-450">
+                Hawai&#699;i GET is itemized on the quote.
+              </p>
+              <Button
+                type="submit"
+                loading={createVisit.isPending}
+                className="mt-3 w-full"
+              >
+                Save Draft
+              </Button>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => navigate(-1)}
+                className="mt-2 w-full"
+              >
+                Cancel
+              </Button>
+            </div>
+
+            <div className="mt-4 rounded-fs border border-fs-line-200 bg-white p-4 shadow-fs-card">
+              <div className="text-[10.5px] font-bold uppercase tracking-[0.13em] text-fs-ink-500">
+                Customer &amp; vehicle
+              </div>
+              {selectedTruck ? (
+                <>
+                  <div className="mt-1.5 font-semibold text-fs-ink-900">
+                    {selectedTruck.companies?.name ?? "No customer on file"}
+                  </div>
+                  <div className="mt-0.5 text-sm text-fs-ink-500">
+                    Unit {selectedTruck.unit_number} &middot; {selectedTruck.year}{" "}
+                    {selectedTruck.make} {selectedTruck.model}
+                  </div>
+                  <div className="fs-money mt-2 text-[11px] text-fs-ink-450">
+                    VIN {selectedTruck.vin}
+                  </div>
+                </>
+              ) : (
+                <div className="mt-1.5 text-sm text-fs-ink-450">
+                  Select a truck to see its customer and details.
+                </div>
+              )}
+            </div>
+          </aside>
+        </div>
+
+        {/* Mobile pinned totals above the thumb-zone primary button. GET is
+            itemized on the quote (per-company rate applied at quote
+            generation), not on this pre-tax visit builder. */}
+        <div className="sticky bottom-0 z-10 -mx-4 mt-6 border-t border-fs-line-300 bg-white px-4 pb-5 pt-3 shadow-[0_-6px_16px_rgba(13,30,45,0.06)] lg:hidden">
           <div className="mx-auto max-w-4xl">
             <div className="flex items-baseline justify-between">
               <span className="text-sm text-fs-ink-500">Subtotal</span>
