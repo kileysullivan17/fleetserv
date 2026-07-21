@@ -2,6 +2,26 @@
 
 Judgment calls made during the UI redesign. Newest first.
 
+## 2026-07-21 — Document view
+
+### Business identity is not fabricated
+Board 1c/1g show a full letterhead: street address, phone, email, GET license
+number, and ACH routing/account numbers. Those are illustrative canvas values;
+the app stores no business profile (the existing PDFs carry only the name
+"FleetServ Hawaii" and a tagline). Inventing a GET license or bank routing
+number on a customer-facing artifact would be misleading, so the shared
+`DocumentArtifact` shows the brand mark, name, and tagline, plus only real data:
+the customer (bill-to), the vehicle (unit / year-make-model / VIN), the line
+items, GET at the company's rate, totals, and dates. Remit language is generic
+("Check payable to FleetServ Hawaii"), with no fabricated account numbers.
+
+### One artifact, both routes; page chrome tagged for print
+`DocumentArtifact` renders the customer-facing paper for both QuoteDetailPage and
+InvoiceDetailPage (kind flips title, meta labels, and terms; `paid` stamps the
+PAID mark). The surrounding breadcrumb, status chip, and action bar are wrapped
+in `.fs-app-chrome` so the print treatment (C7) hides them and prints only the
+artifact. No mutation or PDF-download logic changed.
+
 ## 2026-07-21 — Mobile quote builder
 
 ### GET is not shown on the visit builder; it lives on the quote

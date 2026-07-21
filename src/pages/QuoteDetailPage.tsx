@@ -1,18 +1,12 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
-import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { LineItemsTable } from "@/components/visits/LineItemsTable";
+import { DocumentArtifact } from "@/components/documents/DocumentArtifact";
 import { quoteDisplayNumber } from "@/components/quotes/quoteNumber";
 import { useQuoteDetail } from "@/hooks/useQuoteDetail";
 import { useAcceptQuote, useDeclineQuote } from "@/hooks/useAcceptQuote";
-import {
-  formatCurrency,
-  formatDate,
-  QUOTE_STATUS_LABELS,
-} from "@/utils/format";
+import { QUOTE_STATUS_LABELS } from "@/utils/format";
 
 export function QuoteDetailPage() {
   const { quoteId } = useParams<{ quoteId: string }>();
@@ -104,173 +98,89 @@ export function QuoteDetailPage() {
   const truck = visit?.trucks;
   const company = truck?.companies;
   const lineItems = visit?.service_line_items ?? [];
+  const canDecide = quote.status === "draft" || quote.status === "sent";
 
   return (
-    <div>
-      <nav className="mb-4 text-sm" aria-label="Breadcrumb">
-        <Link to="/quotes" className="text-brand-teal hover:underline">
-          Quotes
-        </Link>
-        <span className="mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">
-          Quote for {formatDate(quote.issued_date)}
-        </span>
-      </nav>
+    <div className="mx-auto max-w-xl">
+      {/* App chrome: hidden in print, the artifact below is what prints. */}
+      <div className="fs-app-chrome">
+        <nav className="mb-3 text-sm" aria-label="Breadcrumb">
+          <Link to="/quotes" className="font-medium text-fs-navy-700 hover:underline">
+            Quotes
+          </Link>
+          <span className="mx-2 text-fs-ink-450">/</span>
+          <span className="text-fs-ink-500">{quoteDisplayNumber(quote.id)}</span>
+        </nav>
 
-      <PageHeader
-        title={
-          company
-            ? `${quoteDisplayNumber(quote.id)}: ${company.name}`
-            : quoteDisplayNumber(quote.id)
-        }
-        subtitle={[
-          truck
-            ? `Unit ${truck.unit_number}: ${truck.year} ${truck.make} ${truck.model}`
-            : null,
-          visit ? `Visit ${formatDate(visit.visit_date)}` : null,
-        ]
-          .filter(Boolean)
-          .join(". ")}
-        actions={
-          <div className="flex items-center gap-3">
-            <StatusBadge
-              status={quote.status}
-              label={QUOTE_STATUS_LABELS[quote.status]}
-            />
-            {(quote.status === "draft" || quote.status === "sent") && (
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <StatusBadge
+            status={quote.status}
+            label={QUOTE_STATUS_LABELS[quote.status]}
+          />
+          <span className="fs-money text-sm text-fs-ink-500">
+            {company?.name}
+          </span>
+          <div className="ml-auto flex flex-wrap gap-2">
+            {canDecide && (
               <>
-                <Button
-                  onClick={onAccept}
-                  loading={acceptQuote.isPending}
-                  disabled={decisionPending}
-                >
-                  Accept Quote
-                </Button>
                 <Button
                   variant="secondary"
                   onClick={onDecline}
                   loading={declineQuote.isPending}
                   disabled={decisionPending}
                 >
-                  Decline Quote
+                  Decline
+                </Button>
+                <Button
+                  onClick={onAccept}
+                  loading={acceptQuote.isPending}
+                  disabled={decisionPending}
+                >
+                  Mark accepted
                 </Button>
               </>
             )}
             <Button
+              variant="secondary"
               onClick={() => void onDownloadPdf()}
               loading={downloading}
               disabled={!visit || !truck || !company}
             >
-              Download PDF
+              PDF
             </Button>
           </div>
-        }
-      />
+        </div>
 
-      {acceptQuote.isError && (
-        <p className="form-error mb-4">
-          Could not accept the quote. Try again.
-        </p>
-      )}
-
-      {declineQuote.isError && (
-        <p className="form-error mb-4">
-          Could not decline the quote. Try again.
-        </p>
-      )}
-
-      {downloadError && (
-        <p className="form-error mb-4">
-          Could not generate the PDF. Try again.
-        </p>
-      )}
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-1 self-start">
-          <CardHeader>
-            <h2 className="text-sm font-semibold text-brand-navy">
-              Quote Details
-            </h2>
-          </CardHeader>
-          <CardBody>
-            <dl className="space-y-4">
-              <div className="flex gap-8">
-                <div>
-                  <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Issued
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-700">
-                    {formatDate(quote.issued_date)}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Expires
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-700">
-                    {formatDate(quote.expiry_date)}
-                  </dd>
-                </div>
-              </div>
-              {company && (
-                <div>
-                  <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Bill To
-                  </dt>
-                  <dd className="mt-1 text-sm text-brand-navy">
-                    {company.name}
-                  </dd>
-                  <dd className="text-sm text-gray-600">
-                    {company.contact_name}
-                  </dd>
-                  <dd className="text-sm text-gray-600">
-                    {company.billing_address}
-                  </dd>
-                </div>
-              )}
-              <div className="border-t border-brand-sand-dark pt-4 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Subtotal</span>
-                  <span className="font-mono text-gray-700">
-                    {formatCurrency(Number(quote.subtotal))}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">
-                    Tax{company ? ` (${company.tax_rate}%)` : ""}
-                  </span>
-                  <span className="font-mono text-gray-700">
-                    {formatCurrency(Number(quote.tax_amount))}
-                  </span>
-                </div>
-                <div className="flex justify-between border-t border-brand-sand-dark pt-2">
-                  <span className="text-sm font-medium text-brand-navy">
-                    Total
-                  </span>
-                  <span className="font-mono text-base font-semibold text-brand-navy">
-                    {formatCurrency(Number(quote.total))}
-                  </span>
-                </div>
-              </div>
-            </dl>
-          </CardBody>
-        </Card>
-
-        <Card className="lg:col-span-2 self-start">
-          <CardHeader>
-            <h2 className="text-sm font-semibold text-brand-navy">
-              Line Items ({lineItems.length})
-            </h2>
-          </CardHeader>
-          <LineItemsTable items={lineItems} />
-        </Card>
+        {acceptQuote.isError && (
+          <p className="form-error mb-4">Could not accept the quote. Try again.</p>
+        )}
+        {declineQuote.isError && (
+          <p className="form-error mb-4">Could not decline the quote. Try again.</p>
+        )}
+        {downloadError && (
+          <p className="form-error mb-4">Could not generate the PDF. Try again.</p>
+        )}
       </div>
 
+      <DocumentArtifact
+        kind="quote"
+        number={quoteDisplayNumber(quote.id)}
+        issuedDate={quote.issued_date}
+        secondaryDate={quote.expiry_date}
+        company={company ?? null}
+        truck={truck ?? null}
+        lineItems={lineItems}
+        subtotal={Number(quote.subtotal)}
+        taxAmount={Number(quote.tax_amount)}
+        total={Number(quote.total)}
+        taxRate={company ? Number(company.tax_rate) : null}
+      />
+
       {visit && (
-        <p className="mt-6 text-sm">
+        <p className="fs-app-chrome mt-4 text-sm">
           <Link
             to={`/visits/${visit.id}`}
-            className="text-brand-teal hover:underline"
+            className="font-medium text-fs-navy-700 hover:underline"
           >
             View the source service visit
           </Link>
