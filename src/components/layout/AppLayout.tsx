@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { BrandMark } from "@/components/ui/BrandMark";
 import { Sidebar } from "./Sidebar";
 import { CommandPalette } from "./CommandPalette";
 
@@ -66,10 +67,7 @@ export function AppLayout() {
               <line x1="3" y1="18" x2="21" y2="18" />
             </svg>
           </button>
-          <span className="text-sm font-semibold text-white">FleetServ</span>
-          <span className="text-2xs font-medium uppercase tracking-wide text-brand-teal-light">
-            Hawaii
-          </span>
+          <BrandMark tone="navy" size="sm" />
         </div>
 
         <div className="max-w-[1280px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8 print:!max-w-none print:!p-0">

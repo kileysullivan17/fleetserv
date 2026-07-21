@@ -1,4 +1,5 @@
 import type { Company, ServiceLineItem, Truck } from "@/types/database";
+import { BrandMark } from "@/components/ui/BrandMark";
 import { formatCurrency, formatDate, SERVICE_TYPE_LABELS } from "@/utils/format";
 
 interface DocumentArtifactProps {
@@ -17,21 +18,6 @@ interface DocumentArtifactProps {
   taxRate: number | null;
   /** Stamp the artifact PAID (invoices only). */
   paid?: boolean;
-}
-
-// The FleetServ mark: two skewed bars + wordmark. Matches the design boards.
-function BrandMark() {
-  return (
-    <div className="flex items-center gap-1.5">
-      <div className="flex gap-[2.5px]">
-        <div className="h-4 w-[6.5px] -skew-x-[16deg] rounded-[1px] bg-fs-teal-500" />
-        <div className="h-4 w-[6.5px] -skew-x-[16deg] rounded-[1px] bg-fs-navy-900" />
-      </div>
-      <span className="text-[15px] font-extrabold italic tracking-[0.03em] text-fs-navy-900">
-        FLEETSERV
-      </span>
-    </div>
-  );
 }
 
 export function DocumentArtifact({
@@ -68,7 +54,7 @@ export function DocumentArtifact({
       {/* Letterhead */}
       <div className="flex justify-between gap-3">
         <div>
-          <BrandMark />
+          <BrandMark tone="light" size="sm" />
           <div className="mt-2 text-[11px] leading-relaxed text-fs-ink-500">
             Mobile fleet service across the islands
             <br />

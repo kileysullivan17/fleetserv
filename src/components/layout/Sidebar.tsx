@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/utils/cn";
+import { BrandMark } from "@/components/ui/BrandMark";
 import { AccountMenu } from "./AccountMenu";
 
 interface NavItem {
@@ -103,29 +104,8 @@ export function Sidebar({
       )}
     >
       {/* Logo / wordmark */}
-      <div className="flex items-center gap-3 px-5 py-5 border-b border-brand-navy-muted">
-        <div className="flex h-8 w-8 items-center justify-center rounded bg-brand-teal shrink-0">
-          <svg
-            viewBox="0 0 24 24"
-            className="w-5 h-5 text-white"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            aria-hidden="true"
-          >
-            <path d="M1 17 L5 7 L14 7 L18 17 Z" />
-            <rect x="3" y="17" width="3" height="2" rx="0.5" />
-            <rect x="16" y="17" width="3" height="2" rx="0.5" />
-          </svg>
-        </div>
-        <div>
-          <span className="text-sm font-semibold text-white leading-none">
-            FleetServ
-          </span>
-          <span className="block text-2xs font-medium text-brand-teal-light leading-none mt-0.5 tracking-wide uppercase">
-            Hawaii
-          </span>
-        </div>
+      <div className="flex items-center px-5 py-5 border-b border-brand-navy-muted">
+        <BrandMark tone="navy" size="md" subline="Mobile fleet service" />
       </div>
 
       {/* Search trigger */}
