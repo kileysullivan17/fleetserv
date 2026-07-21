@@ -5,12 +5,13 @@ import { VisitCard } from "@/components/visits/VisitCard";
 import { formatCurrency } from "@/utils/format";
 import { cn } from "@/utils/cn";
 
-const COLUMN_ACCENTS: Record<ServiceVisitStatus, string> = {
-  draft: "border-t-status-draft",
-  quoted: "border-t-status-quoted",
-  approved: "border-t-status-approved",
-  invoiced: "border-t-status-invoiced",
-  paid: "border-t-status-paid",
+// Column top accent uses the status dot color, matching the chip system.
+const COLUMN_DOT: Record<ServiceVisitStatus, string> = {
+  draft: "var(--fs-draft-dot)",
+  quoted: "var(--fs-sent-dot)",
+  approved: "var(--fs-accepted-dot)",
+  invoiced: "var(--fs-invoiced-dot)",
+  paid: "var(--fs-paid-dot)",
 };
 
 interface PipelineColumnProps {
@@ -33,19 +34,17 @@ export function PipelineColumn({
   return (
     <div className="flex w-64 shrink-0 flex-col">
       <div
-        className={cn(
-          "rounded-t-lg border border-b-0 border-brand-sand-dark border-t-4 bg-white px-3 py-2.5",
-          COLUMN_ACCENTS[status]
-        )}
+        className="rounded-t-fs border border-b-0 border-fs-line-200 border-t-4 bg-white px-3 py-2.5"
+        style={{ borderTopColor: COLUMN_DOT[status] }}
       >
         <div className="flex items-center justify-between">
-          <p className="text-sm font-semibold text-brand-navy">
+          <p className="text-sm font-semibold text-fs-ink-900">
             {label}
-            <span className="ml-2 text-xs font-normal text-gray-400">
+            <span className="ml-2 text-xs font-normal text-fs-ink-450">
               {visits.length}
             </span>
           </p>
-          <p className="text-xs font-mono text-gray-500">
+          <p className="fs-money text-xs text-fs-ink-500">
             {formatCurrency(columnTotal)}
           </p>
         </div>
@@ -54,8 +53,8 @@ export function PipelineColumn({
       <div
         ref={setNodeRef}
         className={cn(
-          "flex-1 space-y-2 rounded-b-lg border border-brand-sand-dark bg-brand-sand/50 p-2 min-h-[160px] transition-colors",
-          isOver && "bg-brand-teal-subtle border-brand-teal"
+          "min-h-[160px] flex-1 space-y-2 rounded-b-fs border border-fs-line-200 bg-fs-bg p-2 transition-colors",
+          isOver && "border-fs-navy-700 bg-fs-navy-50"
         )}
       >
         {visits.map((visit) => (
@@ -65,10 +64,10 @@ export function PipelineColumn({
         {visits.length === 0 && (
           <p
             className={cn(
-              "flex h-full min-h-[120px] items-center justify-center rounded border border-dashed text-xs transition-colors",
+              "flex h-full min-h-[120px] items-center justify-center rounded-fs-sm border border-dashed text-xs transition-colors",
               isOver
-                ? "border-brand-teal text-brand-teal"
-                : "border-brand-sand-dark text-gray-400"
+                ? "border-fs-navy-700 text-fs-navy-700"
+                : "border-fs-line-200 text-fs-ink-450"
             )}
           >
             {isOver ? "Drop to move here" : "No visits"}

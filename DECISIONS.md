@@ -2,6 +2,28 @@
 
 Judgment calls made during the UI redesign. Newest first.
 
+## 2026-07-21 — Status system + job list
+
+### One chip component covers nine app statuses on six designed grounds
+The design ships six chip grounds (draft, sent, accepted, invoiced, paid,
+overdue). The app carries three more across the visit/quote/invoice flows:
+quoted, approved, declined. Rather than invent three new colors, each maps onto
+the nearest designed ground by meaning: quoted → sent (blue), approved →
+accepted (green), declined → overdue (red). The label always renders, so mapped
+states stay distinguishable and status is never carried by color alone
+(WCAG 1.4.1). `StatusBadge` keeps its `status` + `label` API, so the six existing
+call sites upgrade with no change; it now renders the `.fs-chip[data-status]`
+system and gained a `mini` variant for dense rows.
+
+### Jobs page is responsive, not a Kanban→list replacement
+Board 1a is a flat urgency-sorted list; the current jobs page is a drag-between-
+columns Kanban whose drag = status update. "Behavior is frozen," so the drag
+mutation must survive. Resolution: the mobile view (`< lg`) is the 1a urgency
+list (money summary band, status filter chips, ≥72px rows, right-aligned mono
+amounts); the desktop view (`lg+`) keeps the existing drag pipeline, restyled to
+the new tokens. Nothing is removed and the status mutation is untouched. Urgency
+order: invoiced → approved → quoted → draft → paid, then most recent first.
+
 ## 2026-07-21 — Redesign foundation
 
 ### Tokens land under `theme.extend`, additive (not a replace)
