@@ -26,25 +26,27 @@ export function AppLayout() {
 
   return (
     <div className="min-h-screen bg-surface-page">
-      <Sidebar
-        open={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        onSearchClick={() => setPaletteOpen(true)}
-      />
-
-      {/* Backdrop behind the mobile drawer (mobile only) */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-brand-navy/40 lg:hidden"
-          aria-hidden="true"
-          onClick={() => setSidebarOpen(false)}
+      <div className="fs-app-chrome">
+        <Sidebar
+          open={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          onSearchClick={() => setPaletteOpen(true)}
         />
-      )}
+
+        {/* Backdrop behind the mobile drawer (mobile only) */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 z-30 bg-brand-navy/40 lg:hidden"
+            aria-hidden="true"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+      </div>
 
       {/* Main content: offset by the sidebar width on desktop only */}
-      <main className="min-h-screen lg:ml-60">
+      <main className="min-h-screen lg:ml-60 print:!ml-0">
         {/* Mobile top bar: hamburger + wordmark. Hidden on desktop. */}
-        <div className="sticky top-0 z-20 flex items-center gap-3 border-b border-brand-navy-muted bg-surface-sidebar px-4 py-3 lg:hidden">
+        <div className="fs-app-chrome sticky top-0 z-20 flex items-center gap-3 border-b border-brand-navy-muted bg-surface-sidebar px-4 py-3 lg:hidden">
           <button
             type="button"
             onClick={() => setSidebarOpen(true)}
@@ -70,7 +72,7 @@ export function AppLayout() {
           </span>
         </div>
 
-        <div className="max-w-[1280px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <div className="max-w-[1280px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8 print:!max-w-none print:!p-0">
           <Outlet />
         </div>
       </main>

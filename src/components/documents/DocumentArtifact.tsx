@@ -188,6 +188,52 @@ export function DocumentArtifact({
       <div className="mt-1.5 text-[11px] font-semibold italic text-fs-ink-600">
         Mahalo for keeping your fleet with FleetServ.
       </div>
+
+      {/* Print-only footers (board 1g): invoices remit, quotes sign-off. */}
+      {isInvoice ? (
+        <div className="mt-6 hidden border-t border-fs-line-200 pt-3 print:block">
+          <div className="flex gap-8">
+            <div className="flex-1">
+              <div className="text-[9.5px] font-bold uppercase tracking-[0.13em] text-fs-ink-500">
+                Payment
+              </div>
+              <div className="mt-1 text-[11px] leading-relaxed text-fs-ink-900">
+                Check payable to{" "}
+                <span className="font-bold">FleetServ Hawaii</span>
+                <br />
+                Reference <span className="fs-money">{number}</span> with payment
+              </div>
+            </div>
+            <div className="flex-1">
+              <div className="text-[9.5px] font-bold uppercase tracking-[0.13em] text-fs-ink-500">
+                Questions
+              </div>
+              <div className="mt-1 text-[11px] leading-relaxed text-fs-ink-900">
+                Get in touch any time and we&apos;ll walk through the invoice
+                line by line.
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="mt-10 hidden print:block">
+          <div className="flex gap-12">
+            <div className="flex-1 border-t-[1.5px] border-fs-ink-900 pt-2">
+              <div className="text-[9.5px] font-bold uppercase tracking-[0.13em] text-fs-ink-500">
+                Approved by
+              </div>
+              <div className="mt-0.5 text-[11px] text-fs-ink-450">
+                Name &amp; signature
+              </div>
+            </div>
+            <div className="w-40 border-t-[1.5px] border-fs-ink-900 pt-2">
+              <div className="text-[9.5px] font-bold uppercase tracking-[0.13em] text-fs-ink-500">
+                Date
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

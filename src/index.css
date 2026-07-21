@@ -218,4 +218,26 @@
     size: letter;
     margin: 0.75in;
   }
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  /* The paper fills the page; @page owns the margins. */
+  .fs-doc {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+  /* Keep the navy rules, the total bars, and the PAID stamp on paper. */
+  .fs-doc,
+  .fs-doc * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  /* Darken the artifact's Tailwind hairlines to match the token override. */
+  .fs-doc [class*="border-fs-line-200"] {
+    border-color: #9aa5ad !important;
+  }
 }

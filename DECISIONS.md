@@ -2,6 +2,23 @@
 
 Judgment calls made during the UI redesign. Newest first.
 
+## 2026-07-21 — Print treatment
+
+### Hairlines darken via a scoped print rule, not just the token
+The token override `--fs-line-200: #9AA5AD` only reaches styles that read the CSS
+variable, but the artifact draws its hairlines with Tailwind's static
+`border-fs-line-200`. So the print block adds a scoped rule,
+`.fs-doc [class*="border-fs-line-200"] { border-color:#9AA5AD !important }`, plus
+`print-color-adjust: exact` so the navy rules, total bars, and PAID stamp survive
+the browser's default background stripping. The `.fs-doc` card drops its border,
+radius, shadow, and padding in print; `@page` (Letter, 0.75in) owns the margins.
+
+### Remit block states no bank numbers
+Invoices swap in a print-only PAYMENT + QUESTIONS block; quotes swap in an
+APPROVED BY / DATE signature line (board 1g). Consistent with the C4 call, the
+remit says "Check payable to FleetServ Hawaii" and "reference the number with
+payment" and invents no ACH routing or account numbers.
+
 ## 2026-07-21 — Desktop builder density
 
 ### Desktop is a workspace + rail, not a generic part/labor grid
