@@ -63,22 +63,32 @@
 }
 
 @layer components {
-  /* Form controls: consistent sizing */
+  /* Form controls: redesign sizing. 44px tap-target floor, 16px text (no iOS
+     zoom), fs hairline border, navy focus ring. */
   .form-input,
   .form-select,
   .form-textarea {
-    @apply block w-full rounded border border-gray-300 bg-white px-3 py-2 text-sm
-           text-brand-navy placeholder-gray-400
-           focus:border-brand-teal focus:ring-1 focus:ring-brand-teal focus:outline-none
-           disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed;
+    @apply block w-full rounded-fs border border-fs-line-300 bg-white px-3.5
+           text-base text-fs-ink-900 placeholder-fs-ink-450
+           focus:border-fs-navy-700 focus:outline-none focus:ring-0
+           disabled:cursor-not-allowed disabled:bg-fs-bg disabled:text-fs-ink-450;
+    min-height: var(--fs-touch-min);
+  }
+  .form-input:focus-visible,
+  .form-select:focus-visible,
+  .form-textarea:focus-visible {
+    box-shadow: var(--fs-focus-ring);
+  }
+  .form-textarea {
+    @apply py-2.5;
   }
 
   .form-label {
-    @apply block text-sm font-medium text-brand-navy mb-1;
+    @apply mb-1.5 block text-xs font-bold uppercase tracking-[0.08em] text-fs-ink-600;
   }
 
   .form-error {
-    @apply mt-1 text-xs text-brand-coral;
+    @apply mt-1 text-xs font-medium text-brand-coral;
   }
 }
 

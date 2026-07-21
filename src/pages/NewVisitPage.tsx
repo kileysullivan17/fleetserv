@@ -56,6 +56,7 @@ export function NewVisitPage() {
     handleSubmit,
     control,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<VisitFormValues>({
     resolver: zodResolver(visitFormSchema),
@@ -231,6 +232,7 @@ export function NewVisitPage() {
                 item={watchedItems[index]}
                 subtotal={subtotals[index]}
                 register={register}
+                setValue={setValue}
                 errors={errors}
                 onRemove={() => remove(index)}
                 canRemove={fields.length > 1}
@@ -244,12 +246,6 @@ export function NewVisitPage() {
               <p className="form-error">{errors.lineItems.message}</p>
             )}
 
-            <div className="flex items-center justify-end gap-3 border-t border-brand-sand-dark pt-4">
-              <span className="text-sm text-gray-500">Visit total</span>
-              <span className="text-lg font-mono font-semibold text-brand-navy">
-                {formatCurrency(visitTotal)}
-              </span>
-            </div>
           </CardBody>
         </Card>
 
@@ -286,17 +282,45 @@ export function NewVisitPage() {
           </p>
         )}
 
-        <div className="mt-6 flex justify-end gap-2">
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={() => navigate(-1)}
-          >
-            Cancel
-          </Button>
-          <Button type="submit" loading={createVisit.isPending}>
-            Save Draft
-          </Button>
+        {/* Pinned totals: subtotal + total sit above the thumb-zone primary
+            button. GET is itemized on the quote (per-company rate applied at
+            quote generation), not on this pre-tax visit builder. */}
+        <div className="sticky bottom-0 z-10 -mx-4 mt-6 border-t border-fs-line-300 bg-white px-4 pb-5 pt-3 shadow-[0_-6px_16px_rgba(13,30,45,0.06)] sm:mx-0 sm:rounded-b-fs">
+          <div className="mx-auto max-w-4xl">
+            <div className="flex items-baseline justify-between">
+              <span className="text-sm text-fs-ink-500">Subtotal</span>
+              <span className="fs-money text-sm font-semibold text-fs-ink-900">
+                {formatCurrency(visitTotal)}
+              </span>
+            </div>
+            <div className="mt-2 flex items-center justify-between border-t-2 border-fs-navy-900 pt-2">
+              <span className="text-xs font-extrabold uppercase tracking-[0.1em] text-fs-ink-900">
+                Visit total
+              </span>
+              <span className="fs-money text-2xl font-bold text-fs-navy-900">
+                {formatCurrency(visitTotal)}
+              </span>
+            </div>
+            <p className="mt-1 text-xs text-fs-ink-450">
+              Hawai&#699;i GET is itemized on the quote.
+            </p>
+            <div className="mt-3 flex gap-2">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => navigate(-1)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                loading={createVisit.isPending}
+                className="flex-1"
+              >
+                Save Draft
+              </Button>
+            </div>
+          </div>
         </div>
       </form>
     </div>

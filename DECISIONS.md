@@ -2,6 +2,26 @@
 
 Judgment calls made during the UI redesign. Newest first.
 
+## 2026-07-21 — Mobile quote builder
+
+### GET is not shown on the visit builder; it lives on the quote
+Board 1b pins Subtotal + GET + Total in the builder footer. In this app, GET is
+computed at quote generation from the selected company's Hawaii rate
+(`useGenerateQuote`), and the new-visit builder never has that rate: its data
+hook fetches `companies(name)` only, and the data layer is frozen. So the mobile
+builder's pinned footer shows Subtotal + Visit total (pre-tax) above the
+thumb-zone Save button, with a one-line note that GET is itemized on the quote.
+The full Subtotal / GET / Total treatment appears where the rate actually exists:
+the document view (C4) and desktop builder (C6).
+
+### Steppers set the registered field; math untouched
+The 44px quantity steppers call react-hook-form `setValue` on the existing
+`quantity` field. The field stays registered (typing still works) and
+`computeSubtotal` is unchanged, so no pricing logic moved. Steppers appear only
+on quantity-based service types (oil, fluid, fuel, add-on); tire PSI and
+inspection have no qty. Per-line "qty unit @ rate" and the computed line total
+render as read-only mono, never editable.
+
 ## 2026-07-21 — Status system + job list
 
 ### One chip component covers nine app statuses on six designed grounds
