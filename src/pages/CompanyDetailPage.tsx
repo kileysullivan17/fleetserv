@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { PageHeader } from "@/components/ui/PageHeader";
+import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/Button";
-import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { AddTruckModal } from "@/components/fleet/AddTruckModal";
 import { TaxRateReminderBanner } from "@/components/fleet/TaxRateReminderBanner";
@@ -13,7 +11,6 @@ import { formatDate } from "@/utils/format";
 
 export function CompanyDetailPage() {
   const { companyId } = useParams<{ companyId: string }>();
-  const navigate = useNavigate();
   const [addTruckOpen, setAddTruckOpen] = useState(false);
 
   const {
@@ -49,162 +46,133 @@ export function CompanyDetailPage() {
     );
   }
 
+  const initials = (company.contact_name || company.name)
+    .split(" ")
+    .map((w) => w[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
   return (
-    <div>
-      <nav className="mb-4 text-sm" aria-label="Breadcrumb">
-        <Link to="/fleets" className="text-brand-teal hover:underline">
+    <div className="mx-auto max-w-2xl lg:max-w-4xl">
+      <nav className="mb-3 text-sm" aria-label="Breadcrumb">
+        <Link to="/fleets" className="font-medium text-fs-navy-700 hover:underline">
           Fleets
         </Link>
-        <span className="mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">{company.name}</span>
+        <span className="mx-2 text-fs-ink-450">/</span>
+        <span className="text-fs-ink-500">{company.name}</span>
       </nav>
 
-      <PageHeader
-        title={company.name}
-        subtitle={`${company.hawaii_county} County. Added ${formatDate(company.created_at)}.`}
-        actions={
-          <Button onClick={() => setAddTruckOpen(true)}>Add Truck</Button>
-        }
-      />
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h1 className="text-[22px] font-bold text-fs-ink-900">
+            {company.name}
+          </h1>
+          <p className="mt-0.5 text-sm text-fs-ink-500">
+            {company.hawaii_county} County &middot; GET{" "}
+            <span className="fs-money">{company.tax_rate}%</span> &middot; added{" "}
+            {formatDate(company.created_at)}
+          </p>
+        </div>
+        <Button onClick={() => setAddTruckOpen(true)}>Add Truck</Button>
+      </div>
 
       {taxReminder.status === "due" && (
-        <TaxRateReminderBanner
-          county={company.hawaii_county}
-          taxRate={company.tax_rate}
-          onConfirm={taxReminder.confirm}
-          onSnooze={taxReminder.snooze}
-        />
+        <div className="mt-4">
+          <TaxRateReminderBanner
+            county={company.hawaii_county}
+            taxRate={company.tax_rate}
+            onConfirm={taxReminder.confirm}
+            onSnooze={taxReminder.snooze}
+          />
+        </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Company detail card */}
-        <Card className="lg:col-span-1 self-start">
-          <CardHeader>
-            <h2 className="text-sm font-semibold text-brand-navy">
-              Company Details
-            </h2>
-          </CardHeader>
-          <CardBody>
-            <dl className="space-y-4">
-              <div>
-                <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Contact
-                </dt>
-                <dd className="mt-1 text-sm text-brand-navy">
-                  {company.contact_name}
-                </dd>
-                <dd className="text-sm text-gray-600">
-                  {company.contact_email}
-                </dd>
-                <dd className="text-sm text-gray-600">
-                  {company.contact_phone}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Billing Address
-                </dt>
-                <dd className="mt-1 text-sm text-gray-700">
-                  {company.billing_address}
-                </dd>
-              </div>
-              <div className="flex gap-8">
-                <div>
-                  <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    County
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-700">
-                    {company.hawaii_county}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Tax Rate
-                  </dt>
-                  <dd className="mt-1 flex items-center gap-2 text-sm font-mono text-gray-700">
-                    {company.tax_rate}%
-                    {taxReminder.status === "confirmed" ? (
-                      <span className="rounded-full bg-brand-teal-subtle px-2 py-0.5 font-sans text-2xs font-medium text-brand-teal">
-                        Confirmed
-                      </span>
-                    ) : (
-                      <span className="rounded-full bg-brand-coral-subtle px-2 py-0.5 font-sans text-2xs font-medium text-brand-coral">
-                        Unconfirmed
-                      </span>
-                    )}
-                  </dd>
-                </div>
-              </div>
-            </dl>
-          </CardBody>
-        </Card>
-
-        {/* Trucks sub-table */}
-        <Card className="lg:col-span-2 self-start">
-          <CardHeader>
-            <h2 className="text-sm font-semibold text-brand-navy">
-              Trucks{trucks ? ` (${trucks.length})` : ""}
-            </h2>
-          </CardHeader>
-
-          {trucksLoading && (
-            <div className="px-6 py-10 text-center text-sm text-gray-500">
-              Loading trucks...
+      {/* Contact card */}
+      <div className="mt-4 rounded-fs border border-fs-line-200 bg-white p-4 shadow-fs-card">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-fs-navy-100 text-[15px] font-bold text-fs-navy-900">
+            {initials || "?"}
+          </div>
+          <div className="min-w-0">
+            <div className="truncate font-semibold text-fs-ink-900">
+              {company.contact_name || "No contact on file"}
             </div>
-          )}
-
-          {trucks && trucks.length === 0 && (
-            <EmptyState
-              title="No trucks in this fleet"
-              description="Add the first truck to start logging service visits."
-              action={
-                <Button size="sm" onClick={() => setAddTruckOpen(true)}>
-                  Add Truck
-                </Button>
-              }
-            />
-          )}
-
-          {trucks && trucks.length > 0 && (
-            <div className="overflow-x-auto">
-              <table>
-              <thead>
-                <tr>
-                  <th>Unit</th>
-                  <th>Make / Model</th>
-                  <th>Year</th>
-                  <th>VIN</th>
-                  <th>Plate</th>
-                </tr>
-              </thead>
-              <tbody>
-                {trucks.map((truck) => (
-                  <tr
-                    key={truck.id}
-                    className="cursor-pointer"
-                    onClick={() =>
-                      navigate(`/fleets/${companyId}/trucks/${truck.id}`)
-                    }
-                  >
-                    <td className="font-medium text-brand-navy">
-                      {truck.unit_number}
-                    </td>
-                    <td className="text-gray-700">
-                      {truck.make} {truck.model}
-                    </td>
-                    <td className="text-gray-600">{truck.year}</td>
-                    <td className="font-mono text-xs text-gray-500">
-                      {truck.vin}
-                    </td>
-                    <td className="text-gray-600">{truck.license_plate}</td>
-                  </tr>
-                ))}
-              </tbody>
-              </table>
+            <div className="truncate text-sm text-fs-ink-500">
+              {company.contact_email || company.billing_address || "—"}
             </div>
-          )}
-        </Card>
+          </div>
+        </div>
+        <div className="mt-3 grid grid-cols-3 gap-2">
+          <ContactAction
+            href={company.contact_phone ? `tel:${company.contact_phone}` : null}
+            label="Call"
+          />
+          <ContactAction
+            href={company.contact_phone ? `sms:${company.contact_phone}` : null}
+            label="Text"
+          />
+          <ContactAction
+            href={company.contact_email ? `mailto:${company.contact_email}` : null}
+            label="Email"
+          />
+        </div>
+        {company.contact_phone && (
+          <div className="fs-money mt-3 text-sm text-fs-ink-600">
+            {company.contact_phone}
+          </div>
+        )}
       </div>
+
+      {/* Trucks */}
+      <div className="mt-5 text-[11px] font-bold uppercase tracking-[0.14em] text-fs-ink-500">
+        Trucks{trucks ? ` (${trucks.length})` : ""}
+      </div>
+
+      {trucksLoading && (
+        <div className="py-8 text-center text-sm text-fs-ink-500">
+          Loading trucks...
+        </div>
+      )}
+
+      {trucks && trucks.length === 0 && (
+        <div className="mt-2">
+          <EmptyState
+            title="No trucks in this fleet"
+            description="Add the first truck to start logging service visits."
+            action={
+              <Button size="sm" onClick={() => setAddTruckOpen(true)}>
+                Add Truck
+              </Button>
+            }
+          />
+        </div>
+      )}
+
+      {trucks && trucks.length > 0 && (
+        <div className="mt-2 space-y-2.5">
+          {trucks.map((truck) => (
+            <Link
+              key={truck.id}
+              to={`/fleets/${companyId}/trucks/${truck.id}`}
+              className="block rounded-fs border border-fs-line-200 bg-white p-3.5 shadow-fs-card hover:border-fs-navy-700/40"
+            >
+              <div className="flex items-center gap-2">
+                <span className="fs-money rounded-fs-sm bg-fs-navy-100 px-2 py-0.5 text-xs font-bold text-fs-navy-900">
+                  UNIT {truck.unit_number}
+                </span>
+                <span className="min-w-0 flex-1 truncate font-semibold text-fs-ink-900">
+                  {truck.year} {truck.make} {truck.model}
+                </span>
+              </div>
+              <div className="fs-money mt-1.5 text-[11px] text-fs-ink-450">
+                VIN {truck.vin} &middot; Plate {truck.license_plate}
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
 
       {companyId && (
         <AddTruckModal
@@ -214,5 +182,34 @@ export function CompanyDetailPage() {
         />
       )}
     </div>
+  );
+}
+
+function ContactAction({
+  href,
+  label,
+}: {
+  href: string | null;
+  label: string;
+}) {
+  const base =
+    "flex min-h-[44px] items-center justify-center rounded-fs border text-sm font-bold";
+  if (!href) {
+    return (
+      <span
+        className={`${base} cursor-not-allowed border-fs-line-200 text-fs-ink-450 opacity-60`}
+        aria-disabled="true"
+      >
+        {label}
+      </span>
+    );
+  }
+  return (
+    <a
+      href={href}
+      className={`${base} border-fs-line-300 text-fs-navy-700 hover:bg-fs-navy-50`}
+    >
+      {label}
+    </a>
   );
 }

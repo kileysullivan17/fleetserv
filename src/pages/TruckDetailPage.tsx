@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
-import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { TruckEditForm } from "@/components/fleet/TruckEditForm";
@@ -53,198 +51,164 @@ export function TruckDetailPage() {
   }
 
   return (
-    <div>
-      <nav className="mb-4 text-sm" aria-label="Breadcrumb">
-        <Link to="/fleets" className="text-brand-teal hover:underline">
+    <div className="mx-auto max-w-2xl lg:max-w-4xl">
+      <nav className="mb-3 text-sm" aria-label="Breadcrumb">
+        <Link to="/fleets" className="font-medium text-fs-navy-700 hover:underline">
           Fleets
         </Link>
-        <span className="mx-2 text-gray-400">/</span>
+        <span className="mx-2 text-fs-ink-450">/</span>
         <Link
           to={`/fleets/${truck.company_id}`}
-          className="text-brand-teal hover:underline"
+          className="font-medium text-fs-navy-700 hover:underline"
         >
           {company?.name ?? "Fleet"}
         </Link>
-        <span className="mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">Unit {truck.unit_number}</span>
+        <span className="mx-2 text-fs-ink-450">/</span>
+        <span className="text-fs-ink-500">Unit {truck.unit_number}</span>
       </nav>
 
-      <PageHeader
-        title={`Unit ${truck.unit_number}`}
-        subtitle={`${truck.year} ${truck.make} ${truck.model}`}
-        actions={
-          <Button
-            onClick={() =>
-              navigate(`/visits/new?truckId=${truck.id}`)
-            }
-          >
-            New Visit
-          </Button>
-        }
-      />
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <span className="fs-money rounded-fs-sm bg-fs-navy-100 px-2 py-1 text-sm font-bold text-fs-navy-900">
+            UNIT {truck.unit_number}
+          </span>
+          <div>
+            <h1 className="text-[20px] font-bold leading-tight text-fs-ink-900">
+              {truck.year} {truck.make} {truck.model}
+            </h1>
+          </div>
+        </div>
+        <Button onClick={() => navigate(`/visits/new?truckId=${truck.id}`)}>
+          New Visit
+        </Button>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Truck profile card */}
-        <Card className="lg:col-span-1 self-start">
-          <CardHeader>
-            <h2 className="text-sm font-semibold text-brand-navy">
-              Truck Profile
-            </h2>
-            {!editing && (
+      {/* Vehicle profile card */}
+      <div className="mt-4 rounded-fs border border-fs-line-200 bg-white p-4 shadow-fs-card">
+        <div className="flex items-center justify-between">
+          <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-fs-ink-500">
+            Vehicle profile
+          </div>
+          {!editing && (
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => setEditing(true)}
+            >
+              Edit
+            </Button>
+          )}
+        </div>
+        {editing ? (
+          <div className="mt-3">
+            <TruckEditForm truck={truck} onDone={() => setEditing(false)} />
+          </div>
+        ) : (
+          <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
+            <Field label="Unit" value={truck.unit_number} mono />
+            <Field label="Year" value={String(truck.year)} mono />
+            <Field label="Make" value={truck.make} />
+            <Field label="Model" value={truck.model} />
+            <div className="col-span-2">
+              <Field label="VIN" value={truck.vin} mono />
+            </div>
+            <div className="col-span-2">
+              <Field label="License plate" value={truck.license_plate} mono />
+            </div>
+            {truck.notes && (
+              <div className="col-span-2 sm:col-span-4">
+                <div className="text-[10px] font-bold uppercase tracking-[0.13em] text-fs-ink-500">
+                  Notes
+                </div>
+                <div className="mt-1 whitespace-pre-wrap text-sm text-fs-ink-900">
+                  {truck.notes}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Service history */}
+      <div className="mt-5 text-[11px] font-bold uppercase tracking-[0.14em] text-fs-ink-500">
+        Service history{visits ? ` (${visits.length})` : ""}
+      </div>
+
+      {visitsLoading && (
+        <div className="py-8 text-center text-sm text-fs-ink-500">
+          Loading service history...
+        </div>
+      )}
+
+      {visits && visits.length === 0 && (
+        <div className="mt-2">
+          <EmptyState
+            title="No service visits yet"
+            description="Log the first visit for this truck to start its service history."
+            action={
               <Button
                 size="sm"
-                variant="secondary"
-                onClick={() => setEditing(true)}
+                onClick={() => navigate(`/visits/new?truckId=${truck.id}`)}
               >
-                Edit
+                New Visit
               </Button>
-            )}
-          </CardHeader>
-          <CardBody>
-            {editing ? (
-              <TruckEditForm truck={truck} onDone={() => setEditing(false)} />
-            ) : (
-              <dl className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Unit Number
-                    </dt>
-                    <dd className="mt-1 text-sm font-medium text-brand-navy">
-                      {truck.unit_number}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Year
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-700">
-                      {truck.year}
-                    </dd>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Make
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-700">
-                      {truck.make}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Model
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-700">
-                      {truck.model}
-                    </dd>
-                  </div>
-                </div>
-                <div>
-                  <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    VIN
-                  </dt>
-                  <dd className="mt-1 text-sm font-mono text-gray-700">
-                    {truck.vin}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    License Plate
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-700">
-                    {truck.license_plate}
-                  </dd>
-                </div>
-                {truck.notes && (
-                  <div>
-                    <dt className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Notes
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-700 whitespace-pre-wrap">
-                      {truck.notes}
-                    </dd>
-                  </div>
-                )}
-              </dl>
-            )}
-          </CardBody>
-        </Card>
+            }
+          />
+        </div>
+      )}
 
-        {/* Service visit history */}
-        <Card className="lg:col-span-2 self-start">
-          <CardHeader>
-            <h2 className="text-sm font-semibold text-brand-navy">
-              Service History{visits ? ` (${visits.length})` : ""}
-            </h2>
-          </CardHeader>
+      {visits && visits.length > 0 && (
+        <div className="mt-2 overflow-hidden rounded-fs border border-fs-line-200 bg-white shadow-fs-card">
+          {visits.map((visit) => (
+            <button
+              key={visit.id}
+              type="button"
+              onClick={() => navigate(`/visits/${visit.id}`)}
+              className="flex w-full items-center gap-3 border-b border-fs-line-200 px-4 py-3 text-left last:border-b-0 hover:bg-fs-navy-50"
+            >
+              <span className="fs-money w-14 flex-shrink-0 text-xs text-fs-ink-500">
+                {formatDateShort(visit.visit_date)}
+              </span>
+              <span className="min-w-0 flex-1 truncate text-sm text-fs-ink-900">
+                {visit.technician_name}
+                <span className="fs-money ml-2 text-[11px] text-fs-ink-450">
+                  {visit.line_item_count} items
+                </span>
+              </span>
+              <span className="fs-money text-sm font-semibold text-fs-ink-900">
+                {formatCurrency(visit.total)}
+              </span>
+              <StatusBadge
+                status={visit.status}
+                label={VISIT_STATUS_LABELS[visit.status]}
+                mini
+              />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
-          {visitsLoading && (
-            <div className="px-6 py-10 text-center text-sm text-gray-500">
-              Loading service history...
-            </div>
-          )}
-
-          {visits && visits.length === 0 && (
-            <EmptyState
-              title="No service visits yet"
-              description="Log the first visit for this truck to start its service history."
-              action={
-                <Button
-                  size="sm"
-                  onClick={() =>
-                    navigate(`/visits/new?truckId=${truck.id}`)
-                  }
-                >
-                  New Visit
-                </Button>
-              }
-            />
-          )}
-
-          {visits && visits.length > 0 && (
-            <div className="overflow-x-auto">
-              <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Technician</th>
-                  <th>Status</th>
-                  <th className="text-right">Items</th>
-                  <th className="text-right">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {visits.map((visit) => (
-                  <tr
-                    key={visit.id}
-                    className="cursor-pointer"
-                    onClick={() => navigate(`/visits/${visit.id}`)}
-                  >
-                    <td className="font-medium text-brand-navy">
-                      {formatDateShort(visit.visit_date)}
-                    </td>
-                    <td className="text-gray-700">{visit.technician_name}</td>
-                    <td>
-                      <StatusBadge
-                        status={visit.status}
-                        label={VISIT_STATUS_LABELS[visit.status]}
-                      />
-                    </td>
-                    <td className="text-right font-mono text-gray-700">
-                      {visit.line_item_count}
-                    </td>
-                    <td className="text-right font-mono text-gray-700">
-                      {formatCurrency(visit.total)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              </table>
-            </div>
-          )}
-        </Card>
+function Field({
+  label,
+  value,
+  mono = false,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+}) {
+  return (
+    <div>
+      <div className="text-[10px] font-bold uppercase tracking-[0.13em] text-fs-ink-500">
+        {label}
+      </div>
+      <div
+        className={`mt-0.5 text-sm text-fs-ink-900 ${mono ? "fs-money !text-left" : ""}`}
+      >
+        {value}
       </div>
     </div>
   );

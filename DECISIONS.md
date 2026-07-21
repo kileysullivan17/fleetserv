@@ -2,6 +2,32 @@
 
 Judgment calls made during the UI redesign. Newest first.
 
+## 2026-07-21 — Customer, vehicle, new customer
+
+### New-customer form: two required fields (safe against the schema)
+Board 1e wants only company name + mobile required. The `companies` columns
+`contact_name / contact_email / billing_address / contact_phone` are all
+`not null default ''`, so omitting them inserts cleanly. The form now requires
+name + mobile; contact name, email, and address are optional. This is a
+validation relaxation, not a data-layer change: the insert path and columns are
+untouched, and it matches the board. Mobile renders in mono; inputs are 52px
+with the shared navy focus ring.
+
+### Money band and inline history omitted, not faked
+Board 1d leads with YTD billed + open balance and shows service history inline
+under each truck. Both need aggregate queries across invoices/visits per company
+that the current hooks don't run, and the data layer is frozen. Rather than
+fabricate figures, the customer page shows the real contact card (Call / Text /
+Email wired to the actual phone/email), the GET rate, and the trucks; per-truck
+history stays on the existing TruckDetailPage (routing preserved), which is
+reskinned to the 1d history rows. If additive read-only queries are later
+allowed, the money band drops straight in.
+
+### No odometer, so no PM-on-odometer line
+The board rides a "PM due in ~1,600 mi" reminder on an odometer line. The truck
+schema has no mileage/odometer field, so that line would be invented. The
+vehicle meta line shows VIN + plate instead.
+
 ## 2026-07-21 — Document view
 
 ### Business identity is not fabricated
