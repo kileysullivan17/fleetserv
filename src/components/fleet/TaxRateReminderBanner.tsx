@@ -9,7 +9,7 @@ interface TaxRateReminderBannerProps {
 }
 
 // The actionable nag shown on a fleet whose tax rate has not been confirmed.
-// Addressed to the account owner, Alapa'i.
+// Addressed to the account owner.
 export function TaxRateReminderBanner({
   county,
   taxRate,
@@ -32,7 +32,7 @@ export function TaxRateReminderBanner({
       </svg>
       <div className="flex-1">
         <p className="text-sm font-semibold text-brand-navy">
-          Alapa'i, confirm this fleet's tax rate
+          Confirm this fleet's tax rate
         </p>
         <p className="mt-1 text-sm text-gray-600">
           The {county} County rate of {taxRate}% is an illustrative placeholder,

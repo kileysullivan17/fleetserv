@@ -202,7 +202,7 @@ export function AddCompanyModal({ open, onOpenChange }: AddCompanyModalProps) {
           </svg>
           <div>
             <p className="text-xs font-semibold text-fs-ink-900">
-              Alapa&apos;i, confirm this tax rate before invoicing
+              Confirm this tax rate before invoicing
             </p>
             <p className="mt-0.5 text-xs text-fs-ink-600">
               The county rates here are illustrative placeholders, not verified
