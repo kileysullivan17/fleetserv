@@ -1,13 +1,13 @@
-# Invite email for Alapa'i
+# Invite email template
 
-Fill in the two bracketed spots (his email is only needed when you create his
+Fill in the two bracketed spots (their email is only needed when you create their
 login in Supabase; the password is the one you set there). Then send.
 
 Subject: FleetServ is live, take a look
 
 ---
 
-Hey Alapa'i,
+Hey [name],
 
 Remember the fleet-service tool you sketched out? It is real now, and it is
 online. I would love for you to poke around and tell me what you think.
@@ -53,8 +53,8 @@ Kiley
 
 ## Note on the tax rates (for your awareness, not the email)
 
-When Alapa'i opens a fleet he will see a coral banner addressed to him asking
-him to confirm the county tax rate, and the rate shows an "Unconfirmed" chip
-until he clicks "The rate is correct." That is intentional. The county rates in
-the app are placeholders until he verifies the real Hawaii GET rates. If he
-asks, that banner is doing its job.
+When the operator opens a fleet, they will see a coral banner asking them to
+confirm the county tax rate, and the rate shows an "Unconfirmed" chip until they
+click "The rate is correct." That is intentional. The county rates in the app
+are placeholders until they verify the real Hawaii GET rates. If they ask, that
+banner is doing its job.

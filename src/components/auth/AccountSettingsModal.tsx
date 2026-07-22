@@ -33,8 +33,8 @@ interface AccountSettingsModalProps {
 
 // The signed-in user's own account panel: update the display name and change
 // the password. Everything here runs against the user's own session, so no
-// admin access is required. This is what lets a handed-over user (e.g. Alapa'i)
-// set their own password without the owner's involvement.
+// admin access is required. This is what lets a handed-over user set their own
+// password without the owner's involvement.
 export function AccountSettingsModal({
   open,
   onOpenChange,
