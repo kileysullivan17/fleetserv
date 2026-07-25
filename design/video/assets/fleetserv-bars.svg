@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 56" width="1024" height="819">
+  <!-- FleetServ mark: two 16deg-skewed bars, teal + navy. Matches src/components/ui/BrandMark.tsx.
+       Blue/green diagonal bands. Use on light surfaces (chest patch, documents). -->
+  <g transform="translate(15,2)">
+    <g transform="skewX(-16)">
+      <rect x="0" y="0" width="22" height="52" rx="3" fill="#22B597"/>
+      <rect x="28" y="0" width="22" height="52" rx="3" fill="#102A40"/>
+    </g>
+  </g>
+</svg>
