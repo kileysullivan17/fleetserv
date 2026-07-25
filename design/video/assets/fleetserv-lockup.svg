@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 60" width="2000" height="171">
+  <!-- Full FleetServ logo lockup: skewed teal+navy bars + FLEETSERV wordmark (Archivo 800 italic).
+       Matches src/components/ui/BrandMark.tsx. Transparent background, for light surfaces. -->
+  <g transform="translate(15,4)">
+    <g transform="skewX(-16)">
+      <rect x="0" y="0" width="22" height="52" rx="3" fill="#22B597"/>
+      <rect x="28" y="0" width="22" height="52" rx="3" fill="#102A40"/>
+    </g>
+  </g>
+  <text x="92" y="52" font-family="Archivo" font-weight="800" font-style="italic"
+        font-size="64" letter-spacing="2.4" fill="#102A40">FLEETSERV</text>
+</svg>
