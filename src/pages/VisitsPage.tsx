@@ -164,7 +164,7 @@ export function VisitsPage() {
 
       {isError && (
         <div className="py-12 text-center">
-          <p className="text-sm font-semibold text-brand-coral">
+          <p className="text-sm font-semibold text-fs-danger">
             Could not load jobs.
           </p>
           <p className="mt-1 text-sm text-fs-ink-500">

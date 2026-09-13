@@ -72,7 +72,7 @@ export function QuoteDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="py-12 text-center text-sm text-gray-500">
+      <div className="py-12 text-center text-sm text-fs-ink-500">
         Loading quote...
       </div>
     );
@@ -81,12 +81,12 @@ export function QuoteDetailPage() {
   if (isError || !quote) {
     return (
       <div className="py-12 text-center">
-        <p className="text-sm font-medium text-brand-coral">
+        <p className="text-sm font-medium text-fs-danger">
           Quote not found.
         </p>
         <Link
           to="/quotes"
-          className="mt-2 inline-block text-sm text-brand-teal hover:underline"
+          className="mt-2 inline-block text-sm text-fs-navy-700 hover:underline"
         >
           Back to Quotes
         </Link>

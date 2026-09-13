@@ -120,7 +120,7 @@ export function VisitDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="py-12 text-center text-sm text-gray-500">
+      <div className="py-12 text-center text-sm text-fs-ink-500">
         Loading visit...
       </div>
     );
@@ -129,12 +129,12 @@ export function VisitDetailPage() {
   if (isError || !visit) {
     return (
       <div className="py-12 text-center">
-        <p className="text-sm font-medium text-brand-coral">
+        <p className="text-sm font-medium text-fs-danger">
           Visit not found.
         </p>
         <Link
           to="/visits"
-          className="mt-2 inline-block text-sm text-brand-teal hover:underline"
+          className="mt-2 inline-block text-sm text-fs-navy-700 hover:underline"
         >
           Back to Service Visits
         </Link>
@@ -148,11 +148,11 @@ export function VisitDetailPage() {
   return (
     <div>
       <nav className="mb-4 text-sm" aria-label="Breadcrumb">
-        <Link to="/visits" className="text-brand-teal hover:underline">
+        <Link to="/visits" className="text-fs-navy-700 hover:underline">
           Service Visits
         </Link>
-        <span className="mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">{formatDate(visit.visit_date)}</span>
+        <span className="mx-2 text-fs-ink-500">/</span>
+        <span className="text-fs-ink-600">{formatDate(visit.visit_date)}</span>
       </nav>
 
       <PageHeader
@@ -196,7 +196,7 @@ export function VisitDetailPage() {
       {visit.notes && (
         <Card className="mb-6">
           <CardBody>
-            <p className="text-sm text-gray-700 whitespace-pre-wrap">
+            <p className="text-sm text-fs-ink-900 whitespace-pre-wrap">
               {visit.notes}
             </p>
           </CardBody>
@@ -206,13 +206,13 @@ export function VisitDetailPage() {
       {/* Line items */}
       <Card className="mb-6">
         <CardHeader>
-          <h2 className="text-sm font-semibold text-brand-navy">
+          <h2 className="text-sm font-semibold text-fs-ink-900">
             Line Items{lineItems ? ` (${lineItems.length})` : ""}
           </h2>
         </CardHeader>
 
         {itemsLoading && (
-          <div className="px-6 py-10 text-center text-sm text-gray-500">
+          <div className="px-6 py-10 text-center text-sm text-fs-ink-500">
             Loading line items...
           </div>
         )}
@@ -233,7 +233,7 @@ export function VisitDetailPage() {
       {/* Photos */}
       <Card className="mb-6">
         <CardHeader>
-          <h2 className="text-sm font-semibold text-brand-navy">
+          <h2 className="text-sm font-semibold text-fs-ink-900">
             Photos{photos ? ` (${photos.length})` : ""}
           </h2>
           {staged.length > 0 && (
@@ -279,7 +279,7 @@ export function VisitDetailPage() {
       {/* Action bar */}
       <Card>
         <CardBody className="flex items-center justify-between">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-fs-ink-500">
             {visit.status === "draft" &&
               "This visit is a draft. Generate a quote to send it for approval."}
             {visit.status === "quoted" &&
@@ -301,12 +301,12 @@ export function VisitDetailPage() {
                   Generate Quote
                 </Button>
                 {(!lineItems || lineItems.length === 0) && (
-                  <p className="mt-1 text-2xs text-gray-400">
+                  <p className="mt-1 text-2xs text-fs-ink-500">
                     Add line items before generating a quote
                   </p>
                 )}
                 {generateQuote.isError && (
-                  <p className="mt-1 text-2xs text-brand-coral">
+                  <p className="mt-1 text-2xs text-fs-danger">
                     Could not generate the quote. Try again.
                   </p>
                 )}
@@ -327,12 +327,12 @@ export function VisitDetailPage() {
                   Create Invoice
                 </Button>
                 {!quote && (
-                  <p className="mt-1 text-2xs text-gray-400">
+                  <p className="mt-1 text-2xs text-fs-ink-500">
                     No quote found for this visit
                   </p>
                 )}
                 {createInvoice.isError && (
-                  <p className="mt-1 text-2xs text-brand-coral">
+                  <p className="mt-1 text-2xs text-fs-danger">
                     Could not create the invoice. Try again.
                   </p>
                 )}

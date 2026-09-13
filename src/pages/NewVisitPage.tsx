@@ -118,11 +118,11 @@ export function NewVisitPage() {
   return (
     <div className="max-w-4xl">
       <nav className="mb-4 text-sm" aria-label="Breadcrumb">
-        <Link to="/visits" className="text-brand-teal hover:underline">
+        <Link to="/visits" className="text-fs-navy-700 hover:underline">
           Service Visits
         </Link>
-        <span className="mx-2 text-gray-400">/</span>
-        <span className="text-gray-600">New Visit</span>
+        <span className="mx-2 text-fs-ink-500">/</span>
+        <span className="text-fs-ink-600">New Visit</span>
       </nav>
 
       <PageHeader
@@ -135,7 +135,7 @@ export function NewVisitPage() {
           <div className="space-y-6 lg:min-w-0">
         <Card>
           <CardHeader>
-            <h2 className="text-sm font-semibold text-brand-navy">
+            <h2 className="text-sm font-semibold text-fs-ink-900">
               Visit Details
             </h2>
           </CardHeader>
@@ -218,7 +218,7 @@ export function NewVisitPage() {
 
         <Card>
           <CardHeader>
-            <h2 className="text-sm font-semibold text-brand-navy">
+            <h2 className="text-sm font-semibold text-fs-ink-900">
               Line Items
             </h2>
             <Button
@@ -257,7 +257,7 @@ export function NewVisitPage() {
 
         <Card>
           <CardHeader>
-            <h2 className="text-sm font-semibold text-brand-navy">
+            <h2 className="text-sm font-semibold text-fs-ink-900">
               Photos{stagedPhotos.length > 0 ? ` (${stagedPhotos.length})` : ""}
             </h2>
           </CardHeader>
@@ -269,7 +269,7 @@ export function NewVisitPage() {
               onRemove={removeStaged}
               uploading={createVisit.isPending}
             />
-            <p className="mt-2 text-xs text-gray-400">
+            <p className="mt-2 text-xs text-fs-ink-500">
               Photos upload when the visit is saved.
             </p>
           </CardBody>

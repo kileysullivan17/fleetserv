@@ -60,13 +60,13 @@ export function PhotoDropzone({
         className={cn(
           "flex flex-col items-center justify-center rounded-lg border-2 border-dashed px-6 py-8 cursor-pointer transition-colors",
           dragActive
-            ? "border-brand-teal bg-brand-teal-subtle"
-            : "border-brand-sand-dark bg-brand-sand/40 hover:border-brand-teal hover:bg-brand-teal-subtle/50",
+            ? "border-fs-navy-700 bg-fs-accepted-bg"
+            : "border-fs-line-200 bg-fs-bg/40 hover:border-fs-navy-700 hover:bg-fs-accepted-bg/50",
           uploading && "pointer-events-none opacity-60"
         )}
       >
         <svg
-          className="w-8 h-8 text-gray-400"
+          className="w-8 h-8 text-fs-ink-500"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -77,10 +77,10 @@ export function PhotoDropzone({
           <circle cx="8.5" cy="8.5" r="1.5" />
           <polyline points="21 15 16 10 5 21" />
         </svg>
-        <p className="mt-2 text-sm font-medium text-brand-navy">
+        <p className="mt-2 text-sm font-medium text-fs-ink-900">
           {uploading ? "Uploading photos..." : "Drop photos here"}
         </p>
-        <p className="mt-0.5 text-xs text-gray-500">
+        <p className="mt-0.5 text-xs text-fs-ink-500">
           or click to browse. JPEG, PNG, HEIC.
         </p>
         <input
@@ -101,9 +101,9 @@ export function PhotoDropzone({
           {photos.map((photo) => (
             <div
               key={photo.id}
-              className="rounded-lg border border-brand-sand-dark bg-white overflow-hidden"
+              className="rounded-lg border border-fs-line-200 bg-white overflow-hidden"
             >
-              <div className="relative aspect-video bg-brand-sand">
+              <div className="relative aspect-video bg-fs-bg">
                 <img
                   src={photo.previewUrl}
                   alt={photo.caption || photo.file.name}
@@ -114,7 +114,7 @@ export function PhotoDropzone({
                   aria-label={`Remove ${photo.file.name}`}
                   onClick={() => onRemove(photo.id)}
                   disabled={uploading}
-                  className="absolute top-1.5 right-1.5 rounded-full bg-brand-navy/70 p-1 text-white hover:bg-brand-coral transition-colors"
+                  className="absolute top-1.5 right-1.5 rounded-full bg-fs-navy-950/70 p-1 text-white hover:bg-fs-danger transition-colors"
                 >
                   <svg
                     className="w-3.5 h-3.5"

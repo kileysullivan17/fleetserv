@@ -26,7 +26,7 @@ export function AppLayout() {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-surface-page">
+    <div className="min-h-screen bg-fs-bg">
       <div className="fs-app-chrome">
         <Sidebar
           open={sidebarOpen}
@@ -37,7 +37,7 @@ export function AppLayout() {
         {/* Backdrop behind the mobile drawer (mobile only) */}
         {sidebarOpen && (
           <div
-            className="fixed inset-0 z-30 bg-brand-navy/40 lg:hidden"
+            className="fixed inset-0 z-30 bg-fs-navy-950/40 lg:hidden"
             aria-hidden="true"
             onClick={() => setSidebarOpen(false)}
           />
@@ -47,12 +47,12 @@ export function AppLayout() {
       {/* Main content: offset by the sidebar width on desktop only */}
       <main className="min-h-screen lg:ml-60 print:!ml-0">
         {/* Mobile top bar: hamburger + wordmark. Hidden on desktop. */}
-        <div className="fs-app-chrome sticky top-0 z-20 flex items-center gap-3 border-b border-brand-navy-muted bg-surface-sidebar px-4 py-3 lg:hidden">
+        <div className="fs-app-chrome sticky top-0 z-20 flex items-center gap-3 border-b border-fs-navy-700 bg-fs-navy-950 px-4 py-3 lg:hidden">
           <button
             type="button"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open navigation menu"
-            className="flex h-9 w-9 items-center justify-center rounded text-slate-200 hover:bg-surface-sidebar-hover"
+            className="flex h-9 w-9 items-center justify-center rounded text-fs-navy-50 hover:bg-fs-navy-800"
           >
             <svg
               className="h-5 w-5"

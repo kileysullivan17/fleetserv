@@ -24,7 +24,7 @@ export function CompanyDetailPage() {
 
   if (companyLoading) {
     return (
-      <div className="py-12 text-center text-sm text-gray-500">
+      <div className="py-12 text-center text-sm text-fs-ink-500">
         Loading fleet...
       </div>
     );
@@ -33,12 +33,12 @@ export function CompanyDetailPage() {
   if (companyError || !company) {
     return (
       <div className="py-12 text-center">
-        <p className="text-sm font-medium text-brand-coral">
+        <p className="text-sm font-medium text-fs-danger">
           Fleet not found.
         </p>
         <Link
           to="/fleets"
-          className="mt-2 inline-block text-sm text-brand-teal hover:underline"
+          className="mt-2 inline-block text-sm text-fs-navy-700 hover:underline"
         >
           Back to Fleets
         </Link>

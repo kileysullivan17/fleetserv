@@ -52,7 +52,7 @@ export function LoginPage() {
       footer={
         <>
           Need an account?{" "}
-          <Link to="/signup" className="text-brand-teal hover:underline">
+          <Link to="/signup" className="text-fs-navy-700 hover:underline">
             Create one
           </Link>
         </>
@@ -81,7 +81,7 @@ export function LoginPage() {
             </label>
             <Link
               to="/forgot-password"
-              className="text-xs text-brand-teal hover:underline"
+              className="text-xs text-fs-navy-700 hover:underline"
             >
               Forgot password?
             </Link>

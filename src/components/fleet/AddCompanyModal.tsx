@@ -187,9 +187,9 @@ export function AddCompanyModal({ open, onOpenChange }: AddCompanyModalProps) {
 
         <input type="hidden" {...register("tax_rate")} />
 
-        <div className="flex gap-2 rounded-fs-sm border border-brand-coral/30 bg-brand-coral-subtle px-3 py-2.5">
+        <div className="flex gap-2 rounded-fs-sm border border-fs-danger/30 bg-fs-overdue-bg px-3 py-2.5">
           <svg
-            className="mt-0.5 h-4 w-4 shrink-0 text-brand-coral"
+            className="mt-0.5 h-4 w-4 shrink-0 text-fs-danger"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

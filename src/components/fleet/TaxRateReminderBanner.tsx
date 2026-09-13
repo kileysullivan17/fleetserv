@@ -17,9 +17,9 @@ export function TaxRateReminderBanner({
   onSnooze,
 }: TaxRateReminderBannerProps) {
   return (
-    <div className="mb-6 flex items-start gap-3 rounded-lg border border-brand-coral/30 bg-brand-coral-subtle px-4 py-3">
+    <div className="mb-6 flex items-start gap-3 rounded-lg border border-fs-danger/30 bg-fs-overdue-bg px-4 py-3">
       <svg
-        className="mt-0.5 h-5 w-5 shrink-0 text-brand-coral"
+        className="mt-0.5 h-5 w-5 shrink-0 text-fs-danger"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -31,10 +31,10 @@ export function TaxRateReminderBanner({
         <line x1="12" y1="17" x2="12.01" y2="17" />
       </svg>
       <div className="flex-1">
-        <p className="text-sm font-semibold text-brand-navy">
+        <p className="text-sm font-semibold text-fs-ink-900">
           Confirm this fleet's tax rate
         </p>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mt-1 text-sm text-fs-ink-600">
           The {county} County rate of {taxRate}% is an illustrative placeholder,
           not a verified Hawaii GET rate. Until you confirm it, every quote and
           invoice for this fleet is billed at this placeholder value. Please

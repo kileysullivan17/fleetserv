@@ -28,7 +28,7 @@ export function TruckDetailPage() {
 
   if (truckLoading) {
     return (
-      <div className="py-12 text-center text-sm text-gray-500">
+      <div className="py-12 text-center text-sm text-fs-ink-500">
         Loading truck...
       </div>
     );
@@ -37,12 +37,12 @@ export function TruckDetailPage() {
   if (truckError || !truck) {
     return (
       <div className="py-12 text-center">
-        <p className="text-sm font-medium text-brand-coral">
+        <p className="text-sm font-medium text-fs-danger">
           Truck not found.
         </p>
         <Link
           to={companyId ? `/fleets/${companyId}` : "/fleets"}
-          className="mt-2 inline-block text-sm text-brand-teal hover:underline"
+          className="mt-2 inline-block text-sm text-fs-navy-700 hover:underline"
         >
           Back to Fleet
         </Link>

@@ -41,9 +41,9 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
             key={photo.id}
             type="button"
             onClick={() => setLightboxIndex(index)}
-            className="group rounded-lg overflow-hidden border border-brand-sand-dark bg-white text-left focus-visible:ring-2 focus-visible:ring-brand-teal"
+            className="group rounded-lg overflow-hidden border border-fs-line-200 bg-white text-left focus-visible:ring-2 focus-visible:ring-fs-navy-700"
           >
-            <div className="aspect-video bg-brand-sand overflow-hidden">
+            <div className="aspect-video bg-fs-bg overflow-hidden">
               <img
                 src={photo.storage_url}
                 alt={photo.caption || "Visit photo"}
@@ -52,7 +52,7 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
               />
             </div>
             {photo.caption && (
-              <p className="px-2 py-1.5 text-xs text-gray-600 truncate">
+              <p className="px-2 py-1.5 text-xs text-fs-ink-600 truncate">
                 {photo.caption}
               </p>
             )}
@@ -65,7 +65,7 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
           role="dialog"
           aria-modal="true"
           aria-label={active.caption || "Photo"}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-brand-navy-dark/90 p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-fs-navy-950/90 p-6"
           onClick={close}
         >
           <button
