@@ -118,7 +118,7 @@ export function InvoicesPage() {
                       label={INVOICE_STATUS_LABELS[invoice.status]}
                     />
                   </td>
-                  <td className="text-right font-mono text-fs-ink-900">
+                  <td className="fs-money text-fs-ink-900">
                     {formatCurrency(invoice.total)}
                   </td>
                 </tr>

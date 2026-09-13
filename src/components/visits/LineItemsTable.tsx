@@ -28,14 +28,14 @@ export function LineItemsTable({ items }: LineItemsTableProps) {
               {SERVICE_TYPE_LABELS[item.service_type]}
             </td>
             <td className="text-fs-ink-600 max-w-md">{item.description}</td>
-            <td className="text-right font-mono text-fs-ink-900">
+            <td className="fs-money text-fs-ink-900">
               {Number(item.quantity)}
             </td>
             <td className="text-fs-ink-600">{item.unit}</td>
-            <td className="text-right font-mono text-fs-ink-900">
+            <td className="fs-money text-fs-ink-900">
               {formatCurrency(Number(item.unit_price))}
             </td>
-            <td className="text-right font-mono text-fs-ink-900">
+            <td className="fs-money text-fs-ink-900">
               {formatCurrency(Number(item.subtotal))}
             </td>
           </tr>
@@ -46,7 +46,7 @@ export function LineItemsTable({ items }: LineItemsTableProps) {
           <td colSpan={5} className="text-right text-sm font-medium text-fs-ink-500">
             Total
           </td>
-          <td className="text-right font-mono text-base font-semibold text-fs-ink-900">
+          <td className="fs-money text-base font-semibold text-fs-ink-900">
             {formatCurrency(total)}
           </td>
         </tr>

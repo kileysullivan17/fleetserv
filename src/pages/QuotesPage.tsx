@@ -117,7 +117,7 @@ export function QuotesPage() {
                       label={QUOTE_STATUS_LABELS[quote.status]}
                     />
                   </td>
-                  <td className="text-right font-mono text-fs-ink-900">
+                  <td className="fs-money text-fs-ink-900">
                     {formatCurrency(quote.total)}
                   </td>
                 </tr>

@@ -16,8 +16,8 @@
 
   body {
     @apply bg-fs-bg text-fs-ink-900 antialiased;
-    /* Redesign type anchor: Archivo is the UI face. Inter stays loaded so any
-       explicit font-sans usage mid-migration is unaffected. */
+    /* Archivo is the UI face, and now the only sans: font-sans resolves to it
+       too, so nothing can fall back to the pre-redesign Inter. */
     font-family: var(--fs-font-ui);
     font-size: 14px;
     line-height: 1.5;
@@ -94,11 +94,11 @@
 }
 
 /* ============================================================
-   FleetServ redesign tokens (design/tokens.css) — additive.
-   Ported verbatim from the design source, plus --fs-ink-450, a
-   contrast-corrected tertiary text tier (see DECISIONS.md). These
-   run alongside the existing brand.* Tailwind theme during the
-   screen-by-screen migration; nothing above is removed.
+   FleetServ tokens, ported from design/tokens.css, plus
+   --fs-ink-450, a contrast-corrected tertiary text tier (see
+   DECISIONS.md). These are now the whole palette: the brand.*,
+   surface.* and status.* Tailwind scales were deleted once the
+   migration left no uses of them.
    ============================================================ */
 :root {
   /* Brand / anchor */

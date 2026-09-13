@@ -93,7 +93,7 @@ export function FleetsPage() {
                       {company.contact_email}
                     </span>
                   </td>
-                  <td className="text-right font-mono text-fs-ink-900">
+                  <td className="fs-money text-fs-ink-900">
                     {company.truck_count}
                   </td>
                   <td className="text-right text-fs-ink-500">
