@@ -152,3 +152,78 @@ ramp is now ink-900 → ink-600 → ink-500 → ink-450, all AA.
 
 Full lowest-margin pairs for the record: paid chip `#FFFFFF/#147A3D` 5.41:1,
 caption `#66757F/#FFFFFF` 4.76:1, ink-450 `#6A7883/#FFFFFF` 4.54:1. All ≥ 4.5:1.
+
+## 2026-09-12: Finishing the token migration
+
+### The spec was verified, the build was not
+
+The 2026-07-21 entry above computed WCAG ratios for 30 pairs and fixed the one
+that failed. That audit covered the **reference canvas**, the designed artboards
+in `design/`. Nobody re-ran it against the compiled app, and the two had drifted:
+`fs.*` and the older `brand.*` scale were both live, and the components a user
+actually touches were still on `brand.*`.
+
+Measured before this change: 215 `fs-*` utilities against 123 `brand-*` and 82
+unthemed `gray`/`slate`. Two palettes on one screen, which is most of why the app
+read as assembled rather than designed. The two navies (`#1B2B45` and `#102A40`)
+and the two teals (`#0E8C7A` and `#22B597`) are close enough that the mismatch
+looks like a rendering fault rather than a decision.
+
+### Eight pairs were failing AA in production
+
+Every one is the same mistake: teal asked to do a job `tokens.css` explicitly
+rules out. Line 17 of that file reads `--fs-teal-500: #22b597; /* brand mark +
+active nav on navy ONLY */`. Teal carries white at 2.58:1.
+
+| Element | Before | Ratio | After | Ratio |
+|---|---|---|---|---|
+| Primary button | white on `#0E8C7A` | **4.16:1** | white on navy-900 | 14.71:1 |
+| Primary button, hover | white on `#12A991` | **2.95:1** | white on navy-800 | 12.52:1 |
+| Danger button | white on `#D95C3A` | **3.79:1** | white on `#8F1D18` | 8.91:1 |
+| Sidebar active nav | white on `#0E8C7A` | **4.16:1** | white on navy-700 | 9.90:1 |
+| Account avatar | white on `#0E8C7A` | **4.16:1** | white on navy-700 | 9.90:1 |
+| Inline links, 18 of them | `#0E8C7A` on white | **4.16:1** | navy-700 on white | 9.90:1 |
+| "Create one", 12px | `#0E8C7A` on sand | **3.75:1** | navy-700 | 8.60:1 |
+| Card subtitle | `#6B7280` on white | 4.83:1 | ink-600 | 7.95:1 |
+
+There was no destructive colour in the `fs` scale at all, so this adds
+`fs.danger` (`#8F1D18` / hover `#731714` / subtle `#FBE3E1`).
+
+### Teal keeps its documented job
+
+The active sidebar row is navy-700 with a 3px teal inset rule. That is "active
+nav on navy" as written, without asking teal to back a label. After the sweep
+teal appears three times in the compiled CSS: the brand mark, the sidebar
+indicator, and the accepted-status dot.
+
+### The 44px floor was never applied to buttons
+
+`--fs-touch-min: 44px` was wired into `.form-input` and nothing else. Buttons sat
+near 36px. This quoting app is used on a phone, in a yard, in direct sun, with
+gloves on, so the floor now applies to button sizes `md` and `lg`. `sm` stays
+dense for inline table actions, where the row itself is the target.
+
+### Greys were remapped by ground, not by number
+
+`gray-400` and `gray-500` both land on `ink-500`. The obvious mapping for
+`gray-400` was `ink-450`, but `ink-450` measures 4.54:1 on white and 4.11:1 on
+`bg-100`, so it passes only on cards. `ink-500` clears both at 6.18:1 and 5.60:1.
+Slates were all on the navy sidebar and took the navy tints instead.
+
+Two cases the blanket mapping would have got wrong, corrected by hand: the
+"Saved." confirmation takes the accepted-status colour rather than the link
+colour, because it is a state and not a link; and the 404 numeral is a ghost far
+below 3:1 on purpose, so it is marked `aria-hidden` and the sentence beneath it
+carries the meaning.
+
+### Result
+
+`src/` holds zero `brand-*`, `status-*`, `surface-*` or raw `gray`/`slate`
+utilities: 440 `fs-*` uses, one palette. Verified against the compiled build, not
+the source: every legacy hex is absent from `dist/assets/index-*.css`, and the
+sign-in screen measures zero AA failures with a lowest pair of 5.60:1, against
+five failures and a lowest of 3.75:1 before.
+
+The lesson worth keeping: a verified design system is not a verified product. The
+July audit was correct and the app still shipped eight failures, because nothing
+re-checked the built output. Contrast belongs in the build, not only in the spec.
