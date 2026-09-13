@@ -53,6 +53,9 @@ const config: Config = {
           },
           bg: "#F1F4F6",
           surface: "#FFFFFF",
+          // Destructive actions. #8F1D18 carries white at 8.9:1; the old
+          // brand.coral failed AA at 3.8:1 and must not back white text.
+          danger: { DEFAULT: "#8F1D18", hover: "#731714", subtle: "#FBE3E1" },
           // Status grounds — dot + text + bg per state.
           draft: { bg: "#E9EDF1", text: "#3E4E5B", dot: "#75858F" },
           sent: { bg: "#E1EDFA", text: "#14508F", dot: "#2D72C4" },

@@ -21,9 +21,9 @@ export function PageHeader({
       )}
     >
       <div>
-        <h1 className="text-xl font-semibold text-brand-navy">{title}</h1>
+        <h1 className="text-xl font-semibold text-fs-ink-900">{title}</h1>
         {subtitle && (
-          <p className="mt-1 text-sm text-gray-500">{subtitle}</p>
+          <p className="mt-1 text-sm text-fs-ink-600">{subtitle}</p>
         )}
       </div>
       {actions && (

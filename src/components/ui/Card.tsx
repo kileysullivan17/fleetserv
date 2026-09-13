@@ -9,7 +9,7 @@ export function Card({ className, children }: CardProps) {
   return (
     <div
       className={cn(
-        "rounded-lg bg-surface-card shadow-card border border-brand-sand-dark",
+        "rounded-fs-lg bg-fs-surface shadow-fs-card border border-fs-line-200",
         className
       )}
     >
@@ -27,7 +27,7 @@ export function CardHeader({ className, children }: CardHeaderProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-between px-6 py-4 border-b border-brand-sand-dark",
+        "flex items-center justify-between px-6 py-4 border-b border-fs-line-200",
         className
       )}
     >
