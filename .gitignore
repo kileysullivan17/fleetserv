@@ -29,3 +29,11 @@ npm-debug.log*
 
 # Vercel
 .vercel
+
+# Design-tool artifacts: Claude Design canvas files and raw video source.
+# Kept locally, not needed by the build. Back up the mp4 outside git.
+design/*.dc.html
+design/.thumbnail
+design/support.js
+design/tokens.css
+design/video/*.mp4

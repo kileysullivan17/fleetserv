@@ -93,3 +93,12 @@ Maui: 4.0%
 Kauai: 4.0%
 
 (Verify current rates before going live: these are illustrative.)
+
+# Writing style rules
+- No em dashes anywhere. Use "to" for date ranges; otherwise commas, colons, semicolons, or parentheses.
+- Banned phrases: "at the intersection of", "I thrive", "leverage", "passionate about",
+  "driving outcomes", "impactful", "I bring", "spanned", "in today's landscape",
+  "collaborative environment".
+- Prose over templated section labels. Bullets for outcomes only.
+- No suspiciously balanced three-part lists.
+- Plain, specific, confident. Concrete detail over adjectives.
