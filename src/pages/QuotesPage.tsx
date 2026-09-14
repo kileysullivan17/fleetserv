@@ -39,17 +39,17 @@ export function QuotesPage() {
       />
 
       {isLoading && (
-        <div className="py-12 text-center text-sm text-gray-500">
+        <div className="py-12 text-center text-sm text-fs-ink-500">
           Loading quotes...
         </div>
       )}
 
       {isError && (
         <div className="py-12 text-center">
-          <p className="text-sm font-medium text-brand-coral">
+          <p className="text-sm font-medium text-fs-danger">
             Could not load quotes.
           </p>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-fs-ink-500">
             Check your Supabase connection and refresh the page.
           </p>
         </div>
@@ -70,7 +70,7 @@ export function QuotesPage() {
       {quotes && quotes.length > 0 && (
         <Card className="overflow-hidden">
           <CardHeader>
-            <h2 className="text-sm font-semibold text-brand-navy">
+            <h2 className="text-sm font-semibold text-fs-ink-900">
               All Quotes ({quotes.length})
             </h2>
           </CardHeader>
@@ -93,22 +93,22 @@ export function QuotesPage() {
                   className="cursor-pointer"
                   onClick={() => navigate(`/quotes/${quote.id}`)}
                 >
-                  <td className="font-mono font-medium text-brand-navy">
+                  <td className="font-mono font-medium text-fs-ink-900">
                     {quoteDisplayNumber(quote.id)}
                   </td>
-                  <td className="text-gray-700">
+                  <td className="text-fs-ink-900">
                     {quote.company_name ?? (
-                      <span className="text-gray-400">Unknown fleet</span>
+                      <span className="text-fs-ink-500">Unknown fleet</span>
                     )}
                   </td>
-                  <td className="text-gray-700">
+                  <td className="text-fs-ink-900">
                     {quote.unit_number ? (
                       `Unit ${quote.unit_number}`
                     ) : (
-                      <span className="text-gray-400">n/a</span>
+                      <span className="text-fs-ink-500">n/a</span>
                     )}
                   </td>
-                  <td className="text-gray-700">
+                  <td className="text-fs-ink-900">
                     {formatDateShort(quote.issued_date)}
                   </td>
                   <td>
@@ -117,7 +117,7 @@ export function QuotesPage() {
                       label={QUOTE_STATUS_LABELS[quote.status]}
                     />
                   </td>
-                  <td className="text-right font-mono text-gray-700">
+                  <td className="fs-money text-fs-ink-900">
                     {formatCurrency(quote.total)}
                   </td>
                 </tr>

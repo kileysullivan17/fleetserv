@@ -83,12 +83,12 @@ export function SignUpPage() {
       <AuthShell
         title="Sign-up unavailable"
         footer={
-          <Link to="/login" className="text-brand-teal hover:underline">
+          <Link to="/login" className="text-fs-navy-700 hover:underline">
             Back to sign in
           </Link>
         }
       >
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-fs-ink-600">
           Sign-up is not enabled. An access code has not been configured for
           this site. Contact the site owner for an account.
         </p>
@@ -101,12 +101,12 @@ export function SignUpPage() {
       <AuthShell
         title="Check your email"
         footer={
-          <Link to="/login" className="text-brand-teal hover:underline">
+          <Link to="/login" className="text-fs-navy-700 hover:underline">
             Back to sign in
           </Link>
         }
       >
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-fs-ink-600">
           Your account has been created. Check your inbox for a confirmation
           link, then come back and sign in.
         </p>
@@ -121,7 +121,7 @@ export function SignUpPage() {
       footer={
         <>
           Already have an account?{" "}
-          <Link to="/login" className="text-brand-teal hover:underline">
+          <Link to="/login" className="text-fs-navy-700 hover:underline">
             Sign in
           </Link>
         </>

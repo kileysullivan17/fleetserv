@@ -115,19 +115,19 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-brand-navy/40 backdrop-blur-[2px]" />
+        <Dialog.Overlay className="fixed inset-0 z-40 bg-fs-navy-950/40 backdrop-blur-[2px]" />
         <Dialog.Content
           onKeyDown={onKeyDown}
-          className="fixed left-1/2 top-24 z-50 w-full max-w-xl -translate-x-1/2 rounded-lg bg-white shadow-xl border border-brand-sand-dark overflow-hidden"
+          className="fixed left-1/2 top-24 z-50 w-full max-w-xl -translate-x-1/2 rounded-lg bg-white shadow-xl border border-fs-line-200 overflow-hidden"
         >
           <Dialog.Title className="sr-only">Search</Dialog.Title>
           <Dialog.Description className="sr-only">
             Search companies, trucks, and service visits
           </Dialog.Description>
 
-          <div className="flex items-center gap-3 px-4 border-b border-brand-sand-dark">
+          <div className="flex items-center gap-3 px-4 border-b border-fs-line-200">
             <svg
-              className="w-4 h-4 text-gray-400 shrink-0"
+              className="w-4 h-4 text-fs-ink-500 shrink-0"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -144,11 +144,11 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search companies, trucks, visits..."
               aria-label="Search"
-              className="w-full py-3.5 text-sm text-brand-navy placeholder-gray-400 focus:outline-none"
+              className="w-full py-3.5 text-sm text-fs-ink-900 placeholder-fs-ink-450 focus:outline-none"
             />
             {isFetching && (
               <svg
-                className="w-4 h-4 animate-spin text-brand-teal shrink-0"
+                className="w-4 h-4 animate-spin text-fs-navy-700 shrink-0"
                 viewBox="0 0 24 24"
                 fill="none"
                 aria-hidden="true"
@@ -168,14 +168,14 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                 />
               </svg>
             )}
-            <kbd className="hidden sm:block shrink-0 rounded border border-brand-sand-dark bg-brand-sand px-1.5 py-0.5 text-2xs font-mono text-gray-500">
+            <kbd className="hidden sm:block shrink-0 rounded border border-fs-line-200 bg-fs-bg px-1.5 py-0.5 text-2xs font-mono text-fs-ink-500">
               esc
             </kbd>
           </div>
 
           <div ref={listRef} className="max-h-80 overflow-y-auto p-2">
             {query.trim().length < 2 && (
-              <p className="px-3 py-8 text-center text-sm text-gray-400">
+              <p className="px-3 py-8 text-center text-sm text-fs-ink-500">
                 Type at least two characters to search.
               </p>
             )}
@@ -183,7 +183,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
             {query.trim().length >= 2 &&
               !isFetching &&
               results.length === 0 && (
-                <p className="px-3 py-8 text-center text-sm text-gray-400">
+                <p className="px-3 py-8 text-center text-sm text-fs-ink-500">
                   No results for "{query.trim()}".
                 </p>
               )}
@@ -196,7 +196,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
               return (
                 <div key={result.key}>
                   {showHeader && (
-                    <p className="px-3 pt-3 pb-1 text-2xs font-semibold uppercase tracking-wider text-gray-400">
+                    <p className="px-3 pt-3 pb-1 text-2xs font-semibold uppercase tracking-wider text-fs-ink-500">
                       {result.group}
                     </p>
                   )}
@@ -207,14 +207,14 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                     onMouseMove={() => setActiveIndex(index)}
                     className={cn(
                       "flex w-full items-center justify-between gap-3 rounded px-3 py-2 text-left transition-colors",
-                      isActive ? "bg-brand-teal-subtle" : "hover:bg-brand-sand"
+                      isActive ? "bg-fs-accepted-bg" : "hover:bg-fs-bg"
                     )}
                   >
                     <span className="min-w-0">
-                      <span className="block text-sm font-medium text-brand-navy truncate">
+                      <span className="block text-sm font-medium text-fs-ink-900 truncate">
                         {result.label}
                       </span>
-                      <span className="block text-xs text-gray-500 truncate">
+                      <span className="block text-xs text-fs-ink-500 truncate">
                         {result.sublabel}
                       </span>
                     </span>

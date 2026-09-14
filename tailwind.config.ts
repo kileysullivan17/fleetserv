@@ -5,29 +5,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand palette: deep ocean navy anchor, warm slate for surfaces,
-        // Pacific teal accent, coral for alerts, sand for backgrounds.
-        brand: {
-          navy: "#1B2B45",
-          "navy-dark": "#111D2E",
-          "navy-muted": "#2C3F5C",
-          teal: "#0E8C7A",
-          "teal-light": "#12A991",
-          "teal-subtle": "#E6F5F3",
-          coral: "#D95C3A",
-          "coral-subtle": "#FDF0EC",
-          sand: "#F5F3EF",
-          "sand-dark": "#EAE7E1",
-        },
-        // Semantic surface tokens
-        surface: {
-          page: "#F5F3EF",
-          card: "#FFFFFF",
-          sidebar: "#1B2B45",
-          "sidebar-hover": "#2C3F5C",
-        },
-        // Redesign token palette (design/tokens.css). Additive: the brand.*
-        // and status.* scales above stay in place through the migration.
+        // The palette, mirroring design/tokens.css. The pre-redesign brand.*,
+        // surface.* and status.* scales were removed once src/ held no uses of
+        // them; the CSS custom properties in index.css remain the source.
         fs: {
           navy: {
             950: "#0B1B2A",
@@ -53,6 +33,9 @@ const config: Config = {
           },
           bg: "#F1F4F6",
           surface: "#FFFFFF",
+          // Destructive actions. #8F1D18 carries white at 8.9:1; the old
+          // brand.coral failed AA at 3.8:1 and must not back white text.
+          danger: { DEFAULT: "#8F1D18", hover: "#731714", subtle: "#FBE3E1" },
           // Status grounds — dot + text + bg per state.
           draft: { bg: "#E9EDF1", text: "#3E4E5B", dot: "#75858F" },
           sent: { bg: "#E1EDFA", text: "#14508F", dot: "#2D72C4" },
@@ -61,35 +44,14 @@ const config: Config = {
           paid: { bg: "#147A3D", text: "#FFFFFF", dot: "#8CE0AC" },
           overdue: { bg: "#FBE3E1", text: "#8F1D18", dot: "#C63D34" },
         },
-        // Status badge colors
-        status: {
-          draft: "#6B7280",
-          "draft-bg": "#F3F4F6",
-          quoted: "#1D4ED8",
-          "quoted-bg": "#EFF6FF",
-          approved: "#15803D",
-          "approved-bg": "#F0FDF4",
-          invoiced: "#9333EA",
-          "invoiced-bg": "#FAF5FF",
-          paid: "#0E8C7A",
-          "paid-bg": "#E6F5F3",
-          sent: "#1D4ED8",
-          "sent-bg": "#EFF6FF",
-          accepted: "#15803D",
-          "accepted-bg": "#F0FDF4",
-          declined: "#DC2626",
-          "declined-bg": "#FEF2F2",
-          overdue: "#DC2626",
-          "overdue-bg": "#FEF2F2",
-        },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
-        // Redesign faces. archivo is the UI voice; money is the mono used for
-        // every dollar figure, ID, VIN, and table date.
-        archivo: ["Archivo", "system-ui", "sans-serif"],
-        money: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+        // Two faces, matching design/tokens.css. Archivo is the UI voice and
+        // IBM Plex Mono carries every dollar figure, ID, VIN, and table date.
+        // Inter and JetBrains Mono were the pre-redesign pair and are gone:
+        // font-sans appeared only in a comment and font-archivo never at all.
+        sans: ["Archivo", "system-ui", "sans-serif"],
+        mono: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       fontSize: {
         "2xs": ["0.625rem", { lineHeight: "0.875rem" }],

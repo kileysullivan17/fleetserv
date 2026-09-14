@@ -3,21 +3,26 @@ import { cn } from "@/utils/cn";
 type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 type ButtonSize = "sm" | "md" | "lg";
 
+// Primary action is navy-900, not teal. Teal #22B597 is the brand mark and
+// active nav on navy only: it carries white at 2.6:1 and cannot back a label.
+// See design/tokens.css.
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-brand-teal text-white hover:bg-brand-teal-light focus-visible:ring-brand-teal",
+    "bg-fs-navy-900 text-white hover:bg-fs-navy-800 focus-visible:ring-fs-navy-700",
   secondary:
-    "bg-white text-brand-navy border border-brand-sand-dark hover:bg-brand-sand focus-visible:ring-brand-navy",
+    "bg-fs-surface text-fs-navy-900 border border-fs-line-300 hover:bg-fs-navy-50 focus-visible:ring-fs-navy-700",
   ghost:
-    "text-brand-navy hover:bg-brand-sand focus-visible:ring-brand-navy",
+    "text-fs-navy-900 hover:bg-fs-navy-50 focus-visible:ring-fs-navy-700",
   danger:
-    "bg-brand-coral text-white hover:bg-red-600 focus-visible:ring-brand-coral",
+    "bg-fs-danger text-white hover:bg-fs-danger-hover focus-visible:ring-fs-danger",
 };
 
+// 44px is the tap-target floor (--fs-touch-min): this is quoted in the yard,
+// on a phone, with gloves on. sm stays dense for inline table actions.
 const sizeClasses: Record<ButtonSize, string> = {
   sm: "px-3 py-1.5 text-sm",
-  md: "px-4 py-2 text-sm",
-  lg: "px-5 py-2.5 text-base",
+  md: "min-h-[44px] px-4 py-2 text-sm",
+  lg: "min-h-[44px] px-5 py-2.5 text-base",
 };
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -39,7 +44,7 @@ export function Button({
     <button
       disabled={disabled || loading}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded font-medium transition-colors",
+        "inline-flex items-center justify-center gap-2 rounded-fs font-medium transition-colors",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
         "disabled:opacity-50 disabled:cursor-not-allowed",
         variantClasses[variant],

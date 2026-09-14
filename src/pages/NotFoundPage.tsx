@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/Button";
 export function NotFoundPage() {
   return (
     <div className="flex flex-col items-center justify-center py-24 text-center">
-      <p className="text-5xl font-mono font-medium text-brand-sand-dark select-none">
+      <p aria-hidden="true" className="text-5xl font-mono font-medium text-fs-line-300 select-none">
         404
       </p>
-      <h1 className="mt-4 text-lg font-semibold text-brand-navy">
+      <h1 className="mt-4 text-lg font-semibold text-fs-ink-900">
         Page not found
       </h1>
-      <p className="mt-2 text-sm text-gray-500">
+      <p className="mt-2 text-sm text-fs-ink-500">
         This page does not exist or was moved.
       </p>
       <Link to="/fleets" className="mt-6">

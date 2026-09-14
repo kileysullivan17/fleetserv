@@ -15,9 +15,9 @@
   }
 
   body {
-    @apply bg-surface-page text-brand-navy antialiased;
-    /* Redesign type anchor: Archivo is the UI face. Inter stays loaded so any
-       explicit font-sans usage mid-migration is unaffected. */
+    @apply bg-fs-bg text-fs-ink-900 antialiased;
+    /* Archivo is the UI face, and now the only sans: font-sans resolves to it
+       too, so nothing can fall back to the pre-redesign Inter. */
     font-family: var(--fs-font-ui);
     font-size: 14px;
     line-height: 1.5;
@@ -32,12 +32,13 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-brand-sand-dark rounded-full;
+    @apply bg-fs-line-300 rounded-full;
   }
 
-  /* Focus ring: visible but not distracting */
+  /* Focus ring: navy-700, matching --fs-focus-ring. Teal is the brand mark
+     on navy only and is too light to read as a ring on white. */
   :focus-visible {
-    @apply outline-none ring-2 ring-brand-teal ring-offset-1;
+    @apply outline-none ring-2 ring-fs-navy-700 ring-offset-1;
   }
 
   /* Tables */
@@ -45,20 +46,20 @@
     @apply w-full border-collapse;
   }
   th {
-    @apply text-left text-xs font-semibold text-gray-500 uppercase tracking-wider;
+    @apply text-left text-xs font-semibold text-fs-ink-600 uppercase tracking-wider;
   }
   td,
   th {
     @apply px-4 py-3;
   }
   tr {
-    @apply border-b border-brand-sand-dark;
+    @apply border-b border-fs-line-200;
   }
   tbody tr:last-child {
     @apply border-b-0;
   }
   tbody tr:hover {
-    @apply bg-brand-sand/50;
+    @apply bg-fs-navy-50;
   }
 }
 
@@ -88,16 +89,16 @@
   }
 
   .form-error {
-    @apply mt-1 text-xs font-medium text-brand-coral;
+    @apply mt-1 text-xs font-medium text-fs-danger;
   }
 }
 
 /* ============================================================
-   FleetServ redesign tokens (design/tokens.css) — additive.
-   Ported verbatim from the design source, plus --fs-ink-450, a
-   contrast-corrected tertiary text tier (see DECISIONS.md). These
-   run alongside the existing brand.* Tailwind theme during the
-   screen-by-screen migration; nothing above is removed.
+   FleetServ tokens, ported from design/tokens.css, plus
+   --fs-ink-450, a contrast-corrected tertiary text tier (see
+   DECISIONS.md). These are now the whole palette: the brand.*,
+   surface.* and status.* Tailwind scales were deleted once the
+   migration left no uses of them.
    ============================================================ */
 :root {
   /* Brand / anchor */

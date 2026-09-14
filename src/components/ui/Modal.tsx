@@ -21,28 +21,28 @@ export function Modal({
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-brand-navy/40 backdrop-blur-[2px] data-[state=open]:animate-in data-[state=open]:fade-in" />
+        <Dialog.Overlay className="fixed inset-0 z-40 bg-fs-navy-950/50 backdrop-blur-[2px] data-[state=open]:animate-in data-[state=open]:fade-in" />
         <Dialog.Content
           className={cn(
             "fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2",
-            "rounded-lg bg-white shadow-xl border border-brand-sand-dark",
+            "rounded-fs-lg bg-fs-surface shadow-xl border border-fs-line-200",
             "max-h-[85vh] overflow-y-auto",
             className
           )}
         >
-          <div className="flex items-start justify-between px-6 py-4 border-b border-brand-sand-dark">
+          <div className="flex items-start justify-between px-6 py-4 border-b border-fs-line-200">
             <div>
-              <Dialog.Title className="text-base font-semibold text-brand-navy">
+              <Dialog.Title className="text-base font-semibold text-fs-ink-900">
                 {title}
               </Dialog.Title>
               {description && (
-                <Dialog.Description className="mt-1 text-sm text-gray-500">
+                <Dialog.Description className="mt-1 text-sm text-fs-ink-600">
                   {description}
                 </Dialog.Description>
               )}
             </div>
             <Dialog.Close
-              className="rounded p-1 text-gray-400 hover:text-brand-navy hover:bg-brand-sand transition-colors"
+              className="rounded-fs-sm p-1 text-fs-ink-450 hover:text-fs-ink-900 hover:bg-fs-navy-50 transition-colors"
               aria-label="Close"
             >
               <svg

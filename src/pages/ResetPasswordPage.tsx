@@ -55,7 +55,7 @@ export function ResetPasswordPage() {
   if (!session && (loading || !graceElapsed)) {
     return (
       <AuthShell title="Verifying your reset link...">
-        <p className="text-sm text-gray-500">One moment.</p>
+        <p className="text-sm text-fs-ink-500">One moment.</p>
       </AuthShell>
     );
   }
@@ -66,12 +66,12 @@ export function ResetPasswordPage() {
       <AuthShell
         title="This link is not valid"
         footer={
-          <Link to="/forgot-password" className="text-brand-teal hover:underline">
+          <Link to="/forgot-password" className="text-fs-navy-700 hover:underline">
             Request a new link
           </Link>
         }
       >
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-fs-ink-600">
           This password reset link is invalid or has expired. Request a new one
           and try again.
         </p>

@@ -45,12 +45,12 @@ export function ForgotPasswordPage() {
       <AuthShell
         title="Check your email"
         footer={
-          <Link to="/login" className="text-brand-teal hover:underline">
+          <Link to="/login" className="text-fs-navy-700 hover:underline">
             Back to sign in
           </Link>
         }
       >
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-fs-ink-600">
           If an account exists for that email, a password reset link is on its
           way. Open it and you will be able to set a new password.
         </p>
@@ -63,7 +63,7 @@ export function ForgotPasswordPage() {
       title="Reset your password"
       subtitle="Enter your email and we will send you a reset link."
       footer={
-        <Link to="/login" className="text-brand-teal hover:underline">
+        <Link to="/login" className="text-fs-navy-700 hover:underline">
           Back to sign in
         </Link>
       }

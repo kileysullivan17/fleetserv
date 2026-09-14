@@ -23,17 +23,17 @@ export function FleetsPage() {
 
       <Card>
         {isLoading && (
-          <div className="px-6 py-12 text-center text-sm text-gray-500">
+          <div className="px-6 py-12 text-center text-sm text-fs-ink-500">
             Loading fleets...
           </div>
         )}
 
         {isError && (
           <div className="px-6 py-12 text-center">
-            <p className="text-sm font-medium text-brand-coral">
+            <p className="text-sm font-medium text-fs-danger">
               Could not load fleets.
             </p>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-fs-ink-500">
               Check your Supabase connection and refresh the page.
             </p>
           </div>
@@ -81,22 +81,22 @@ export function FleetsPage() {
                   className="cursor-pointer"
                   onClick={() => navigate(`/fleets/${company.id}`)}
                 >
-                  <td className="font-medium text-brand-navy">
+                  <td className="font-medium text-fs-ink-900">
                     {company.name}
                   </td>
-                  <td className="text-gray-600">{company.hawaii_county}</td>
+                  <td className="text-fs-ink-600">{company.hawaii_county}</td>
                   <td>
-                    <span className="block text-gray-700">
+                    <span className="block text-fs-ink-900">
                       {company.contact_name}
                     </span>
-                    <span className="block text-xs text-gray-400">
+                    <span className="block text-xs text-fs-ink-500">
                       {company.contact_email}
                     </span>
                   </td>
-                  <td className="text-right font-mono text-gray-700">
+                  <td className="fs-money text-fs-ink-900">
                     {company.truck_count}
                   </td>
-                  <td className="text-right text-gray-500">
+                  <td className="text-right text-fs-ink-500">
                     {formatDateShort(company.created_at)}
                   </td>
                 </tr>

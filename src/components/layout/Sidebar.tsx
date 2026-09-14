@@ -98,13 +98,13 @@ export function Sidebar({
   return (
     <aside
       className={cn(
-        "fixed inset-y-0 left-0 z-40 flex w-60 flex-col bg-surface-sidebar transition-transform duration-200",
+        "fixed inset-y-0 left-0 z-40 flex w-60 flex-col bg-fs-navy-950 transition-transform duration-200",
         open ? "translate-x-0" : "-translate-x-full",
         "lg:translate-x-0"
       )}
     >
       {/* Logo / wordmark */}
-      <div className="flex items-center px-5 py-5 border-b border-brand-navy-muted">
+      <div className="flex items-center px-5 py-5 border-b border-fs-navy-700">
         <BrandMark tone="navy" size="md" subline="Mobile fleet service" />
       </div>
 
@@ -117,7 +117,7 @@ export function Sidebar({
               onSearchClick?.();
               onClose?.();
             }}
-            className="flex w-full items-center gap-3 rounded px-3 py-2 text-sm text-slate-400 bg-brand-navy-muted/40 hover:bg-surface-sidebar-hover hover:text-slate-200 transition-colors"
+            className="flex w-full items-center gap-3 rounded px-3 py-2 text-sm text-fs-navy-100 bg-fs-navy-800/40 hover:bg-fs-navy-800 hover:text-fs-navy-50 transition-colors"
           >
             <svg
               className="w-4 h-4 shrink-0"
@@ -131,7 +131,7 @@ export function Sidebar({
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
             <span className="flex-1 text-left">Search</span>
-            <kbd className="rounded border border-brand-navy-muted px-1.5 py-0.5 text-2xs font-mono text-slate-500">
+            <kbd className="rounded border border-fs-navy-700 px-1.5 py-0.5 text-2xs font-mono text-fs-navy-100">
               ⌘K
             </kbd>
           </button>
@@ -153,8 +153,8 @@ export function Sidebar({
               className={cn(
                 "flex items-center gap-3 rounded px-3 py-2.5 text-sm font-medium transition-colors group",
                 isActive
-                  ? "bg-brand-teal text-white"
-                  : "text-slate-300 hover:bg-surface-sidebar-hover hover:text-white"
+                  ? "bg-fs-navy-700 text-white shadow-[inset_3px_0_0_0_#22B597]"
+                  : "text-fs-navy-100 hover:bg-fs-navy-800 hover:text-white"
               )}
             >
               <span
@@ -162,7 +162,7 @@ export function Sidebar({
                   "transition-colors",
                   isActive
                     ? "text-white"
-                    : "text-slate-400 group-hover:text-slate-200"
+                    : "text-fs-navy-100 group-hover:text-fs-navy-50"
                 )}
               >
                 {item.icon}
@@ -174,7 +174,7 @@ export function Sidebar({
       </nav>
 
       {/* Footer: account menu (profile + password + sign out) */}
-      <div className="border-t border-brand-navy-muted px-2 py-3">
+      <div className="border-t border-fs-navy-700 px-2 py-3">
         <AccountMenu onItemSelect={onClose} />
       </div>
     </aside>

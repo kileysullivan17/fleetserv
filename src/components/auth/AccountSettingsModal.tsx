@@ -140,20 +140,20 @@ export function AccountSettingsModal({
               Save name
             </Button>
             {profileSaved && (
-              <span className="text-xs font-medium text-brand-teal">Saved.</span>
+              <span className="text-xs font-medium text-fs-accepted-text">Saved.</span>
             )}
           </div>
         </form>
 
-        <div className="border-t border-brand-sand-dark" />
+        <div className="border-t border-fs-line-200" />
 
         {/* Change password */}
         <form onSubmit={onChangePassword} className="space-y-3" noValidate>
           <div>
-            <h3 className="text-sm font-semibold text-brand-navy">
+            <h3 className="text-sm font-semibold text-fs-ink-900">
               Change password
             </h3>
-            <p className="mt-0.5 text-xs text-gray-500">
+            <p className="mt-0.5 text-xs text-fs-ink-500">
               Set a new password for {email}.
             </p>
           </div>
@@ -218,7 +218,7 @@ export function AccountSettingsModal({
               Update password
             </Button>
             {passwordSaved && (
-              <span className="text-xs font-medium text-brand-teal">
+              <span className="text-xs font-medium text-fs-accepted-text">
                 Password updated.
               </span>
             )}
