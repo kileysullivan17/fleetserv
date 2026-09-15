@@ -1,158 +1,124 @@
--- FleetServ Hawaii: reconcile live demo data with seed_demo_data.sql
--- repair_demo_data.sql, drafted 2026-09-15
+-- FleetServ Hawaii: clean the joke contact data out of the live database
+-- repair_demo_data.sql, drafted 2026-09-15, rewritten the same day against the real rows
 --
--- WHY THIS EXISTS. The live database has drifted from supabase/seed_demo_data.sql.
--- As of 2026-09-15 the Fleets table shows two companies, not three, and one truck
--- each, not seven total:
+-- WHAT IS ACTUALLY THERE. Inspected 2026-09-15 through the app, which puts company
+-- ids in its own URLs:
 --
---   Aloha Freight Lines  contact "Barry Santos"  barrygetdaukus@afl.com
---   Radiatah Freightah   contact "Kay Ifuku"     nemminyou@kifuku.net
+--   Aloha Freight Lines   9871b515-4f5c-4421-9370-10e7f67afb50   Barry Santos
+--   Radiatah Freightah    199b1496-f6a4-4ad6-87c2-6a3c5c745f88   Kay Ifuku
 --
--- Both rows are stamped 07/04/26, the seed commit date, so these began as seeded
--- rows and were edited afterwards through the app. Re-running the seed alone does
--- NOT repair them: every insert there is "on conflict (id) do nothing", which
--- skips rows that already exist rather than correcting them.
+-- NEITHER IS SEED DATA. Both were created in the app. All three companies in
+-- seed_demo_data.sql (aaaaaaaa..0001, bbbbbbbb..0002, cccccccc..0003) are absent
+-- from this database entirely, so the seed was evidently never applied here.
 --
--- Run the steps in order. Step 1 changes nothing. Read its output before going on.
+-- The first draft of this file assumed these were seeded rows that had been edited,
+-- because one shares a name with a seed company and both carry the seed's 07/04/26
+-- date. That was wrong. Its repair step keyed on the seed ids, so it would have
+-- matched zero rows and reported success having changed nothing.
+--
+-- Run step 1 first. It changes nothing and confirms the ids below are still current.
 
 -- ---------------------------------------------------------------------------
--- STEP 1. Inspect. Read-only. Run this first, on its own.
+-- STEP 1. Inspect. Read-only.
 -- ---------------------------------------------------------------------------
--- Tells you which of the two cases you are in for each live row: a seed row that
--- was edited (id matches one of the three below), or a row created in the app
--- (id matches none of them).
+-- Expect two rows, both labelled "created in the app". If a row instead reports a
+-- seed id, or an id below does not appear, the database has moved since 2026-09-15
+-- and the updates in step 2 will silently match nothing. Reconcile before going on.
 
 select
   id,
   name,
   contact_name,
   contact_email,
+  contact_phone,
   hawaii_county,
   case id
     when 'aaaaaaaa-0000-0000-0000-000000000001' then 'seed: Aloha Freight Lines'
     when 'bbbbbbbb-0000-0000-0000-000000000002' then 'seed: Kona Coast Haulers'
     when 'cccccccc-0000-0000-0000-000000000003' then 'seed: Valley Isle Logistics'
-    else 'NOT a seed row, created in the app'
+    when '9871b515-4f5c-4421-9370-10e7f67afb50' then 'created in the app, known 2026-09-15'
+    when '199b1496-f6a4-4ad6-87c2-6a3c5c745f88' then 'created in the app, known 2026-09-15'
+    else 'UNKNOWN, created since 2026-09-15'
   end as origin,
   (select count(*) from public.trucks t where t.company_id = c.id) as trucks
 from public.companies c
 order by origin, name;
 
 -- ---------------------------------------------------------------------------
--- STEP 2. Repair edited seed rows in place. Safe and idempotent.
+-- STEP 2. Clean both rows in place. Non-destructive. Recommended.
 -- ---------------------------------------------------------------------------
--- Restores the three companies' details to their seed values, matching on the
--- fixed ids. UPDATE rather than delete-and-reinsert on purpose: trucks, service
--- visits, quotes and invoices hang off these ids and are left untouched.
+-- UPDATE rather than delete and reinsert: trucks hang off these ids, and service
+-- visits hang off the trucks, with every foreign key set to cascade on delete.
+-- Updating keeps all of it attached.
 --
--- Rows that already match are rewritten with identical values, so running this
--- twice is the same as running it once. Rows that do not exist are not created
--- here; step 3 handles those.
+-- Values follow the seed's conventions: plausible Hawaii operators, role-based
+-- addresses, and 555 numbers, which are reserved for fiction and cannot ring a
+-- real person. The replaced values were barrygetdaukus@afl.com, nemminyou@kifuku.net
+-- and the phone 9996382646, none of which are in a reserved range.
 
 begin;
 
+-- Name is already fine and matches the seed's wording. Only the contact is a joke.
 update public.companies set
-  name            = 'Aloha Freight Lines',
-  contact_name    = 'Keanu Kahale',
-  contact_email   = 'dispatch@alohafreight.com',
-  contact_phone   = '(808) 555-0142',
-  billing_address = '91-210 Hanua St, Kapolei, HI 96707',
-  hawaii_county   = 'Honolulu',
-  tax_rate        = 4.712
-where id = 'aaaaaaaa-0000-0000-0000-000000000001';
+  contact_name  = 'Keanu Kahale',
+  contact_email = 'dispatch@alohafreight.com',
+  contact_phone = '(808) 555-0142'
+where id = '9871b515-4f5c-4421-9370-10e7f67afb50';
 
+-- Name, contact and phone all replaced. "Windward Cartage" is deliberately not one
+-- of the seed's three, so this row cannot collide with them if the seed is ever run.
 update public.companies set
-  name            = 'Kona Coast Haulers',
-  contact_name    = 'Malia Ontai',
-  contact_email   = 'ops@konacoasthaulers.com',
-  contact_phone   = '(808) 555-0188',
-  billing_address = '74-425 Kealakehe Pkwy, Kailua-Kona, HI 96740',
-  hawaii_county   = 'Hawaii',
-  tax_rate        = 4.5
-where id = 'bbbbbbbb-0000-0000-0000-000000000002';
-
-update public.companies set
-  name            = 'Valley Isle Logistics',
-  contact_name    = 'Ikaika Souza',
-  contact_email   = 'fleet@valleyislelogistics.com',
-  contact_phone   = '(808) 555-0119',
-  billing_address = '250 Alamaha St, Kahului, HI 96732',
-  hawaii_county   = 'Maui',
-  tax_rate        = 4.0
-where id = 'cccccccc-0000-0000-0000-000000000003';
+  name          = 'Windward Cartage',
+  contact_name  = 'Nalani Fisher',
+  contact_email = 'dispatch@windwardcartage.com',
+  contact_phone = '(808) 555-0165'
+where id = '199b1496-f6a4-4ad6-87c2-6a3c5c745f88';
 
 commit;
 
 -- ---------------------------------------------------------------------------
--- STEP 3. Restore anything missing.
+-- STEP 3. Optional. The truck plate.
 -- ---------------------------------------------------------------------------
--- Step 1 showed one truck per company where the seed defines seven (three for
--- Aloha, two each for the others), and one seed company absent entirely. Open
--- supabase/seed_demo_data.sql from the repo, paste the whole file in, and run it.
+-- Windward Cartage's truck carries plate "KIF 253", which is the old contact's
+-- initials. Cosmetic, and only visible on the fleet detail page. The VIN is
+-- already meaningless.
 --
--- Its inserts are all "on conflict (id) do nothing", so it fills the gaps and
--- changes nothing that step 2 just corrected. Run step 2 BEFORE this, not after:
--- the order does not matter for correctness, but doing it this way means every
--- statement you run after the repair is a no-op on the rows you fixed.
+--   update public.trucks set license_plate = 'WWC 253'
+--   where company_id = '199b1496-f6a4-4ad6-87c2-6a3c5c745f88';
 
 -- ---------------------------------------------------------------------------
--- STEP 4. The non-seed row. DESTRUCTIVE. Left commented out deliberately.
+-- STEP 4. Do NOT run the seed after step 2 without reading this.
 -- ---------------------------------------------------------------------------
--- If step 1 reported "Radiatah Freightah" as NOT a seed row, it was created in
--- the app and nothing in the repo describes it. Two options.
+-- seed_demo_data.sql inserts its own "Aloha Freight Lines" under a different id.
+-- Running it after step 2 leaves two companies with that name, which looks worse
+-- than the joke did. Pick one:
 --
--- Option A, keep the row and clear the joke. Preserves its trucks and any visits,
--- quotes or invoices attached to it. Substitute the id from step 1 and pick a
--- name that is obviously demo data.
+--   a) Step 2 only. Two clean fleets, all trucks kept. Nothing else to do.
+--   b) The seed's three fleets instead. Delete both rows below, then run
+--      seed_demo_data.sql. DESTRUCTIVE: delete cascades from companies through
+--      trucks, service_visits, service_line_items, photos, quotes and invoices.
+--      Count what would go first:
 --
---   update public.companies set
---     name          = 'Windward Cartage',
---     contact_name  = 'Nalani Fisher',
---     contact_email = 'dispatch@windwardcartage.com',
---     contact_phone = '(808) 555-0165'
---   where id = 'PASTE-THE-ID-FROM-STEP-1';
+--        select
+--          (select count(*) from public.trucks t
+--             where t.company_id in ('9871b515-4f5c-4421-9370-10e7f67afb50',
+--                                    '199b1496-f6a4-4ad6-87c2-6a3c5c745f88')) as trucks,
+--          (select count(*) from public.service_visits v
+--             join public.trucks t on t.id = v.truck_id
+--             where t.company_id in ('9871b515-4f5c-4421-9370-10e7f67afb50',
+--                                    '199b1496-f6a4-4ad6-87c2-6a3c5c745f88')) as visits;
 --
--- Option B, remove it. DELETES CASCADE the whole way down. Only company_id lives
--- on companies' children directly; everything else hangs off the visit:
---
---   companies -> trucks (company_id)
---             -> service_visits (truck_id)
---                 -> service_line_items, photos, quotes, invoices (visit_id)
---
--- Every one of those is "on delete cascade", so deleting the company removes its
--- trucks, visits, line items, photos, quotes and invoices with it. Only do this
--- once you are certain nothing real is attached.
---
---   delete from public.companies where id = 'PASTE-THE-ID-FROM-STEP-1';
---
--- Prefer Option A unless you know the row is empty. Count what would go with it,
--- joining through trucks and visits, since none of these tables carry company_id:
---
---   select
---     (select count(*) from public.trucks t
---        where t.company_id = 'PASTE-THE-ID') as trucks,
---     (select count(*) from public.service_visits v
---        join public.trucks t on t.id = v.truck_id
---        where t.company_id = 'PASTE-THE-ID') as visits,
---     (select count(*) from public.quotes q
---        join public.service_visits v on v.id = q.visit_id
---        join public.trucks t on t.id = v.truck_id
---        where t.company_id = 'PASTE-THE-ID') as quotes,
---     (select count(*) from public.invoices i
---        join public.service_visits v on v.id = i.visit_id
---        join public.trucks t on t.id = v.truck_id
---        where t.company_id = 'PASTE-THE-ID') as invoices;
+--        delete from public.companies
+--        where id in ('9871b515-4f5c-4421-9370-10e7f67afb50',
+--                     '199b1496-f6a4-4ad6-87c2-6a3c5c745f88');
 
 -- ---------------------------------------------------------------------------
 -- STEP 5. Verify. Read-only.
 -- ---------------------------------------------------------------------------
--- Expect three companies, all reporting "seed", seven trucks in total, and no
--- address outside the 555 range or the three seed domains.
+-- After step 2: two rows, no joke names, every address on a company domain, every
+-- phone in the 555 range.
 
-select
-  c.name,
-  c.contact_name,
-  c.contact_email,
-  (select count(*) from public.trucks t where t.company_id = c.id) as trucks
+select name, contact_name, contact_email, contact_phone,
+       (select count(*) from public.trucks t where t.company_id = c.id) as trucks
 from public.companies c
-order by c.name;
+order by name;
