@@ -6,12 +6,42 @@ import { Button } from "@/components/ui/Button";
 import { useCreateCompany } from "@/hooks/useCompanies";
 import type { HawaiiCounty } from "@/types/database";
 
-// County-specific default GET tax rates. Editable per company.
-const COUNTY_DEFAULT_TAX_RATES: Record<HawaiiCounty, number> = {
+// Combined Hawaii GET by county: the state rate plus that county's surcharge, if
+// any. These carry over the assumptions already encoded here and are not a fresh
+// reading of the law. VERIFY before billing: surcharges are set by county
+// ordinance and change. The per-fleet reminder on the company page exists for
+// exactly this, and nothing here removes the need to confirm it.
+const COUNTY_COMBINED_GET_RATES: Record<HawaiiCounty, number> = {
   Hawaii: 4.5,
-  Honolulu: 4.712,
+  Honolulu: 4.5,
   Maui: 4.0,
   Kauai: 4.0,
+};
+
+// GET is owed on gross receipts, and tax passed on to the customer is itself a
+// receipt, so billing the combined rate leaves the operator short by the tax on
+// the tax. The maximum pass-on rate is r / (1 - r). That is where the familiar
+// 4.712% on a 4.5% county comes from: it is not a different tax, it is 4.5%
+// grossed up.
+//
+// Rounded to three decimals because companies.tax_rate is numeric(6, 3). 4.5
+// grosses up to 4.712 exactly; 4.0 gives 4.1666..., stored as 4.167.
+function maxPassOnRate(combinedPercent: number): number {
+  return (
+    Math.round((combinedPercent / (1 - combinedPercent / 100)) * 1000) / 1000
+  );
+}
+
+// Defaults are pass-on rates, one basis across all four counties. Until
+// 2026-09-15 Honolulu held a pass-on rate while the other three held combined
+// rates, so a quote for an Oahu fleet and a quote for a Maui fleet were computed
+// on different bases and only one of them covered the tax on the tax. Editable
+// per company.
+const COUNTY_DEFAULT_TAX_RATES: Record<HawaiiCounty, number> = {
+  Hawaii: maxPassOnRate(COUNTY_COMBINED_GET_RATES.Hawaii),
+  Honolulu: maxPassOnRate(COUNTY_COMBINED_GET_RATES.Honolulu),
+  Maui: maxPassOnRate(COUNTY_COMBINED_GET_RATES.Maui),
+  Kauai: maxPassOnRate(COUNTY_COMBINED_GET_RATES.Kauai),
 };
 
 const HAWAII_COUNTIES = ["Hawaii", "Honolulu", "Maui", "Kauai"] as const;
