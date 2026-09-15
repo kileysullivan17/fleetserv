@@ -67,7 +67,7 @@ export function PipelineColumn({
               "flex h-full min-h-[120px] items-center justify-center rounded-fs-sm border border-dashed text-xs transition-colors",
               isOver
                 ? "border-fs-navy-700 text-fs-navy-700"
-                : "border-fs-line-200 text-fs-ink-450"
+                : "border-fs-line-200 text-fs-ink-500"
             )}
           >
             {isOver ? "Drop to move here" : "No visits"}

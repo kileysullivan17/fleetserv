@@ -108,7 +108,7 @@ export function QuoteDetailPage() {
           <Link to="/quotes" className="font-medium text-fs-navy-700 hover:underline">
             Quotes
           </Link>
-          <span className="mx-2 text-fs-ink-450">/</span>
+          <span className="mx-2 text-fs-ink-500">/</span>
           <span className="text-fs-ink-500">{quoteDisplayNumber(quote.id)}</span>
         </nav>
 

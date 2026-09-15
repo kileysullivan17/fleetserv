@@ -60,7 +60,7 @@ export function CompanyDetailPage() {
         <Link to="/fleets" className="font-medium text-fs-navy-700 hover:underline">
           Fleets
         </Link>
-        <span className="mx-2 text-fs-ink-450">/</span>
+        <span className="mx-2 text-fs-ink-500">/</span>
         <span className="text-fs-ink-500">{company.name}</span>
       </nav>
 

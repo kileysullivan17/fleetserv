@@ -56,14 +56,14 @@ export function TruckDetailPage() {
         <Link to="/fleets" className="font-medium text-fs-navy-700 hover:underline">
           Fleets
         </Link>
-        <span className="mx-2 text-fs-ink-450">/</span>
+        <span className="mx-2 text-fs-ink-500">/</span>
         <Link
           to={`/fleets/${truck.company_id}`}
           className="font-medium text-fs-navy-700 hover:underline"
         >
           {company?.name ?? "Fleet"}
         </Link>
-        <span className="mx-2 text-fs-ink-450">/</span>
+        <span className="mx-2 text-fs-ink-500">/</span>
         <span className="text-fs-ink-500">Unit {truck.unit_number}</span>
       </nav>
 

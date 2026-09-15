@@ -208,6 +208,15 @@ dense for inline table actions, where the row itself is the target.
 `gray-400` and `gray-500` both land on `ink-500`. The obvious mapping for
 `gray-400` was `ink-450`, but `ink-450` measures 4.54:1 on white and 4.11:1 on
 `bg-100`, so it passes only on cards. `ink-500` clears both at 6.18:1 and 5.60:1.
+
+**`--fs-ink-450` is a white-surface token.** It was introduced in July to fix one
+failing pair on white and its 4.54:1 leaves no headroom, so on the `bg-100` app
+ground it drops to 4.11:1 and fails. Two pre-existing uses were caught this way,
+measured on the running app rather than found by reading: the pipeline column's
+empty state, and the breadcrumb separator on five detail pages. Both moved to
+`ink-500`. Use `ink-450` only on `#FFFFFF`; anything on the app ground needs
+`ink-500` or darker. Disabled controls are exempt, WCAG 1.4.3 excludes inactive
+components.
 Slates were all on the navy sidebar and took the navy tints instead.
 
 Two cases the blanket mapping would have got wrong, corrected by hand: the

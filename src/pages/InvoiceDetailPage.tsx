@@ -131,7 +131,7 @@ export function InvoiceDetailPage() {
           <Link to="/invoices" className="font-medium text-fs-navy-700 hover:underline">
             Invoices
           </Link>
-          <span className="mx-2 text-fs-ink-450">/</span>
+          <span className="mx-2 text-fs-ink-500">/</span>
           <span className="fs-money text-fs-ink-500">{invoice.invoice_number}</span>
         </nav>
 
