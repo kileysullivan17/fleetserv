@@ -33,6 +33,11 @@ export type Company = {
   billing_address: string;
   hawaii_county: HawaiiCounty;
   tax_rate: number;
+  // Set by migration 003. Optional so the app keeps working if it is deployed
+  // before the migration runs: the fields read as undefined, the reminder treats
+  // the fleet as unconfirmed, and it nags rather than silently hiding.
+  tax_rate_confirmed_at?: string | null;
+  tax_rate_confirmed_value?: number | null;
   created_at: string;
 }
 

@@ -6,6 +6,11 @@ interface TaxRateReminderBannerProps {
   taxRate: number;
   onConfirm: () => void;
   onSnooze: () => void;
+  // True while the attestation is being written to the fleet's row.
+  isConfirming?: boolean;
+  // Shown when that write fails. Without this the button would appear to do
+  // nothing, which is the worst way for an attestation to fail.
+  error?: Error | null;
 }
 
 // The actionable nag shown on a fleet whose tax rate has not been confirmed.
@@ -15,6 +20,8 @@ export function TaxRateReminderBanner({
   taxRate,
   onConfirm,
   onSnooze,
+  isConfirming = false,
+  error = null,
 }: TaxRateReminderBannerProps) {
   return (
     <div className="mb-6 flex items-start gap-3 rounded-lg border border-fs-danger/30 bg-fs-overdue-bg px-4 py-3">
@@ -41,13 +48,18 @@ export function TaxRateReminderBanner({
           verify the current rate, then confirm.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
-          <Button size="sm" onClick={onConfirm}>
-            The rate is correct
+          <Button size="sm" onClick={onConfirm} disabled={isConfirming}>
+            {isConfirming ? "Saving..." : "The rate is correct"}
           </Button>
           <Button size="sm" variant="secondary" onClick={onSnooze}>
             Remind me in 2 weeks
           </Button>
         </div>
+        {error && (
+          <p role="alert" className="mt-2 text-sm text-fs-danger">
+            That did not save, so the rate is still unconfirmed. {error.message}
+          </p>
+        )}
       </div>
     </div>
   );

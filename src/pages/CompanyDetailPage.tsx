@@ -20,7 +20,7 @@ export function CompanyDetailPage() {
   } = useCompany(companyId);
   const { data: trucks, isLoading: trucksLoading } =
     useTrucksByCompany(companyId);
-  const taxReminder = useTaxRateReminder(companyId);
+  const taxReminder = useTaxRateReminder(company);
 
   if (companyLoading) {
     return (
@@ -85,6 +85,8 @@ export function CompanyDetailPage() {
             taxRate={company.tax_rate}
             onConfirm={taxReminder.confirm}
             onSnooze={taxReminder.snooze}
+            isConfirming={taxReminder.isConfirming}
+            error={taxReminder.confirmError}
           />
         </div>
       )}
