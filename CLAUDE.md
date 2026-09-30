@@ -34,6 +34,10 @@ fleetserv/
       000_schema.sql                  # Enums, tables, indexes, photo bucket
       001_rls_policies.sql            # RLS: authenticated-only access
       002_invoice_number_sequence.sql # Atomic invoice number allocation
+      003_tax_rate_attestation.sql    # Tax rate confirmation on the company row
+      004_private_photos.sql          # photos.storage_path, backfilled from URLs
+      005_private_bucket.sql          # visit-photos bucket made private
+      006_drop_photo_storage_url.sql  # Drops the old public URL column
     seed_demo_data.sql                # Optional sample data (not run on deploy)
   index.html
   tailwind.config.ts
