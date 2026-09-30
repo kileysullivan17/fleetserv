@@ -62,10 +62,11 @@ Required in .env.local (local) and Vercel project settings (production/preview):
 - VITE_SUPABASE_URL
 - VITE_SUPABASE_ANON_KEY
 
-Optional:
-- VITE_SIGNUP_ACCESS_CODE: shared code required on the sign-up page. Ships in
-  the client bundle (a deterrent, not a secret). If unset, self sign-up is
-  disabled (fail safe).
+There is no self sign-up (removed 2026-09-30; see
+docs/adr/0001-private-photos-and-invite-only-access.md). Staff accounts are
+created by invitation from the Supabase dashboard, with "Allow new users to sign
+up" turned off. Set the invite redirect to /reset-password so a new user picks a
+password on arrival.
 
 ## Key dependencies
 

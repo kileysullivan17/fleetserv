@@ -49,14 +49,7 @@ export function LoginPage() {
     <AuthShell
       title="Sign in"
       subtitle="Access the FleetServ Hawaii workspace."
-      footer={
-        <>
-          Need an account?{" "}
-          <Link to="/signup" className="text-fs-navy-700 hover:underline">
-            Create one
-          </Link>
-        </>
-      }
+      footer={<>Accounts are by invitation. Ask your FleetServ admin for access.</>}
     >
       <form onSubmit={onSubmit} className="space-y-4" noValidate>
         <div>
