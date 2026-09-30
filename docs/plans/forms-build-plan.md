@@ -122,6 +122,10 @@ Done when: every existing photo still shows in the app and in the Service Report
 - `CLAUDE.md`: update the directory layout, the environment variables, and the migrations list.
 - Portfolio case study (separate repo, `~/Downloads/site`): only after Phases 1 to 4 are deployed and verified. It moves the inspection module past "specced", because the schema constraint it describes is resolved, and it carries the security disclosure from `CHANGELOG.md`. Keep the heading ids that `process.html` links to (`user-and-problem`, `prioritized-and-cut`, `judgment-call`, `how-ill-know`). Follow that repo's rules: state only what is true, no invented metrics, no em dashes.
 
+## Hosting assumption
+
+FleetServ runs on Supabase's free plan (decided 2026-09-30): it is a portfolio build with filler data and no paying operator. Free projects pause after about a week without traffic and must be restored by hand, so the live demo can be asleep when someone opens it. Moving to a paid plan, or to a paid auth and storage service, is a future-state need that starts when a real operator uses the app, and is recorded here rather than paid for now.
+
 ## Not in this plan
 
 Per-company access for customer logins, offline saving, the answer types planned for format version 2, and Incident Report access rules for real data.
