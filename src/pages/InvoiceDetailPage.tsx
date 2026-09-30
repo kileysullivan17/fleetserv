@@ -5,6 +5,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { DocumentArtifact } from "@/components/documents/DocumentArtifact";
 import { useInvoiceDetail } from "@/hooks/useInvoiceDetail";
 import { useMarkInvoiceExported } from "@/hooks/useMarkInvoiceExported";
+import { signPhotos } from "@/lib/photos";
 import { usePhotosByVisit } from "@/hooks/useVisitPhotos";
 import { buildInvoiceIif, downloadIif } from "@/lib/iif";
 import { downloadBlob } from "@/utils/downloadBlob";
@@ -77,13 +78,15 @@ export function InvoiceDetailPage() {
         import("@react-pdf/renderer"),
         import("@/components/visits/ServiceReportPdf"),
       ]);
+      // Sign fresh links at the moment of generation; the PDF embeds the bytes.
+      const freshPhotos = await signPhotos(photos ?? []);
       const blob = await pdf(
         <ServiceReportPdf
           visit={visit}
           truck={truck}
           company={company}
           lineItems={visit.service_line_items}
-          photos={photos ?? []}
+          photos={freshPhotos}
           preparedOn={formatDate(new Date().toISOString().slice(0, 10))}
         />
       ).toBlob();

@@ -17,6 +17,7 @@ import { useLineItemsByVisit } from "@/hooks/useLineItemsByVisit";
 import { useQuoteByVisit } from "@/hooks/useQuoteByVisit";
 import { useGenerateQuote } from "@/hooks/useGenerateQuote";
 import { useCreateInvoice } from "@/hooks/useCreateInvoice";
+import { signPhotos } from "@/lib/photos";
 import {
   usePhotosByVisit,
   useUploadVisitPhotos,
@@ -62,13 +63,15 @@ export function VisitDetailPage() {
         import("@react-pdf/renderer"),
         import("@/components/visits/ServiceReportPdf"),
       ]);
+      // Sign fresh links at the moment of generation; the PDF embeds the bytes.
+      const freshPhotos = await signPhotos(photos ?? []);
       const blob = await pdf(
         <ServiceReportPdf
           visit={visit}
           truck={truck}
           company={company}
           lineItems={lineItems ?? []}
-          photos={photos ?? []}
+          photos={freshPhotos}
           preparedOn={formatDate(new Date().toISOString().slice(0, 10))}
         />
       ).toBlob();

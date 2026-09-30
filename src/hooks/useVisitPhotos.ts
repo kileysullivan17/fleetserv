@@ -1,6 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { db } from "@/lib/supabase";
-import { uploadVisitPhoto } from "@/lib/photos";
+import {
+  SIGNED_URL_TTL_SECONDS,
+  signPhotos,
+  uploadVisitPhoto,
+  type SignedPhoto,
+} from "@/lib/photos";
 import type { Photo } from "@/types/database";
 
 export const photoKeys = {
@@ -11,14 +16,17 @@ export function usePhotosByVisit(visitId: string | undefined) {
   return useQuery({
     queryKey: photoKeys.byVisit(visitId ?? ""),
     enabled: Boolean(visitId),
-    queryFn: async (): Promise<Photo[]> => {
+    // Signed links expire, so refresh well before they do.
+    staleTime: (SIGNED_URL_TTL_SECONDS * 1000) / 2,
+    refetchInterval: (SIGNED_URL_TTL_SECONDS * 1000) / 2,
+    queryFn: async (): Promise<SignedPhoto[]> => {
       const { data, error } = await db("photos")
         .select("*")
         .eq("visit_id", visitId as string)
         .order("uploaded_at", { ascending: true });
 
       if (error) throw error;
-      return data ?? [];
+      return signPhotos(data ?? []);
     },
   });
 }

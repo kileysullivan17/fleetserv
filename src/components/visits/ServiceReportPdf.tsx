@@ -8,12 +8,12 @@ import {
 } from "@react-pdf/renderer";
 import type {
   Company,
-  Photo,
   ServiceLineItem,
   ServiceVisit,
   Truck,
 } from "@/types/database";
 import { SERVICE_TYPE_LABELS } from "@/utils/format";
+import type { SignedPhoto } from "@/lib/photos";
 
 const NAVY = "#1B2B45";
 const TEAL = "#0E8C7A";
@@ -208,7 +208,7 @@ export interface ServiceReportPdfProps {
   truck: Truck;
   company: Company;
   lineItems: ServiceLineItem[];
-  photos: Photo[];
+  photos: SignedPhoto[];
   // Date the report was generated, formatted by the caller so this stays a
   // pure render.
   preparedOn: string;
@@ -330,7 +330,7 @@ export function ServiceReportPdf({
             <View style={styles.photoGrid}>
               {photos.map((photo) => (
                 <View key={photo.id} style={styles.photoItem} wrap={false}>
-                  <Image src={photo.storage_url} style={styles.photoImage} />
+                  <Image src={photo.signed_url} style={styles.photoImage} />
                   {photo.caption ? (
                     <Text style={styles.photoCaption}>{photo.caption}</Text>
                   ) : null}

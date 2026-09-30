@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Photo } from "@/types/database";
+import type { SignedPhoto } from "@/lib/photos";
 
 interface PhotoGridProps {
-  photos: Photo[];
+  photos: SignedPhoto[];
 }
 
 export function PhotoGrid({ photos }: PhotoGridProps) {
@@ -45,7 +45,7 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
           >
             <div className="aspect-video bg-fs-bg overflow-hidden">
               <img
-                src={photo.storage_url}
+                src={photo.signed_url}
                 alt={photo.caption || "Visit photo"}
                 loading="lazy"
                 className="h-full w-full object-cover transition-transform group-hover:scale-105"
@@ -115,7 +115,7 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={active.storage_url}
+              src={active.signed_url}
               alt={active.caption || "Visit photo"}
               className="max-h-[80vh] w-auto rounded-lg object-contain"
             />

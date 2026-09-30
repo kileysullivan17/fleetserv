@@ -78,7 +78,9 @@ export type ServiceLineItem = {
 export type Photo = {
   id: string;
   visit_id: string;
-  storage_url: string;
+  // Path inside the private visit-photos bucket. Never a URL: display links
+  // are signed on demand by signPhotos() in lib/photos.ts and expire.
+  storage_path: string;
   caption: string;
   uploaded_at: string;
 }
