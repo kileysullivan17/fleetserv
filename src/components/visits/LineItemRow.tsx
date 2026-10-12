@@ -6,6 +6,7 @@ import type {
 import {
   FLUID_TYPES,
   FUEL_TYPES,
+  PLUG_TYPES,
   INSPECTION_CATEGORIES,
   OIL_GRADES,
   SERVICE_TYPE_OPTIONS,
@@ -107,8 +108,14 @@ export function LineItemRow({
     item.service_type === "oil_change" ||
     item.service_type === "fluid" ||
     item.service_type === "fuel" ||
+    item.service_type === "spark_plugs" ||
     item.service_type === "add_on";
-  const qtyLabel = item.service_type === "fuel" ? "gal" : item.unit || "ea";
+  const qtyLabel =
+    item.service_type === "fuel"
+      ? "gal"
+      : item.service_type === "spark_plugs"
+        ? "ea"
+        : item.unit || "ea";
 
   return (
     <div className="rounded-fs border border-fs-line-200 bg-fs-surface p-4 shadow-fs-card">
@@ -318,6 +325,52 @@ export function LineItemRow({
             <div>
               <label htmlFor={`${base}.unit_price`} className="form-label">
                 Price per gallon
+              </label>
+              <input
+                id={`${base}.unit_price`}
+                type="number"
+                step="0.01"
+                min="0"
+                className="form-input fs-money"
+                {...register(`${base}.unit_price`)}
+              />
+              {itemErrors?.unit_price && (
+                <p className="form-error">{itemErrors.unit_price.message}</p>
+              )}
+            </div>
+          </div>
+        )}
+
+        {item.service_type === "spark_plugs" && (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div>
+              <label htmlFor={`${base}.plug_type`} className="form-label">
+                Plug type
+              </label>
+              <select
+                id={`${base}.plug_type`}
+                className="form-select"
+                {...register(`${base}.plug_type`)}
+              >
+                {PLUG_TYPES.map((plug) => (
+                  <option key={plug} value={plug}>
+                    {plug}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <QuantityStepper
+              base={base}
+              label="Plugs"
+              value={item.quantity}
+              step={1}
+              register={register}
+              setValue={setValue}
+              error={itemErrors?.quantity?.message}
+            />
+            <div>
+              <label htmlFor={`${base}.unit_price`} className="form-label">
+                Price per plug
               </label>
               <input
                 id={`${base}.unit_price`}

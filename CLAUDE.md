@@ -38,6 +38,7 @@ fleetserv/
       004_private_photos.sql          # photos.storage_path, backfilled from URLs
       005_private_bucket.sql          # visit-photos bucket made private
       006_drop_photo_storage_url.sql  # Drops the old public URL column
+      007_spark_plugs_service_type.sql # Adds spark_plugs to the service_type enum
     seed_demo_data.sql                # Optional sample data (not run on deploy)
   index.html
   tailwind.config.ts

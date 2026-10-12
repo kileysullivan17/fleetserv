@@ -7,6 +7,7 @@ const SERVICE_TYPES: [ServiceType, ...ServiceType[]] = [
   "fuel",
   "tire_air",
   "visual_inspection",
+  "spark_plugs",
   "add_on",
 ];
 
@@ -18,6 +19,7 @@ export const lineItemSchema = z
     oil_grade: z.string(),
     fluid_type: z.string(),
     fuel_type: z.string(),
+    plug_type: z.string(),
     quantity: z.coerce.number(),
     unit: z.string(),
     unit_price: z.coerce.number(),
@@ -39,6 +41,7 @@ export const lineItemSchema = z
       item.service_type === "oil_change" ||
       item.service_type === "fluid" ||
       item.service_type === "fuel" ||
+      item.service_type === "spark_plugs" ||
       item.service_type === "add_on";
 
     if (needsQuantity && item.quantity <= 0) {

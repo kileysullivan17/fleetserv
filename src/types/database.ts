@@ -16,6 +16,7 @@ export type ServiceType =
   | "fuel"
   | "tire_air"
   | "visual_inspection"
+  | "spark_plugs"
   | "add_on";
 
 export type QuoteStatus = "draft" | "sent" | "accepted" | "declined";

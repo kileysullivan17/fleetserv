@@ -23,6 +23,9 @@ export const FLUID_TYPES = [
 
 export const FUEL_TYPES = ["Diesel", "Gas", "DEF"] as const;
 
+// Electrode material: the usual way a plug is specified on a work order.
+export const PLUG_TYPES = ["Copper", "Platinum", "Iridium"] as const;
+
 export const VOLUME_UNITS = ["quarts", "gallons"] as const;
 
 export const INSPECTION_CATEGORIES = [
@@ -43,6 +46,7 @@ export const SERVICE_TYPE_OPTIONS: { value: ServiceType; label: string }[] = [
   { value: "fuel", label: "Fuel" },
   { value: "tire_air", label: "Tire Air" },
   { value: "visual_inspection", label: "Visual Inspection" },
+  { value: "spark_plugs", label: "Spark Plugs" },
   { value: "add_on", label: "Add-On" },
 ];
 
@@ -53,6 +57,7 @@ export interface LineItemFormValues {
   oil_grade: string;
   fluid_type: string;
   fuel_type: string;
+  plug_type: string;
   quantity: number;
   unit: string;
   unit_price: number;
@@ -71,6 +76,7 @@ export function defaultLineItem(
     oil_grade: OIL_GRADES[0],
     fluid_type: FLUID_TYPES[0],
     fuel_type: FUEL_TYPES[0],
+    plug_type: PLUG_TYPES[0],
     quantity: 1,
     unit: "quarts",
     unit_price: 0,
@@ -130,6 +136,15 @@ export function mapLineItemToDb(item: LineItemFormValues): LineItemInsert {
         description: `Fuel: ${item.fuel_type}`,
         quantity: item.quantity,
         unit: "gallons",
+        unit_price: price,
+        subtotal: item.quantity * price,
+      };
+    case "spark_plugs":
+      return {
+        service_type: "spark_plugs",
+        description: `Spark plugs: ${item.plug_type}`,
+        quantity: item.quantity,
+        unit: "each",
         unit_price: price,
         subtotal: item.quantity * price,
       };

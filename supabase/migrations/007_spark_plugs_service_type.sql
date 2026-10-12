@@ -1,0 +1,21 @@
+-- FleetServ Hawaii: spark plugs become a service type
+-- 007_spark_plugs_service_type.sql
+--
+-- service_line_items.service_type is the service_type enum from 000, so a new
+-- kind of line item needs a new enum value before the app can save one. The
+-- app change that ships with this migration adds "Spark Plugs" to the visit
+-- form: a plug type, a plug count, and a price per plug, saved as
+-- "Spark plugs: <type>" with the unit "each".
+--
+-- Run this before deploying that app change. Until it runs, saving a visit
+-- with a spark plug line fails with an invalid enum value, and every other
+-- service type keeps working.
+--
+-- Safe to run twice: "if not exists" makes a second run a no-op. Postgres
+-- cannot remove an enum value, so rolling back means leaving the value in
+-- place unused; no existing row is touched.
+--
+-- No RLS change is needed: the policies in 001 are row level and do not name
+-- service types.
+
+alter type public.service_type add value if not exists 'spark_plugs';

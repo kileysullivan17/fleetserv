@@ -39,6 +39,7 @@ export const SERVICE_TYPE_LABELS: Record<string, string> = {
   fuel: "Fuel",
   tire_air: "Tire Air",
   visual_inspection: "Visual Inspection",
+  spark_plugs: "Spark Plugs",
   add_on: "Add-On",
 };
 

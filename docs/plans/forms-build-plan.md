@@ -53,7 +53,7 @@ Done when: every existing photo still shows in the app and in the Service Report
 
 ### Step 2.2 Template storage and version pinning
 
-- `supabase/migrations/007_form_templates.sql`: table `form_templates` (`id uuid`, `template_id text`, `version int`, `form_type text`, `definition jsonb`, `created_at`), `unique (template_id, version)`.
+- `supabase/migrations/008_form_templates.sql` (renumbered from 007, which became the spark plugs service type on 2026-10-12): table `form_templates` (`id uuid`, `template_id text`, `version int`, `form_type text`, `definition jsonb`, `created_at`), `unique (template_id, version)`.
 - A trigger that rejects any update to a `form_templates` row once a Form references it. Editing a used template means inserting the next version.
 - RLS in the same authenticated pattern as 001.
 
@@ -67,7 +67,7 @@ Done when: every existing photo still shows in the app and in the Service Report
 
 ### Step 3.1 Schema
 
-`supabase/migrations/008_forms.sql`:
+`supabase/migrations/009_forms.sql` (renumbered from 008):
 
 - `forms`: `id`, `visit_id`, `form_template_id` (the pinned version's row), `status` (`draft`, `completed`), `completed_at`, `created_at`.
 - `form_responses`: `id uuid` supplied by the client (no default), `form_id`, `item_id text`, `value jsonb`, `note text`, `unique (form_id, item_id)`.
