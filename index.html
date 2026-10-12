@@ -4,6 +4,18 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Apply the stored theme before first paint, so a dark choice never
+         flashes light. Mirrors src/lib/theme.ts; no stored value means System,
+         which tokens.css handles with prefers-color-scheme. -->
+    <script>
+      try {
+        var t = localStorage.getItem("fleetserv.theme");
+        if (t === "light" || t === "dark") {
+          document.documentElement.setAttribute("data-theme", t);
+        }
+      } catch (e) {}
+    </script>
     <title>FleetServ Hawaii</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

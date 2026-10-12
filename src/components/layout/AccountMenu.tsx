@@ -2,13 +2,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "@/hooks/useTheme";
+import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme";
 import { AccountSettingsModal } from "@/components/auth/AccountSettingsModal";
+import { cn } from "@/utils/cn";
 
-// The sidebar-footer avatar. Clicking it opens a menu with account settings
-// (display name + password) and sign out. onItemSelect lets the caller close
-// the mobile drawer when the user acts.
+// The sidebar-footer avatar. Clicking it opens a menu with the theme choice,
+// account settings (display name + password) and sign out. onItemSelect lets
+// the caller close the mobile drawer when the user acts.
 export function AccountMenu({ onItemSelect }: { onItemSelect?: () => void }) {
   const { session, signOut } = useAuth();
+  const { preference, setTheme } = useTheme();
   const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
 
@@ -70,8 +74,38 @@ export function AccountMenu({ onItemSelect }: { onItemSelect?: () => void }) {
               <p className="truncate text-xs text-fs-ink-500">{email}</p>
             </div>
             <DropdownMenu.Separator className="my-1 h-px bg-fs-line-200" />
+            <DropdownMenu.Label
+              id="fs-theme-label"
+              className="px-3 pb-1.5 pt-2 text-2xs font-bold uppercase tracking-[0.08em] text-fs-ink-600"
+            >
+              Theme
+            </DropdownMenu.Label>
+            <DropdownMenu.RadioGroup
+              aria-labelledby="fs-theme-label"
+              value={preference}
+              onValueChange={(value) => setTheme(value as ThemePreference)}
+              className="mx-2 mb-1 flex gap-1 rounded-fs bg-fs-tint p-1"
+            >
+              {THEME_OPTIONS.map((option) => (
+                <DropdownMenu.RadioItem
+                  key={option.value}
+                  value={option.value}
+                  // Keep the menu open so the change is visible in place.
+                  onSelect={(e) => e.preventDefault()}
+                  className={cn(
+                    "flex min-h-[44px] flex-1 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-fs-sm text-xs font-semibold text-fs-ink-600 outline-none",
+                    "data-[highlighted]:ring-2 data-[highlighted]:ring-fs-focus",
+                    "data-[state=checked]:bg-fs-selected data-[state=checked]:text-fs-selected-fg"
+                  )}
+                >
+                  <ThemeIcon value={option.value} />
+                  {option.label}
+                </DropdownMenu.RadioItem>
+              ))}
+            </DropdownMenu.RadioGroup>
+            <DropdownMenu.Separator className="my-1 h-px bg-fs-line-200" />
             <DropdownMenu.Item
-              className="flex cursor-pointer items-center gap-2 rounded px-3 py-2 text-sm text-fs-ink-900 outline-none data-[highlighted]:bg-fs-bg"
+              className="flex min-h-[44px] cursor-pointer items-center gap-2 rounded px-3 py-2 text-sm text-fs-ink-900 outline-none data-[highlighted]:bg-fs-bg"
               onSelect={() => setSettingsOpen(true)}
             >
               <svg
@@ -88,7 +122,7 @@ export function AccountMenu({ onItemSelect }: { onItemSelect?: () => void }) {
               Account settings
             </DropdownMenu.Item>
             <DropdownMenu.Item
-              className="flex cursor-pointer items-center gap-2 rounded px-3 py-2 text-sm text-fs-danger outline-none data-[highlighted]:bg-fs-overdue-bg"
+              className="flex min-h-[44px] cursor-pointer items-center gap-2 rounded px-3 py-2 text-sm text-fs-danger outline-none data-[highlighted]:bg-fs-overdue-bg"
               onSelect={() => void onSignOut()}
             >
               <svg
@@ -111,5 +145,33 @@ export function AccountMenu({ onItemSelect }: { onItemSelect?: () => void }) {
 
       <AccountSettingsModal open={settingsOpen} onOpenChange={setSettingsOpen} />
     </>
+  );
+}
+
+// Sun, moon, and screen. Decorative: the label beside each carries the name.
+function ThemeIcon({ value }: { value: ThemePreference }) {
+  return (
+    <svg
+      className="h-4 w-4 shrink-0"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden="true"
+    >
+      {value === "light" && (
+        <>
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        </>
+      )}
+      {value === "dark" && <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />}
+      {value === "system" && (
+        <>
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <path d="M8 21h8M12 17v4" />
+        </>
+      )}
+    </svg>
   );
 }
