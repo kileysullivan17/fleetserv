@@ -114,7 +114,7 @@ export function InvoiceDetailPage() {
         </p>
         <Link
           to="/invoices"
-          className="mt-2 inline-block text-sm text-fs-navy-700 hover:underline"
+          className="mt-2 inline-block text-sm text-fs-link hover:underline"
         >
           Back to Invoices
         </Link>
@@ -131,7 +131,7 @@ export function InvoiceDetailPage() {
     <div className="mx-auto max-w-xl">
       <div className="fs-app-chrome">
         <nav className="mb-3 text-sm" aria-label="Breadcrumb">
-          <Link to="/invoices" className="font-medium text-fs-navy-700 hover:underline">
+          <Link to="/invoices" className="font-medium text-fs-link hover:underline">
             Invoices
           </Link>
           <span className="mx-2 text-fs-ink-500">/</span>
@@ -217,7 +217,7 @@ export function InvoiceDetailPage() {
         {visit && (
           <Link
             to={`/visits/${visit.id}`}
-            className="font-medium text-fs-navy-700 hover:underline"
+            className="font-medium text-fs-link hover:underline"
           >
             View the source service visit
           </Link>
@@ -225,7 +225,7 @@ export function InvoiceDetailPage() {
         {invoice.quote_id && (
           <Link
             to={`/quotes/${invoice.quote_id}`}
-            className="font-medium text-fs-navy-700 hover:underline"
+            className="font-medium text-fs-link hover:underline"
           >
             View the source quote
           </Link>

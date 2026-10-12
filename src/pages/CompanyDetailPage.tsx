@@ -38,7 +38,7 @@ export function CompanyDetailPage() {
         </p>
         <Link
           to="/fleets"
-          className="mt-2 inline-block text-sm text-fs-navy-700 hover:underline"
+          className="mt-2 inline-block text-sm text-fs-link hover:underline"
         >
           Back to Fleets
         </Link>
@@ -57,7 +57,7 @@ export function CompanyDetailPage() {
   return (
     <div className="mx-auto max-w-2xl lg:max-w-4xl">
       <nav className="mb-3 text-sm" aria-label="Breadcrumb">
-        <Link to="/fleets" className="font-medium text-fs-navy-700 hover:underline">
+        <Link to="/fleets" className="font-medium text-fs-link hover:underline">
           Fleets
         </Link>
         <span className="mx-2 text-fs-ink-500">/</span>
@@ -92,9 +92,9 @@ export function CompanyDetailPage() {
       )}
 
       {/* Contact card */}
-      <div className="mt-4 rounded-fs border border-fs-line-200 bg-white p-4 shadow-fs-card">
+      <div className="mt-4 rounded-fs border border-fs-line-200 bg-fs-surface p-4 shadow-fs-card">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-fs-navy-100 text-[15px] font-bold text-fs-navy-900">
+          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-fs-tag text-[15px] font-bold text-fs-strong">
             {initials || "?"}
           </div>
           <div className="min-w-0">
@@ -158,10 +158,10 @@ export function CompanyDetailPage() {
             <Link
               key={truck.id}
               to={`/fleets/${companyId}/trucks/${truck.id}`}
-              className="block rounded-fs border border-fs-line-200 bg-white p-3.5 shadow-fs-card hover:border-fs-navy-700/40"
+              className="block rounded-fs border border-fs-line-200 bg-fs-surface p-3.5 shadow-fs-card hover:border-fs-focus/40"
             >
               <div className="flex items-center gap-2">
-                <span className="fs-money rounded-fs-sm bg-fs-navy-100 px-2 py-0.5 text-xs font-bold text-fs-navy-900">
+                <span className="fs-money rounded-fs-sm bg-fs-tag px-2 py-0.5 text-xs font-bold text-fs-strong">
                   UNIT {truck.unit_number}
                 </span>
                 <span className="min-w-0 flex-1 truncate font-semibold text-fs-ink-900">
@@ -209,7 +209,7 @@ function ContactAction({
   return (
     <a
       href={href}
-      className={`${base} border-fs-line-300 text-fs-navy-700 hover:bg-fs-navy-50`}
+      className={`${base} border-fs-line-300 text-fs-link hover:bg-fs-tint`}
     >
       {label}
     </a>

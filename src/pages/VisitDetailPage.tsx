@@ -137,7 +137,7 @@ export function VisitDetailPage() {
         </p>
         <Link
           to="/visits"
-          className="mt-2 inline-block text-sm text-fs-navy-700 hover:underline"
+          className="mt-2 inline-block text-sm text-fs-link hover:underline"
         >
           Back to Service Visits
         </Link>
@@ -151,7 +151,7 @@ export function VisitDetailPage() {
   return (
     <div>
       <nav className="mb-4 text-sm" aria-label="Breadcrumb">
-        <Link to="/visits" className="text-fs-navy-700 hover:underline">
+        <Link to="/visits" className="text-fs-link hover:underline">
           Service Visits
         </Link>
         <span className="mx-2 text-fs-ink-500">/</span>

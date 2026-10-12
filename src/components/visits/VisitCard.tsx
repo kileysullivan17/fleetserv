@@ -26,8 +26,8 @@ export function VisitCard({ visit, onOpen, overlay = false }: VisitCardProps) {
         if (!isDragging) onOpen(visit.id);
       }}
       className={cn(
-        "cursor-grab select-none rounded-fs border border-fs-line-200 bg-white p-3 shadow-fs-card",
-        "transition-shadow hover:border-fs-navy-700/40 hover:shadow-card-hover",
+        "cursor-grab select-none rounded-fs border border-fs-line-200 bg-fs-surface p-3 shadow-fs-card",
+        "transition-shadow hover:border-fs-focus/40 hover:shadow-card-hover",
         isDragging && "opacity-40",
         overlay && "rotate-2 cursor-grabbing shadow-card-hover"
       )}

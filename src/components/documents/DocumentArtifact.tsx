@@ -44,7 +44,7 @@ export function DocumentArtifact({
     : "Estimate based on the inspection of this vehicle. Approve by reply, text, or signature. Pricing valid through the date above.";
 
   return (
-    <div className="fs-doc relative rounded-fs border border-fs-line-200 bg-white p-5 shadow-[0_2px_8px_rgba(13,30,45,0.08)] sm:p-7">
+    <div className="fs-doc fs-light relative rounded-fs border border-fs-line-200 bg-fs-surface p-5 shadow-[0_2px_8px_rgba(13,30,45,0.08)] sm:p-7">
       {paid && (
         <div className="pointer-events-none absolute right-8 top-52 -rotate-12 rounded-lg border-[3px] border-fs-paid-bg bg-white/70 px-4 py-1 text-2xl font-extrabold tracking-[0.18em] text-fs-paid-bg opacity-90">
           PAID
@@ -62,7 +62,7 @@ export function DocumentArtifact({
           </div>
         </div>
         <div className="text-right">
-          <div className="text-[17px] font-extrabold leading-none tracking-[0.1em] text-fs-navy-900">
+          <div className="text-[17px] font-extrabold leading-none tracking-[0.1em] text-fs-strong">
             {docTitle}
           </div>
           <div className="fs-money mt-1 text-xs font-semibold text-fs-ink-900">
@@ -76,7 +76,7 @@ export function DocumentArtifact({
         </div>
       </div>
 
-      <div className="my-3 h-[2.5px] bg-fs-navy-900" />
+      <div className="my-3 h-[2.5px] bg-fs-rule" />
 
       {/* Bill to + vehicle */}
       <div className="flex gap-5">
@@ -157,11 +157,11 @@ export function DocumentArtifact({
             {formatCurrency(taxAmount)}
           </span>
         </div>
-        <div className="mt-1 flex w-52 items-center justify-between border-t-2 border-fs-navy-900 pt-1.5">
-          <span className="text-[10.5px] font-extrabold uppercase tracking-[0.1em] text-fs-navy-900">
+        <div className="mt-1 flex w-52 items-center justify-between border-t-2 border-fs-rule pt-1.5">
+          <span className="text-[10.5px] font-extrabold uppercase tracking-[0.1em] text-fs-strong">
             {totalLabel}
           </span>
-          <span className="fs-money text-[19px] font-bold text-fs-navy-900">
+          <span className="fs-money text-[19px] font-bold text-fs-strong">
             {formatCurrency(total)}
           </span>
         </div>

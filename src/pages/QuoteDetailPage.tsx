@@ -86,7 +86,7 @@ export function QuoteDetailPage() {
         </p>
         <Link
           to="/quotes"
-          className="mt-2 inline-block text-sm text-fs-navy-700 hover:underline"
+          className="mt-2 inline-block text-sm text-fs-link hover:underline"
         >
           Back to Quotes
         </Link>
@@ -105,7 +105,7 @@ export function QuoteDetailPage() {
       {/* App chrome: hidden in print, the artifact below is what prints. */}
       <div className="fs-app-chrome">
         <nav className="mb-3 text-sm" aria-label="Breadcrumb">
-          <Link to="/quotes" className="font-medium text-fs-navy-700 hover:underline">
+          <Link to="/quotes" className="font-medium text-fs-link hover:underline">
             Quotes
           </Link>
           <span className="mx-2 text-fs-ink-500">/</span>
@@ -180,7 +180,7 @@ export function QuoteDetailPage() {
         <p className="fs-app-chrome mt-4 text-sm">
           <Link
             to={`/visits/${visit.id}`}
-            className="font-medium text-fs-navy-700 hover:underline"
+            className="font-medium text-fs-link hover:underline"
           >
             View the source service visit
           </Link>

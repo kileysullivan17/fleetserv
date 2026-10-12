@@ -118,7 +118,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
         <Dialog.Overlay className="fixed inset-0 z-40 bg-fs-navy-950/40 backdrop-blur-[2px]" />
         <Dialog.Content
           onKeyDown={onKeyDown}
-          className="fixed left-1/2 top-24 z-50 w-full max-w-xl -translate-x-1/2 rounded-lg bg-white shadow-xl border border-fs-line-200 overflow-hidden"
+          className="fixed left-1/2 top-24 z-50 w-full max-w-xl -translate-x-1/2 rounded-lg bg-fs-surface shadow-xl border border-fs-line-200 overflow-hidden"
         >
           <Dialog.Title className="sr-only">Search</Dialog.Title>
           <Dialog.Description className="sr-only">
@@ -148,7 +148,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
             />
             {isFetching && (
               <svg
-                className="w-4 h-4 animate-spin text-fs-navy-700 shrink-0"
+                className="w-4 h-4 animate-spin text-fs-link shrink-0"
                 viewBox="0 0 24 24"
                 fill="none"
                 aria-hidden="true"

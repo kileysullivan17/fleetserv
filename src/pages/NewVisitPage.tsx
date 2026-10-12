@@ -118,7 +118,7 @@ export function NewVisitPage() {
   return (
     <div className="max-w-4xl">
       <nav className="mb-4 text-sm" aria-label="Breadcrumb">
-        <Link to="/visits" className="text-fs-navy-700 hover:underline">
+        <Link to="/visits" className="text-fs-link hover:underline">
           Service Visits
         </Link>
         <span className="mx-2 text-fs-ink-500">/</span>
@@ -291,18 +291,18 @@ export function NewVisitPage() {
 
           {/* Desktop rail: totals + customer context (board 1f) */}
           <aside className="mt-6 hidden lg:sticky lg:top-6 lg:mt-0 lg:block">
-            <div className="rounded-fs border border-fs-line-200 bg-white p-4 shadow-fs-card">
+            <div className="rounded-fs border border-fs-line-200 bg-fs-surface p-4 shadow-fs-card">
               <div className="flex items-baseline justify-between">
                 <span className="text-sm text-fs-ink-500">Subtotal</span>
                 <span className="fs-money text-sm font-semibold text-fs-ink-900">
                   {formatCurrency(visitTotal)}
                 </span>
               </div>
-              <div className="mt-3 flex items-center justify-between border-t-2 border-fs-navy-900 pt-3">
+              <div className="mt-3 flex items-center justify-between border-t-2 border-fs-rule pt-3">
                 <span className="text-xs font-extrabold uppercase tracking-[0.1em] text-fs-ink-900">
                   Visit total
                 </span>
-                <span className="fs-money text-2xl font-bold text-fs-navy-900">
+                <span className="fs-money text-2xl font-bold text-fs-strong">
                   {formatCurrency(visitTotal)}
                 </span>
               </div>
@@ -326,7 +326,7 @@ export function NewVisitPage() {
               </Button>
             </div>
 
-            <div className="mt-4 rounded-fs border border-fs-line-200 bg-white p-4 shadow-fs-card">
+            <div className="mt-4 rounded-fs border border-fs-line-200 bg-fs-surface p-4 shadow-fs-card">
               <div className="text-[10.5px] font-bold uppercase tracking-[0.13em] text-fs-ink-500">
                 Customer &amp; vehicle
               </div>
@@ -355,7 +355,7 @@ export function NewVisitPage() {
         {/* Mobile pinned totals above the thumb-zone primary button. GET is
             itemized on the quote (per-company rate applied at quote
             generation), not on this pre-tax visit builder. */}
-        <div className="sticky bottom-0 z-10 -mx-4 mt-6 border-t border-fs-line-300 bg-white px-4 pb-5 pt-3 shadow-[0_-6px_16px_rgba(13,30,45,0.06)] lg:hidden">
+        <div className="sticky bottom-0 z-10 -mx-4 mt-6 border-t border-fs-line-300 bg-fs-surface px-4 pb-5 pt-3 shadow-[0_-6px_16px_rgba(13,30,45,0.06)] lg:hidden">
           <div className="mx-auto max-w-4xl">
             <div className="flex items-baseline justify-between">
               <span className="text-sm text-fs-ink-500">Subtotal</span>
@@ -363,11 +363,11 @@ export function NewVisitPage() {
                 {formatCurrency(visitTotal)}
               </span>
             </div>
-            <div className="mt-2 flex items-center justify-between border-t-2 border-fs-navy-900 pt-2">
+            <div className="mt-2 flex items-center justify-between border-t-2 border-fs-rule pt-2">
               <span className="text-xs font-extrabold uppercase tracking-[0.1em] text-fs-ink-900">
                 Visit total
               </span>
-              <span className="fs-money text-2xl font-bold text-fs-navy-900">
+              <span className="fs-money text-2xl font-bold text-fs-strong">
                 {formatCurrency(visitTotal)}
               </span>
             </div>

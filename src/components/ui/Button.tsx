@@ -3,18 +3,18 @@ import { cn } from "@/utils/cn";
 type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 type ButtonSize = "sm" | "md" | "lg";
 
-// Primary action is navy-900, not teal. Teal #22B597 is the brand mark and
-// active nav on navy only: it carries white at 2.6:1 and cannot back a label.
-// See design/tokens.css.
+// Primary is the --fs-primary role: navy-900 with white text in light, and
+// teal-500 with navy-950 text in dark (6.8:1). Teal never backs white text:
+// it carries white at 2.6:1. Roles and values live in tokens.css.
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-fs-navy-900 text-white hover:bg-fs-navy-800 focus-visible:ring-fs-navy-700",
+    "bg-fs-primary text-fs-primary-fg hover:bg-fs-primary-hover focus-visible:ring-fs-focus",
   secondary:
-    "bg-fs-surface text-fs-navy-900 border border-fs-line-300 hover:bg-fs-navy-50 focus-visible:ring-fs-navy-700",
+    "bg-fs-surface text-fs-strong border border-fs-line-300 hover:bg-fs-tint focus-visible:ring-fs-focus",
   ghost:
-    "text-fs-navy-900 hover:bg-fs-navy-50 focus-visible:ring-fs-navy-700",
+    "text-fs-strong hover:bg-fs-tint focus-visible:ring-fs-focus",
   danger:
-    "bg-fs-danger text-white hover:bg-fs-danger-hover focus-visible:ring-fs-danger",
+    "bg-fs-danger-solid text-white hover:bg-fs-danger-hover focus-visible:ring-fs-danger",
 };
 
 // 44px is the tap-target floor (--fs-touch-min): this is quoted in the yard,

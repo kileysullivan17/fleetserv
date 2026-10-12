@@ -66,7 +66,7 @@ export function ResetPasswordPage() {
       <AuthShell
         title="This link is not valid"
         footer={
-          <Link to="/forgot-password" className="text-fs-navy-700 hover:underline">
+          <Link to="/forgot-password" className="text-fs-link hover:underline">
             Request a new link
           </Link>
         }

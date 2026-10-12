@@ -42,7 +42,7 @@ export function TruckDetailPage() {
         </p>
         <Link
           to={companyId ? `/fleets/${companyId}` : "/fleets"}
-          className="mt-2 inline-block text-sm text-fs-navy-700 hover:underline"
+          className="mt-2 inline-block text-sm text-fs-link hover:underline"
         >
           Back to Fleet
         </Link>
@@ -53,13 +53,13 @@ export function TruckDetailPage() {
   return (
     <div className="mx-auto max-w-2xl lg:max-w-4xl">
       <nav className="mb-3 text-sm" aria-label="Breadcrumb">
-        <Link to="/fleets" className="font-medium text-fs-navy-700 hover:underline">
+        <Link to="/fleets" className="font-medium text-fs-link hover:underline">
           Fleets
         </Link>
         <span className="mx-2 text-fs-ink-500">/</span>
         <Link
           to={`/fleets/${truck.company_id}`}
-          className="font-medium text-fs-navy-700 hover:underline"
+          className="font-medium text-fs-link hover:underline"
         >
           {company?.name ?? "Fleet"}
         </Link>
@@ -69,7 +69,7 @@ export function TruckDetailPage() {
 
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2">
-          <span className="fs-money rounded-fs-sm bg-fs-navy-100 px-2 py-1 text-sm font-bold text-fs-navy-900">
+          <span className="fs-money rounded-fs-sm bg-fs-tag px-2 py-1 text-sm font-bold text-fs-strong">
             UNIT {truck.unit_number}
           </span>
           <div>
@@ -84,7 +84,7 @@ export function TruckDetailPage() {
       </div>
 
       {/* Vehicle profile card */}
-      <div className="mt-4 rounded-fs border border-fs-line-200 bg-white p-4 shadow-fs-card">
+      <div className="mt-4 rounded-fs border border-fs-line-200 bg-fs-surface p-4 shadow-fs-card">
         <div className="flex items-center justify-between">
           <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-fs-ink-500">
             Vehicle profile
@@ -158,13 +158,13 @@ export function TruckDetailPage() {
       )}
 
       {visits && visits.length > 0 && (
-        <div className="mt-2 overflow-hidden rounded-fs border border-fs-line-200 bg-white shadow-fs-card">
+        <div className="mt-2 overflow-hidden rounded-fs border border-fs-line-200 bg-fs-surface shadow-fs-card">
           {visits.map((visit) => (
             <button
               key={visit.id}
               type="button"
               onClick={() => navigate(`/visits/${visit.id}`)}
-              className="flex w-full items-center gap-3 border-b border-fs-line-200 px-4 py-3 text-left last:border-b-0 hover:bg-fs-navy-50"
+              className="flex w-full items-center gap-3 border-b border-fs-line-200 px-4 py-3 text-left last:border-b-0 hover:bg-fs-tint"
             >
               <span className="fs-money w-14 flex-shrink-0 text-xs text-fs-ink-500">
                 {formatDateShort(visit.visit_date)}

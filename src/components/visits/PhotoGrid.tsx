@@ -41,7 +41,7 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
             key={photo.id}
             type="button"
             onClick={() => setLightboxIndex(index)}
-            className="group rounded-lg overflow-hidden border border-fs-line-200 bg-white text-left focus-visible:ring-2 focus-visible:ring-fs-navy-700"
+            className="group rounded-lg overflow-hidden border border-fs-line-200 bg-fs-surface text-left focus-visible:ring-2 focus-visible:ring-fs-focus"
           >
             <div className="aspect-video bg-fs-bg overflow-hidden">
               <img

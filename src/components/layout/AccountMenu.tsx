@@ -30,7 +30,7 @@ export function AccountMenu({ onItemSelect }: { onItemSelect?: () => void }) {
         <DropdownMenu.Trigger asChild>
           <button
             type="button"
-            className="flex w-full items-center gap-3 rounded px-2 py-2 text-left transition-colors hover:bg-fs-navy-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-fs-navy-700"
+            className="flex w-full items-center gap-3 rounded px-2 py-2 text-left transition-colors hover:bg-fs-navy-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-fs-focus"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-fs-navy-700 text-xs font-semibold text-white shrink-0">
               {initial}
@@ -61,7 +61,7 @@ export function AccountMenu({ onItemSelect }: { onItemSelect?: () => void }) {
             side="top"
             align="start"
             sideOffset={8}
-            className="z-50 w-56 rounded-md border border-fs-line-200 bg-white p-1 shadow-xl"
+            className="z-50 w-56 rounded-md border border-fs-line-200 bg-fs-surface p-1 shadow-xl"
           >
             <div className="px-3 py-2">
               <p className="truncate text-sm font-medium text-fs-ink-900">

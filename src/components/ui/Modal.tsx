@@ -42,7 +42,7 @@ export function Modal({
               )}
             </div>
             <Dialog.Close
-              className="rounded-fs-sm p-1 text-fs-ink-450 hover:text-fs-ink-900 hover:bg-fs-navy-50 transition-colors"
+              className="rounded-fs-sm p-1 text-fs-ink-450 hover:text-fs-ink-900 hover:bg-fs-tint transition-colors"
               aria-label="Close"
             >
               <svg

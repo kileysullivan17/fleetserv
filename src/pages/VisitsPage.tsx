@@ -129,7 +129,7 @@ export function VisitsPage() {
 
       {/* Money summary band */}
       {hasVisits && (
-        <div className="mt-4 flex gap-4 rounded-fs-lg bg-fs-navy-900 px-5 py-4 text-white lg:max-w-2xl">
+        <div className="mt-4 flex gap-4 rounded-fs-lg bg-fs-band px-5 py-4 text-white lg:max-w-2xl">
           <div className="flex-1">
             <div className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-fs-navy-100/80">
               Unpaid
@@ -218,7 +218,7 @@ export function VisitsPage() {
           </div>
 
           {visible.length > 0 && (
-            <div className="mt-3 overflow-hidden rounded-fs-lg border border-fs-line-200 bg-white shadow-fs-card">
+            <div className="mt-3 overflow-hidden rounded-fs-lg border border-fs-line-200 bg-fs-surface shadow-fs-card">
               <div className="px-5 pb-1.5 pt-3 text-[11px] font-bold uppercase tracking-[0.14em] text-fs-ink-500">
                 By urgency
               </div>
@@ -285,8 +285,8 @@ function FilterChip({ active, onClick, label, dot }: FilterChipProps) {
       className={cn(
         "inline-flex min-h-[36px] items-center gap-1.5 rounded-full px-3.5 text-[13px] font-semibold transition-colors",
         active
-          ? "bg-fs-navy-900 text-white"
-          : "border border-fs-line-200 bg-white text-fs-ink-600 hover:bg-fs-navy-50"
+          ? "bg-fs-selected text-fs-selected-fg"
+          : "border border-fs-line-200 bg-fs-surface text-fs-ink-600 hover:bg-fs-tint"
       )}
     >
       {dot && !active && (

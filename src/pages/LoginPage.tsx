@@ -74,7 +74,7 @@ export function LoginPage() {
             </label>
             <Link
               to="/forgot-password"
-              className="text-xs text-fs-navy-700 hover:underline"
+              className="text-xs text-fs-link hover:underline"
             >
               Forgot password?
             </Link>

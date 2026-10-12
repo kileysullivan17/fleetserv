@@ -34,7 +34,7 @@ export function PipelineColumn({
   return (
     <div className="flex w-64 shrink-0 flex-col">
       <div
-        className="rounded-t-fs border border-b-0 border-fs-line-200 border-t-4 bg-white px-3 py-2.5"
+        className="rounded-t-fs border border-b-0 border-fs-line-200 border-t-4 bg-fs-surface px-3 py-2.5"
         style={{ borderTopColor: COLUMN_DOT[status] }}
       >
         <div className="flex items-center justify-between">
@@ -54,7 +54,7 @@ export function PipelineColumn({
         ref={setNodeRef}
         className={cn(
           "min-h-[160px] flex-1 space-y-2 rounded-b-fs border border-fs-line-200 bg-fs-bg p-2 transition-colors",
-          isOver && "border-fs-navy-700 bg-fs-navy-50"
+          isOver && "border-fs-focus bg-fs-tint"
         )}
       >
         {visits.map((visit) => (
@@ -66,7 +66,7 @@ export function PipelineColumn({
             className={cn(
               "flex h-full min-h-[120px] items-center justify-center rounded-fs-sm border border-dashed text-xs transition-colors",
               isOver
-                ? "border-fs-navy-700 text-fs-navy-700"
+                ? "border-fs-focus text-fs-link"
                 : "border-fs-line-200 text-fs-ink-500"
             )}
           >

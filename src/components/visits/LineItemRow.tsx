@@ -63,7 +63,7 @@ function QuantityStepper({
           type="button"
           aria-label={`Decrease ${label.toLowerCase()}`}
           onClick={() => set((Number(value) || 0) - step)}
-          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-fs border border-fs-line-300 bg-white text-2xl leading-none text-fs-navy-900 hover:bg-fs-navy-50"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-fs border border-fs-line-300 bg-fs-surface text-2xl leading-none text-fs-strong hover:bg-fs-tint"
         >
           &minus;
         </button>
@@ -79,7 +79,7 @@ function QuantityStepper({
           type="button"
           aria-label={`Increase ${label.toLowerCase()}`}
           onClick={() => set((Number(value) || 0) + step)}
-          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-fs border border-fs-line-300 bg-white text-2xl leading-none text-fs-navy-900 hover:bg-fs-navy-50"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-fs border border-fs-line-300 bg-fs-surface text-2xl leading-none text-fs-strong hover:bg-fs-tint"
         >
           +
         </button>
@@ -111,7 +111,7 @@ export function LineItemRow({
   const qtyLabel = item.service_type === "fuel" ? "gal" : item.unit || "ea";
 
   return (
-    <div className="rounded-fs border border-fs-line-200 bg-white p-4 shadow-fs-card">
+    <div className="rounded-fs border border-fs-line-200 bg-fs-surface p-4 shadow-fs-card">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <label htmlFor={`${base}.service_type`} className="form-label">
@@ -392,7 +392,7 @@ export function LineItemRow({
                 return (
                   <div
                     key={cat.key}
-                    className="flex items-center justify-between rounded-fs-sm border border-fs-line-200 bg-white px-3 py-2"
+                    className="flex items-center justify-between rounded-fs-sm border border-fs-line-200 bg-fs-surface px-3 py-2"
                   >
                     <span className="text-sm text-fs-ink-900">{cat.label}</span>
                     <div className="flex overflow-hidden rounded-fs-sm border border-fs-line-200">
@@ -401,7 +401,7 @@ export function LineItemRow({
                           "cursor-pointer px-3 py-1.5 text-xs font-semibold transition-colors",
                           value === "pass"
                             ? "bg-fs-accepted-bg text-fs-accepted-text"
-                            : "bg-white text-fs-ink-450 hover:text-fs-ink-600"
+                            : "bg-fs-surface text-fs-ink-450 hover:text-fs-ink-600"
                         )}
                       >
                         <input
@@ -417,7 +417,7 @@ export function LineItemRow({
                           "cursor-pointer border-l border-fs-line-200 px-3 py-1.5 text-xs font-semibold transition-colors",
                           value === "fail"
                             ? "bg-fs-overdue-bg text-fs-overdue-text"
-                            : "bg-white text-fs-ink-450 hover:text-fs-ink-600"
+                            : "bg-fs-surface text-fs-ink-450 hover:text-fs-ink-600"
                         )}
                       >
                         <input

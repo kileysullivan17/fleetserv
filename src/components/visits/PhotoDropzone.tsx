@@ -60,8 +60,8 @@ export function PhotoDropzone({
         className={cn(
           "flex flex-col items-center justify-center rounded-lg border-2 border-dashed px-6 py-8 cursor-pointer transition-colors",
           dragActive
-            ? "border-fs-navy-700 bg-fs-accepted-bg"
-            : "border-fs-line-200 bg-fs-bg/40 hover:border-fs-navy-700 hover:bg-fs-accepted-bg/50",
+            ? "border-fs-focus bg-fs-accepted-bg"
+            : "border-fs-line-200 bg-fs-bg/40 hover:border-fs-focus hover:bg-fs-accepted-bg/50",
           uploading && "pointer-events-none opacity-60"
         )}
       >
@@ -101,7 +101,7 @@ export function PhotoDropzone({
           {photos.map((photo) => (
             <div
               key={photo.id}
-              className="rounded-lg border border-fs-line-200 bg-white overflow-hidden"
+              className="rounded-lg border border-fs-line-200 bg-fs-surface overflow-hidden"
             >
               <div className="relative aspect-video bg-fs-bg">
                 <img
@@ -114,7 +114,7 @@ export function PhotoDropzone({
                   aria-label={`Remove ${photo.file.name}`}
                   onClick={() => onRemove(photo.id)}
                   disabled={uploading}
-                  className="absolute top-1.5 right-1.5 rounded-full bg-fs-navy-950/70 p-1 text-white hover:bg-fs-danger transition-colors"
+                  className="absolute top-1.5 right-1.5 rounded-full bg-fs-navy-950/70 p-1 text-white hover:bg-fs-danger-solid transition-colors"
                 >
                   <svg
                     className="w-3.5 h-3.5"

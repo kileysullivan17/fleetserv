@@ -38,8 +38,8 @@ export function BrandMark({
   subline = false,
   className,
 }: BrandMarkProps) {
-  const wordColor = tone === "navy" ? "text-white" : "text-fs-navy-900";
-  const secondBar = tone === "navy" ? "bg-white" : "bg-fs-navy-900";
+  const wordColor = tone === "navy" ? "text-white" : "text-fs-strong";
+  const secondBar = tone === "navy" ? "bg-white" : "bg-fs-strong";
   const sublineColor = tone === "navy" ? "text-fs-teal-200" : "text-fs-ink-500";
 
   return (

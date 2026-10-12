@@ -17,7 +17,7 @@ export function JobRow({ visit }: JobRowProps) {
   return (
     <Link
       to={`/visits/${visit.id}`}
-      className="flex min-h-[72px] items-center justify-between gap-3 border-b border-fs-line-200 px-5 py-3 last:border-b-0 hover:bg-fs-navy-50"
+      className="flex min-h-[72px] items-center justify-between gap-3 border-b border-fs-line-200 px-5 py-3 last:border-b-0 hover:bg-fs-tint"
     >
       <div className="min-w-0">
         <div className="truncate text-base font-semibold text-fs-ink-900">

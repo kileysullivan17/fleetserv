@@ -99,6 +99,9 @@ export function Sidebar({
     <aside
       className={cn(
         "fixed inset-y-0 left-0 z-40 flex w-60 flex-col bg-fs-navy-950 transition-transform duration-200",
+        // The sidebar and the dark app ground are the same navy-950, so dark
+        // draws a 1px edge here. In light the edge token is transparent.
+        "shadow-[1px_0_0_0_var(--fs-sidebar-edge)]",
         open ? "translate-x-0" : "-translate-x-full",
         "lg:translate-x-0"
       )}
