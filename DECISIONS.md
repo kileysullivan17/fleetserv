@@ -236,3 +236,89 @@ five failures and a lowest of 3.75:1 before.
 The lesson worth keeping: a verified design system is not a verified product. The
 July audit was correct and the app still shipped eight failures, because nothing
 re-checked the built output. Contrast belongs in the build, not only in the spec.
+
+## 2026-10-12: Dark mode and the B4 design files
+
+### One token file at the repo root
+
+`tokens.css` at the root is now the only token source. It has two layers: the
+B4 semantic tokens (`--background`, `--primary`, `--status-*`) that `DESIGN.md`
+describes, and the `--fs-*` names the app reads. `src/index.css` imports it, and
+every `fs.*` color in `tailwind.config.ts` points at a custom property through
+`color-mix`, so opacity modifiers such as `/40` keep working.
+`design/tokens.css` stays where it is as the frozen July sidecar for the local
+canvases. It is gitignored and the build never read it, so replacing it would
+not have reached the app.
+
+### Light stays as shipped this round
+
+The token map changes several light values for B4: a deep teal primary, quoted
+and invoiced folded into navy, approved and paid on teal, a 12px medium radius,
+17px body text, no card shadow. None of them is applied yet. This round is the
+design files and dark mode, and every light screen had to look the same before
+and after: all 24 light captures (12 screens at 1280 and 390) are
+pixel-identical to be4cbe9. The light restyle is listed as planned in
+`PRODUCT.md`.
+
+### Navy steps split into roles
+
+`fs-navy-700` was a link on white and a divider on the sidebar; `fs-navy-900`
+was a button fill, a heading color, and a rule. One dark value cannot do both
+jobs, so every navy use on a card or the app background moved to a named role
+(`fs-link`, `fs-focus`, `fs-rule`, `fs-strong`, `fs-tint`, `fs-tag`, `fs-band`,
+`fs-selected`, `fs-primary`, `fs-danger-solid`). Each role has the same light
+hex as the step it replaced. The navy and teal steps now appear only on navy
+grounds and keep one value in both themes.
+
+### Dark values, and the ones adjusted
+
+Dark uses the draft's dark tokens, mapped through the token map. Where the app
+needed a value the draft has no slot for, or a draft value failed, it was set
+by measurement:
+
+| Token | Dark value | Why |
+|---|---|---|
+| `--status-overdue-dot` | #cc6664 (was #b14e4e) | #b14e4e measured 2.43:1 on its chip ground; dots need 3:1. Now 3.37:1 |
+| `--fs-ink-600` | #d9e4ee | no draft slot; 11.4:1 on a card |
+| `--fs-ink-450` | #a3b1bd | no draft slot; 6.7:1 on a card, 4.52:1 on the tag ground |
+| `--fs-link` | #93b5d6 | navy-700 links vanish on a dark card; 6.9:1 |
+| `--fs-primary-hover` | #8fdcc9 | teal-200; navy-950 text stays at 11.0:1 |
+| `--fs-danger-hover` | #9b3f3f | no draft slot; 6.6:1 with white |
+| `--fs-sidebar-edge` | #17364f | sidebar and ground are both navy-950 in dark |
+| ring offset | `--fs-surface` | Tailwind's default white offset showed as a halo on dark cards |
+
+axe color-contrast found no failures on 12 screens at 1280 and 390 in light and
+in dark. The incomplete nodes are the same table cells in both themes, clipped
+by the horizontal scroll at 390; the same cells pass at 1280.
+
+### Documents and print stay light
+
+A quote or invoice on screen is paper, so the document card carries `fs-light`,
+which re-applies the light tokens inside a dark page. The dark blocks in
+`tokens.css` sit inside `@media screen`, so print is light under any choice. The
+three PDFs set their own colors in code and never read the theme.
+
+### The theme choice is per device
+
+Like the tax-rate snooze, Light, Dark, or System is one person's choice on one
+device, so it lives in localStorage, with every access wrapped. System removes
+`data-theme` and lets `prefers-color-scheme` decide. An inline script in
+`index.html` applies a stored choice before first paint.
+
+### Technician roles are planned, not built
+
+The design brief treats field technicians as their own tablet user. The app
+keeps one shared operator login, created by invitation, and auth is unchanged.
+Separate technician and admin roles are listed as planned in `PRODUCT.md`.
+
+### Spark plugs is a service type
+
+Spark plugs follow the oil, fluid, and fuel pattern rather than riding on
+add-on lines, so they get their own fields and label. The service type is a
+Postgres enum, so migration 007 adds the value. Like every other type it has no
+default price, and the seed file gains no row.
+
+### Fonts confirmed
+
+Archivo for the interface and IBM Plex Mono for money, IDs, VINs, and table
+dates, as already loaded. No other face is referenced.

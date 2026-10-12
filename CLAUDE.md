@@ -17,16 +17,17 @@ fleetserv/
     lib/
       supabase.ts   # Typed Supabase client and db() helper
       queryClient.ts
+      theme.ts      # Light / Dark / System preference: read, store, apply
     types/
       database.ts   # Full schema types: Company, Truck, ServiceVisit, etc.
     utils/
       cn.ts         # Tailwind class merge utility
       format.ts     # Currency, date, status label formatters
-    hooks/          # Custom React hooks (useTrucks, useAuth, etc.)
+    hooks/          # Custom React hooks (useTrucks, useAuth, useTheme, etc.)
     router.tsx      # React Router v6 routes, guarded by RequireAuth
     App.tsx         # Root: AuthProvider > QueryClientProvider > RouterProvider
     main.tsx        # ReactDOM.createRoot entry point
-    index.css       # Tailwind directives + global base styles
+    index.css       # Imports ../tokens.css, then Tailwind directives + base styles
   public/
     favicon.svg
   supabase/
@@ -40,7 +41,10 @@ fleetserv/
       006_drop_photo_storage_url.sql  # Drops the old public URL column
       007_spark_plugs_service_type.sql # Adds spark_plugs to the service_type enum
     seed_demo_data.sql                # Optional sample data (not run on deploy)
-  index.html
+  index.html        # Includes the pre-paint theme script
+  tokens.css        # The one token source: semantic B4 tokens + the --fs-* app layer
+  DESIGN.md         # The design system (B4 Route Tablet), read with tokens.css
+  PRODUCT.md        # What the product is, who it serves, copy rules, planned work
   tailwind.config.ts
   vite.config.ts
   tsconfig.json
@@ -60,6 +64,15 @@ fleetserv/
 - No em dashes anywhere: use periods, commas, or colons.
 - Status badges: always use the StatusBadge component with the typed variant prop.
 - Currency: always formatCurrency(). Dates: always formatDate() or formatDateShort().
+
+## Design source of truth
+
+- `tokens.css` at the repo root is the only token file the app reads. `src/index.css` imports it and every `fs.*` color in `tailwind.config.ts` points at one of its custom properties. `DESIGN.md` describes the system those tokens implement; change a value in `tokens.css`, never in a component.
+- `design/tokens.css` is the July v1 sidecar for the local design canvases (`design/*.dc.html`). It is gitignored, frozen, and not read by the build.
+- Light, dark, and print all come from `tokens.css`. Dark is set by `data-theme` on `<html>` (the account menu toggle) or by `prefers-color-scheme` when the choice is System.
+- On a card or the app background, use the role colors: `fs-surface`, `fs-ink-*`, `fs-line-*`, `fs-link`, `fs-focus`, `fs-strong`, `fs-rule`, `fs-tint`, `fs-tag`, `fs-primary`, `fs-danger` (text) and `fs-danger-solid` (fill). The `fs-navy-*` and `fs-teal-*` steps are for navy grounds only (sidebar, mobile bar, overlays); they do not change in dark. Never `bg-white`, `text-black`, or a hex value for a surface or text color.
+- Customer documents are paper: the on-screen document carries `fs-light`, which re-applies the light tokens inside a dark page. The PDFs set their own colors and do not read the theme.
+- Check contrast in both themes for any new color pair.
 
 ## Environment variables
 

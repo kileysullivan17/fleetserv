@@ -6,6 +6,17 @@ Migrations are applied by hand in the Supabase SQL editor, in number order. Ever
 
 About the data: the live database holds two hand-entered filler companies (see `supabase/repair_demo_data.sql`), created in the app, not from the seed file. The release notes describe them that way: filler records, never a real customer.
 
+## Form types: where each stands
+
+Updated 2026-10-12. The four Form Types are the Procore-style set in `CONTEXT.md`.
+
+- Inspection: shipped as the six-point visual inspection checklist, a pass/fail line item on the visit. Phases 2 and 3 move it onto a template; the checkpoint before Phase 4 decides whether the line item stays.
+- Daily Log: planned. A starter template lands in step 2.3 and renders through the step 3.2 renderer.
+- Observation: planned. The form lands with the other starter templates in step 2.3; the Observation record it opens is step 3.4.
+- Incident Report: planned. A starter template lands in step 2.3; access rules for real incident data are outside this plan.
+
+None of the three planned forms has a date.
+
 ---
 
 ## Phase 1. Close the access gaps (ship this first, on its own)
@@ -128,4 +139,4 @@ FleetServ runs on Supabase's free plan (decided 2026-09-30): it is a portfolio b
 
 ## Not in this plan
 
-Per-company access for customer logins, offline saving, the answer types planned for format version 2, and Incident Report access rules for real data.
+Separate technician and admin roles (planned, see `PRODUCT.md`; everyone uses the shared operator login until then), per-company access for customer logins, offline saving, the answer types planned for format version 2, and Incident Report access rules for real data.
