@@ -286,6 +286,7 @@ by measurement:
 | `--fs-danger-hover` | #9b3f3f | no draft slot; 6.6:1 with white |
 | `--fs-sidebar-edge` | #17364f | sidebar and ground are both navy-950 in dark |
 | ring offset | `--fs-surface` | Tailwind's default white offset showed as a halo on dark cards |
+| `--fs-paid-mark`, `--fs-invoiced-mark` | teal-500, navy-100 | new: the jobs filter dots and board column rules reused the chip dots, which are made for the solid chips and nearly vanished on a dark card. Light keeps the old dot colors |
 
 axe color-contrast found no failures on 12 screens at 1280 and 390 in light and
 in dark. The incomplete nodes are the same table cells in both themes, clipped

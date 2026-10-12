@@ -164,6 +164,11 @@
   --fs-invoiced-bg: #fcefd7; --fs-invoiced-text: #7a4a06; --fs-invoiced-dot: #c7860f;
   --fs-paid-bg: #147a3d;     --fs-paid-text: #ffffff;     --fs-paid-dot: #8ce0ac;
   --fs-overdue-bg: #fbe3e1;  --fs-overdue-text: #8f1d18;  --fs-overdue-dot: #c63d34;
+  /* Paid and invoiced as a standalone dot or column rule on a neutral ground.
+     Their chip dots are made for the solid chips, and in dark they nearly
+     vanish on a card, so marks use the solid chip ground there instead. */
+  --fs-paid-mark: #8ce0ac;
+  --fs-invoiced-mark: #c7860f;
 
   /* Chip spec, default and mini. */
   --fs-chip-font: 700 11px/1.3 var(--fs-font-ui);
@@ -288,6 +293,8 @@
     --fs-invoiced-bg: var(--status-invoiced); --fs-invoiced-text: var(--status-invoiced-fg); --fs-invoiced-dot: var(--status-invoiced-dot);
     --fs-paid-bg: var(--status-paid);         --fs-paid-text: var(--status-paid-fg);         --fs-paid-dot: var(--status-paid-dot);
     --fs-overdue-bg: var(--status-overdue);   --fs-overdue-text: var(--status-overdue-fg);   --fs-overdue-dot: var(--status-overdue-dot);
+    --fs-paid-mark: var(--status-paid); /* teal-500: 5.7:1 on --card */
+    --fs-invoiced-mark: var(--status-invoiced); /* navy-100: 11.4:1 on --card */
     --fs-focus-ring: 0 0 0 3px rgba(143, 220, 201, 0.45);
   }
 }
@@ -391,6 +398,8 @@
     --fs-invoiced-bg: var(--status-invoiced); --fs-invoiced-text: var(--status-invoiced-fg); --fs-invoiced-dot: var(--status-invoiced-dot);
     --fs-paid-bg: var(--status-paid);         --fs-paid-text: var(--status-paid-fg);         --fs-paid-dot: var(--status-paid-dot);
     --fs-overdue-bg: var(--status-overdue);   --fs-overdue-text: var(--status-overdue-fg);   --fs-overdue-dot: var(--status-overdue-dot);
+    --fs-paid-mark: var(--status-paid); /* teal-500: 5.7:1 on --card */
+    --fs-invoiced-mark: var(--status-invoiced); /* navy-100: 11.4:1 on --card */
     --fs-focus-ring: 0 0 0 3px rgba(143, 220, 201, 0.45);
   }
 }

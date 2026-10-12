@@ -35,8 +35,8 @@ const STATUS_DOT: Record<ServiceVisitStatus, string> = {
   draft: "var(--fs-draft-dot)",
   quoted: "var(--fs-sent-dot)",
   approved: "var(--fs-accepted-dot)",
-  invoiced: "var(--fs-invoiced-dot)",
-  paid: "var(--fs-paid-dot)",
+  invoiced: "var(--fs-invoiced-mark)",
+  paid: "var(--fs-paid-mark)",
 };
 
 // Desktop keeps the drag pipeline; the mutation and column order are unchanged.
