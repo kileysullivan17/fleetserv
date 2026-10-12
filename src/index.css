@@ -106,7 +106,7 @@
   text-align: right;
 }
 
-/* Status chip — compose per state, e.g. <span class="fs-chip" data-status="invoiced"> */
+/* Status chip: compose per state, e.g. <span class="fs-chip" data-status="invoiced"> */
 .fs-chip {
   display: inline-flex;
   align-items: center;

@@ -8,7 +8,7 @@ interface JobRowProps {
 }
 
 // One urgency-sorted job. The whole row is the tap target (≥72px), opening the
-// visit page — routing is unchanged. Amount is tabular mono, right-aligned;
+// visit page; routing is unchanged. Amount is tabular mono, right-aligned;
 // status is a dot + label chip, never color alone.
 export function JobRow({ visit }: JobRowProps) {
   const company = visit.company_name ?? "Unknown customer";
