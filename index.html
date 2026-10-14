@@ -23,8 +23,63 @@
       href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Splash: logo, line and a loading bar for 2s on the first open in a
+         browser session, then the app. Skipped on reloads in the same session,
+         on any deep link (a path other than / or a query string), and by any
+         tap or key. Reduced motion: no fade or sweep. Markup and script sit
+         at the top of <body>; the script un-hides it before first paint.
+         Navy-950 ground in both themes (the sidebar color), so the white band in the mark never washes out. Teal-500 only on navy, per tokens.css. -->
+    <style>
+      #splash { position: fixed; inset: 0; z-index: 2147483000; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 18px; padding: 24px; text-align: center;
+        transition: opacity 0.36s ease, visibility 0s linear 0.36s; }
+      #splash[hidden] { display: none; }
+      #splash.is-leaving { opacity: 0; visibility: hidden; }
+      #splash .splash-logo { display: block; width: min(78vw, 360px); height: auto; }
+      #splash .splash-line { margin: 0; max-width: 22em; }
+      #splash .splash-bar { position: relative; width: min(62vw, 280px); height: 4px; overflow: hidden; }
+      #splash .splash-bar i { position: absolute; inset: 0; transform-origin: left; animation: splash-sweep 1.4s ease-in-out 0.16s both; }
+      #splash .splash-mark, #splash .splash-line { animation: splash-in 0.4s ease-out both; }
+      #splash .splash-line { animation-delay: 0.2s; }
+      @keyframes splash-in { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes splash-sweep { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+      @media (prefers-reduced-motion: reduce) {
+        #splash, #splash .splash-mark, #splash .splash-line, #splash .splash-bar i { animation: none; transition: none; }
+      }
+      #splash { background: #0b1b2a; color: #d9e4ee; }
+      #splash .splash-line { font: 500 16px/1.35 "Archivo", system-ui, sans-serif; }
+      #splash .splash-bar { background: rgba(217, 228, 238, 0.18); }
+      #splash .splash-bar i { background: #22b597; }
+    </style>
   </head>
   <body>
+    <div id="splash" aria-hidden="true" hidden>
+      <div class="splash-mark"><svg class="splash-logo" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 456.4 100.0"><rect x="4" y="22" width="22" height="56" rx="3" fill="#22B597" transform="skewX(-16) translate(22,0)"/><rect x="32" y="22" width="22" height="56" rx="3" fill="#FFFFFF" transform="skewX(-16) translate(22,0)"/><path d="M75.62 76.0 82.7 36.15H113.32L111.87 44.27H91.69L90.12 52.85H107.87L106.48 60.80H88.79L86.06 76.0Z M115.18 76.0 122.19 36.15H132.58L127.07 67.47H147.02L145.51 76.0Z M153.57 76.0 160.65 36.15H193.59L192.14 44.27H169.64L168.30 51.75H187.97L186.57 59.70H166.91L165.46 67.88H188.37L186.92 76.0Z M196.43 76.0 203.51 36.15H236.45L235.00 44.27H212.50L211.17 51.75H230.83L229.44 59.70H209.77L208.32 67.88H231.23L229.78 76.0Z M249.33 76.0 254.90 44.68H241.96L243.47 36.15H279.72L278.21 44.68H265.28L259.77 76.0Z M298.28 76.69Q294.57 76.69 291.32 76.14Q288.07 75.59 285.67 74.40Q283.26 73.21 281.90 71.21Q280.53 69.21 280.53 66.31Q280.53 65.50 280.65 64.54Q280.77 63.58 281.00 62.83H291.03Q290.91 63.24 290.80 63.76Q290.68 64.28 290.68 64.69Q290.68 66.14 291.55 67.03Q292.42 67.93 293.99 68.34Q295.55 68.75 297.64 68.75Q299.33 68.75 300.75 68.51Q302.17 68.28 303.24 67.82Q304.31 67.35 304.92 66.54Q305.53 65.73 305.53 64.57Q305.53 63.47 304.72 62.71Q303.91 61.96 302.54 61.41Q301.18 60.86 299.47 60.42Q297.76 59.99 295.90 59.47Q293.81 58.89 291.73 58.13Q289.64 57.38 287.96 56.22Q286.28 55.06 285.26 53.29Q284.24 51.52 284.24 48.97Q284.24 45.31 285.75 42.79Q287.26 40.27 289.81 38.61Q292.36 36.96 295.58 36.21Q298.80 35.45 302.22 35.45Q305.65 35.45 308.58 36.03Q311.51 36.61 313.68 37.83Q315.85 39.05 317.07 40.91Q318.29 42.76 318.29 45.37Q318.29 45.84 318.23 46.44Q318.17 47.05 318.00 48.10H308.08Q308.20 47.63 308.20 47.37Q308.20 47.11 308.20 46.88Q308.20 45.20 306.75 44.15Q305.30 43.11 302.46 43.11Q300.19 43.11 298.54 43.60Q296.89 44.09 296.02 44.94Q295.15 45.78 295.15 46.94Q295.15 47.81 295.70 48.44Q296.25 49.08 297.24 49.58Q298.22 50.07 299.53 50.48Q300.83 50.88 302.40 51.23Q304.66 51.81 307.13 52.53Q309.59 53.26 311.74 54.48Q313.88 55.7 315.19 57.58Q316.49 59.47 316.49 62.25Q316.49 66.02 314.98 68.75Q313.48 71.47 310.90 73.24Q308.31 75.01 305.07 75.85Q301.82 76.69 298.28 76.69Z M323.51 76.0 330.59 36.15H363.53L362.08 44.27H339.58L338.24 51.75H357.90L356.51 59.70H336.85L335.40 67.88H358.31L356.86 76.0Z M366.43 76.0 373.45 36.15H395.78Q399.90 36.15 402.59 37.45Q405.29 38.76 406.62 41.02Q407.96 43.28 407.96 46.24Q407.96 49.78 406.86 52.51Q405.76 55.23 403.75 57.15Q401.75 59.06 398.91 60.22L404.13 76.0H392.76L388.65 61.96H379.31L376.81 76.0ZM380.70 54.25H391.02Q392.65 54.25 394.04 53.46Q395.43 52.68 396.30 51.23Q397.17 49.78 397.17 47.92Q397.17 46.12 396.13 45.08Q395.08 44.04 393.23 44.04H382.44Z M422.63 76.0 415.32 36.15H426.05L429.13 56.57Q429.30 57.84 429.53 59.41Q429.77 60.97 429.97 62.42Q430.17 63.87 430.29 64.98H430.64Q431.28 63.64 432.03 62.10Q432.78 60.57 433.54 59.06Q434.29 57.55 434.87 56.33L444.96 36.15H455.98L434.70 76.0Z" fill="#FFFFFF"/></svg></div>
+      <p class="splash-line">Inspection first, invoice last.</p>
+      <div class="splash-bar"><i></i></div>
+    </div>
+    <script>
+      (function () {
+        var el = document.getElementById('splash');
+        var key = 'fleetserv.splashSeen';
+        var seen = false;
+        try { seen = sessionStorage.getItem(key) === '1'; sessionStorage.setItem(key, '1'); } catch (e) {}
+        if (seen || location.pathname !== '/' || location.search) return;
+        el.hidden = false;
+        var done = false;
+        function leave() {
+          if (done) return;
+          done = true;
+          el.classList.add('is-leaving');
+          setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 400);
+          window.removeEventListener('pointerdown', leave);
+          window.removeEventListener('keydown', leave);
+        }
+        window.addEventListener('pointerdown', leave);
+        window.addEventListener('keydown', leave);
+        setTimeout(leave, 2000);
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

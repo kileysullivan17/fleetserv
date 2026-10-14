@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-14: Splash screen
+
+**Splash.** The first time FleetServ opens in a browser session it shows the logo, "Inspection first, invoice last." and a teal bar for 2 seconds on the navy ground, then the app. Reloads, links to a specific page, and any tap or key skip it. With reduced motion on, nothing animates. It lives in `index.html`, so it shows before the app finishes loading.
+
 ## 2026-10-12: Dark mode, spark plugs, and the design files
 
 **Dark mode.** The account menu has a Theme control with three choices: Light, Dark, and System, which follows the device. The choice is kept on that device and applies before the page draws, so a dark choice never flashes light. Quotes, invoices, and service reports stay on white paper in either theme, and printing is always light. Light mode looks the same as before.
